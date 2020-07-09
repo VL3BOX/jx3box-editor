@@ -29,3 +29,5 @@ import Tinymce from "@jx3box/jx3box-editor/src/Tinymce.vue"
 <Upload @insert="insertWhere" @update="getList" @htmlUpdate="getHTML"/>
 <Resource @insert="insertWhere" @update="getHTML"/>
 ```
+
+<!-- 手动更新cdn `https://oss.jx3box.com/static/jx3box-editor/tinymce.css` -->

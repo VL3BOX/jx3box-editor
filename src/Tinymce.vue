@@ -45,7 +45,7 @@ export default {
                 language: "zh_CN",
 
                 // 样式
-                // content_css: `http://localhost:1024/css/article.css`,
+                // content_css: `https://oss.jx3box.com/static/jx3box-editor/tinymce.css`,
                 body_class: "c-article c-article-editor",
                 height: this.height || 800,
                 autosave_ask_before_unload: false,
