@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-editor",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "JX3BOX Article & Editor",
     "main": "index.js",
     "scripts": {
@@ -62,6 +62,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/JX3BOX/jx3box-article.git"
+        "url": "git+https://github.com/JX3BOX/jx3box-editor.git"
     }
 }

@@ -123,17 +123,6 @@ export default {
         fileList: {
             deep: true,
             handler: function(newval) {
-                let list = [];
-                newval.forEach((file) => {
-                    if (file.selected) {
-                        file.is_img
-                            ? list.push(`<img src="${file.url}" />`)
-                            : list.push(
-                                  `<a target="_blank" href="${file.url}">${file.name}</a>`
-                              );
-                    }
-                });
-                this.insertList = list.join(" \n");
                 this.$emit("update", newval);
             },
         },
@@ -206,6 +195,20 @@ export default {
                 file.selected ? this.selectedCount++ : this.selectedCount--;
             }
         },
+        buildHTML : function (){
+            let list = [];
+            this.fileList.forEach((file) => {
+                if (file.selected) {
+                    file.is_img
+                        ? list.push(`<img src="${file.url}" />`)
+                        : list.push(
+                                `<a target="_blank" href="${file.url}">${file.name}</a>`
+                            );
+                }
+            });
+            this.insertList = list.join(" \n"); 
+            return this.insertList 
+        },
         insert: function() {
             // 关闭窗口
             this.dialogVisible = false;
@@ -216,7 +219,7 @@ export default {
             // 传递值
             this.$emit("insert", {
                 list: this.fileList,
-                html: this.insertList,
+                html: this.buildHTML(),
             });
 
             //移除所有选择状态

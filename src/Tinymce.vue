@@ -59,11 +59,11 @@ export default {
                     "link autolink",
                     "hr lists advlist table codeinline codesample checklist foldtext mathjax",
                     "image emoticons media videox macro qixue",
-                    "autosave code fullscreen wordcount powerpaste pagebreak jx3icon printpage", // template anchor
+                    "autosave code fullscreen wordcount powerpaste pagebreak printpage", // template anchor jx3icon 
                 ],
                 toolbar: [
                     "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | restoredraft fullscreen code",
-                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample mathjax | emoticons image media videox | macro qixue jx3icon pagebreak printpage", // template anchor
+                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample mathjax | emoticons image media videox | macro qixue pagebreak printpage", // template anchor jx3icon 
                 ],
                 mobile: {
                     toolbar_drawer: true,

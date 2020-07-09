@@ -35,15 +35,20 @@
 .c-article-editor {
     .e-print-pagebreak {
         .db;
-        border-bottom: 1px dotted #eee;
+        border: none;
+        border-bottom: 1px dotted #7ddcf9;
         font-size: 0;
-        &:after {
-            content: "🖨 打印分页占位符";
-            .db;
-            .x;
-            .fz(12px);
-            color: #999;
-        }
+        width: 100%;
+        height: 0;
+        box-sizing: border-box;
+        margin: 0 !important;
+        // &:after {
+        //     content: "🖨 打印分页占位符";
+        //     .db;
+        //     .x;
+        //     .fz(12px);
+        //     color: #999;
+        // }
     }
 }
 @media print {
