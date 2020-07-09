@@ -1,0 +1,35 @@
+<template>
+    <div>
+        <Tinymce v-model="content" :attachmentEnable="true" :resourceEnable="true" @update="test"/>
+    </div>
+</template>
+
+<script>
+import Tinymce from "../src/Tinymce.vue";
+import demohtml from "./content";
+export default {
+    name: "T",
+    props: [],
+    data: function () {
+        return {
+            content : demohtml
+        };
+    },
+    computed: {},
+    methods: {
+        test : function (val){
+            // console.log(val)
+        }
+    },
+    mounted: function () {},
+    components: {
+        Tinymce,
+    },
+};
+</script>
+
+<style lang="less">
+    html{
+        padding:20px;
+    }
+</style>

@@ -1,0 +1,46 @@
+.c-editor-tinymce {
+
+    .c-editor-header{
+        .mb(10px);
+        .clearfix;
+
+        .c-upload,.c-resource{
+            .fl;
+        }
+        .c-upload{
+            .mr(5px);
+        }
+    }
+
+    .u-tutorial {
+        .mt(10px);
+        .mb(10px);
+        .fz(13px);
+        .el-alert__icon.is-big {
+            .fz(18px);
+        }
+        .el-alert__content {
+            padding-left: 0;
+        }
+        .el-alert__closebtn {
+            top: 12px;
+        }
+        a {
+            color: @primary;
+        }
+        a:hover {
+            box-shadow: 0 1px 0 @primary;
+        }
+        .el-alert__description{
+            margin:0 !important;
+        }
+    }
+}
+
+@media screen and (max-width: @phone) {
+    .c-editor-tinymce {
+        .u-tutorial {
+            .none;
+        }
+    }
+}

@@ -1,0 +1,50 @@
+/* 表格 */
+.c-article {
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        height:auto;
+        margin: 10px 0;
+        overflow-x: auto;
+        max-width: 100%;
+        display: block;
+        border: none;
+
+        td,
+        th {
+            padding: 6px 10px;
+        }
+        td {
+            border: 1px solid #eee;
+        }
+        // th {
+        //     // background-color: #fafbfc;
+        //     // font-weight: 600;
+        // }
+        tr:nth-child(2n + 1) {
+            background-color: #fafbfc;
+        }
+        tr:first-child {
+            // background-color: #f1f8ff;
+            background-color: #fafbfc;
+            font-weight: 600;
+
+            // td {
+            //     border: 1px solid #c8e1ff;
+            // }
+        }
+    }
+}
+
+@media screen and (max-width: @phone) {
+    .c-article table {
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+
+@media print{
+	table{
+        page-break-inside: avoid !important;
+    }
+}
