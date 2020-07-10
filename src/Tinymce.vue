@@ -10,7 +10,7 @@
             v-model="data"
             :init="init"
             class="c-tinymce"
-            placeholder="✔ 图片可直接拖拽至编辑器内自动上传 ✔ 支持word/excel一键粘贴"
+            placeholder="✔ 图片可右键粘贴或拖拽至编辑器内自动上传 ✔ 支持word/excel内容一键粘贴"
         />
         <el-alert class="u-tutorial" type="warning" show-icon
                 >进入特殊区域（代码块，折叠块等等）脱离或使用工具栏触发后，请使用键盘方向
