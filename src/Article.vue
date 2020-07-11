@@ -50,7 +50,9 @@ import $ from "jquery";
 import fold from "../assets/js/fold";
 import directory from "../assets/js/directory";
 import macro from "../assets/js/macro";
+import '@jx3box/jx3box-macro/macro.css'
 import qixue from "../assets/js/qixue";
+import '@jx3box/jx3box-talent/talent.css'
 
 export default {
     name: "Article",
