@@ -24,7 +24,7 @@
                         @keyup.enter.native="search"
                     >
                         <template slot="prepend">ID ／名称</template>
-                        <template slot="append"
+                        <template slot="append" v-if="isPC"
                             ><el-switch
                                 v-model="strict"
                                 active-text="精确匹配"
@@ -281,6 +281,7 @@ export default {
             schools: school,
 
             html: "",
+            isPC:true
         };
     },
     computed: {
@@ -395,6 +396,9 @@ export default {
         showIcon: function(id) {
             return __ossRoot + "icon/" + id + ".png";
         },
+        checkUA : function (){
+            this.isPC = window.innerWidth > 720
+        }
     },
     filters: {
         filterRaw: function(str) {
@@ -405,6 +409,7 @@ export default {
         },
     },
     created: function() {
+        this.checkUA()
         loadStat()
             .then((data) => {
                 this.stat = data;

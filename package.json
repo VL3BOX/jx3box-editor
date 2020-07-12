@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-editor",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "JX3BOX Article & Editor",
     "main": "index.js",
     "scripts": {
@@ -42,7 +42,8 @@
         "lodash": "^4.17.15",
         "prismjs": "^1.20.0",
         "vue": "^2.6.11",
-        "vue-photoswipe.js": "^2.0.23"
+        "vue-photoswipe.js": "^2.0.23",
+        "csslab": "^4.0.3"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.3.0",
@@ -54,7 +55,6 @@
         "vue-cli-plugin-element": "~1.0.1",
         "vue-template-compiler": "^2.6.11",
         "vue-svg-inline-loader": "^1.4.6",
-        "csslab": "^4.0.3",
         "@vue/cli-plugin-vuex": "^4.0.0",
         "less": "^3.0.4",
         "less-loader": "^5.0.0",

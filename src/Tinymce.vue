@@ -67,12 +67,9 @@ export default {
                 ],
                 mobile: {
                     toolbar_drawer: true,
-                    plugins: [
-                        "hr lists advlist table emoticons autosave autolink pagebreak fullscreen",
-                    ],
                     toolbar: [
-                        "undo bold emoticons forecolor backcolor pagebreak restoredraft fullscreen",
-                        "hr alignleft aligncenter alignright alignjustify indent outdent bullist numlist table blockquote",
+                        "undo emoticons bold forecolor backcolor removeformat pagebreak fullscreen",
+                        "hr alignleft aligncenter alignright alignjustify indent outdent bullist numlist checklist table blockquote codesample mathjax macro qixue media",
                     ],
                 },
                 block_formats:
