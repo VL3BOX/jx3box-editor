@@ -168,6 +168,9 @@ export default {
         data: function(newval) {
             this.$emit("update", newval);
         },
+        content : function (newval){
+            this.data = newval
+        }
     },
     methods: {
         setup: function(editor) {
