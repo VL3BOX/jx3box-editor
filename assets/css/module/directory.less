@@ -1,8 +1,10 @@
 .c-article-directory {
-
     h1,
     h2,
-    h3 {
+    h3,
+    h4,
+    h5,
+    h6 {
         margin: 0;
         padding: 0;
         cursor: pointer;
@@ -14,28 +16,21 @@
         overflow: hidden;
         letter-spacing: 0.2px;
         line-height: 20px;
-        padding:8px 0;
+        padding: 8px 0;
         &:hover {
             // font-weight: 600;
-            color:#0366d6;
+            color: #0366d6;
         }
-    }
-    a{
-        color:@color;
-    }
-
-    h1 {
-        font-size: 15px;
-    }
-    h2 {
-        font-size: 14px;
-    }
-    h3 {
         font-size: 12px;
     }
+    a {
+        color: @color;
+    }
 
-    h1,h2,h3{
-        &::before{
+    h1,
+    h2,
+    h3,h4,h5,h6 {
+        &::before {
             content: "\e78b";
 
             font-family: element-icons !important;
@@ -48,61 +43,66 @@
             vertical-align: baseline;
             display: inline-block;
             -webkit-font-smoothing: antialiased;
-            margin-right:5px;
+            margin-right: 5px;
             font-size: 16px;
         }
     }
 
     .hasChild {
+        font-size: 14px;
         &::before {
             content: "\e784";
         }
     }
 
-    h2{
-        margin-left:20px;
+    h2,h3,h4,h5,h6{
+        margin-left: 20px;
     }
-    h3{
-        margin-left:40px;
+    .hasChild{
+        margin-left: 0;
     }
+
+    h3 + h2,h4 + h3,h5 + h4,h6 + h5{
+        margin-left: 0;
+    }
+
 }
 
-.c-article-directory-title{
-
-    margin-bottom:5px;
-    .c-article-directory-title-label{
-        font-weight:300;
-        font-size:20px;
+.c-article-directory-title {
+    margin-bottom: 5px;
+    .c-article-directory-title-label {
+        font-weight: 300;
+        font-size: 20px;
         cursor: pointer;
-        &:hover{
-            color:#f39;
+        &:hover {
+            color: #f39;
         }
     }
-    .c-article-directory-title-skip{
+    .c-article-directory-title-skip {
         font-size: 14px;
         float: right;
         padding: 0 5px;
         line-height: 25px;
-        color: darken(#dcdfe6,5%);
+        color: darken(#dcdfe6, 5%);
         cursor: pointer;
-        &:hover{
-            color: darken(#dcdfe6,20%);
+        &:hover {
+            color: darken(#dcdfe6, 20%);
         }
     }
 }
-.c-article-directory-content{
+.c-article-directory-content {
     padding: 10px 15px;
 }
 
-@keyframes focusFade{
-    from{
-        background-color:#c3fcff;
+@keyframes focusFade {
+    from {
+        background-color: #c3fcff;
     }
-    to{
-        background-color:transparent;
+    to {
+        background-color: transparent;
     }
 }
 
-.c-article .isScrollFocus{
+.c-article .isScrollFocus {
     animation: focusFade 0.5s ease-in-out;
 }

@@ -5,7 +5,7 @@ function directory(from, to) {
     if (!to && $box.length) return;
 
     // 遍历节点
-    let directories = $(from).find("h1,h2,h3");
+    let directories = $(from).find("h1,h2,h3,h4,h5,h6");
 
     // 存在目录
     if (directories.length > 1) {
@@ -42,16 +42,19 @@ function directory(from, to) {
 
             // 排除最后一个
             if (i < directories.length - 1) {
+
                 // 判断相邻节点类型
                 let current = $(item)[0].tagName;
                 let next = directories.eq(i + 1)[0].tagName;
 
-                // 设置是否存在子集
-                if (current == "H1" && next != "H1") {
-                    _item.addClass("hasChild");
-                } else if (current == "H2" && next == "H3") {
+                // 下一个节点与当前节点不同，并且是它的下级时
+                const relations = ['H1','H2','H3','H4','H5','H6']
+                let current_pos = relations.indexOf(current)
+                let next_pos =relations.indexOf(next)
+                if(current_pos != next_pos && next_pos > current_pos){
                     _item.addClass("hasChild");
                 }
+
             }
 
             //追加到目录盒中
@@ -59,7 +62,7 @@ function directory(from, to) {
         });
 
         //进行事件委托
-        $directory.on('click','h1,h2,h3',function (){
+        $directory.on('click','h1,h2,h3,h4,h5,h6',function (){
             let target = $(this).data('raw').offset().top
             $(document).scrollTop(target - 112)
             $(this).data('raw').addClass('isScrollFocus')
