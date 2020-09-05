@@ -37,9 +37,15 @@
 }
 
 @media screen and (max-width: @phone) {
-    .c-article table {
-        width: 100% !important;
-        height: auto !important;
+    .c-article{
+        table {
+            width: 100% !important;
+            height: auto !important;
+
+            th,td{
+                white-space: nowrap;
+            }
+        }
     }
 }
 
