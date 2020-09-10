@@ -100,7 +100,7 @@ import { __server } from "@jx3box/jx3box-common/js/jx3box.json";
 const API = __server + "upload";
 
 import allow_types from "@jx3box/jx3box-common/js/conf";
-const imgtypes = ["jpg", "png", "gif", "bmp"];
+const imgtypes = ["jpg", "png", "gif", "bmp","webp"];
 
 export default {
     name: "Upload",
