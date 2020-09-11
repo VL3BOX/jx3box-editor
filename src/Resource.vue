@@ -243,7 +243,6 @@ import axios from "axios";
 import {
     loadResource,
     loadStat,
-    getIconsStat,
     getIcons,
 } from "../service/database";
 import { __ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
@@ -414,11 +413,6 @@ export default {
             .then((data) => {
                 this.stat = data;
             })
-            .then(() => {
-                getIconsStat().then((data) => {
-                    this.stat.icon = data.icons;
-                });
-            });
     },
     components: {},
 };
