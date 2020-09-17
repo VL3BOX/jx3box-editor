@@ -245,7 +245,7 @@ import {
     loadStat,
     getIcons,
 } from "../service/database";
-import { __ossRoot } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __ossRoot,__iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { school } from "@jx3box/jx3box-data/data/xf/school.json";
 // import {skillFilter,buffFilter,itemFilter}from '../assets/js/filter2'
@@ -393,7 +393,7 @@ export default {
             });
         },
         showIcon: function(id) {
-            return __ossRoot + "icon/" + id + ".png";
+            return __iconPath + "icon/" + id + ".png";
         },
         checkUA : function (){
             this.isPC = window.innerWidth > 720
@@ -404,7 +404,7 @@ export default {
             return str && str.replace(/\\n/g, "\n");
         },
         iconURL: function(id) {
-            return __ossRoot + "icon/" + id + ".png";
+            return __iconPath + "icon/" + id + ".png";
         },
     },
     created: function() {
