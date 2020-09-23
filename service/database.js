@@ -46,7 +46,6 @@ function getIcons(query, params) {
         .then((res) => {
             let data = res.data;
             let list = [...data.skill, ...data.buff, ...data.item];
-            console.log(list);
             return list;
         })
         .catch((err) => {

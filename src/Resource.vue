@@ -39,7 +39,7 @@
                     class="m-database-tabs"
                     v-model="type"
                     type="card"
-                    @tab-click="search"
+                    @tab-click="changeType"
                 >
                     <el-tab-pane label="技能" name="skill">
                         <span slot="label">
@@ -73,7 +73,9 @@
                                 <span class="u-primary">
                                     <span class="u-name"
                                         >{{ o.Name }}
-                                        <em>({{ o.SkillName }})</em>
+                                        <em v-if="o.SkillName"
+                                            >({{ o.SkillName }})</em
+                                        >
                                     </span>
                                     <span class="u-content">{{
                                         o.Desc | filterRaw
@@ -119,7 +121,12 @@
                                     :src="o.IconID | iconURL"
                                 />
                                 <span class="u-primary">
-                                    <span class="u-name">{{ o.Name }}</span>
+                                    <span class="u-name"
+                                        >{{ o.Name }}
+                                        <em v-if="o.BuffName"
+                                            >({{ o.BuffName }})</em
+                                        ></span
+                                    >
                                     <span class="u-content">{{ o.Desc }}</span>
                                 </span>
                             </li>
@@ -222,6 +229,30 @@
                     </el-tab-pane>
                 </el-tabs>
 
+                <template v-if="multipage">
+                    <!-- 下一页 -->
+                    <el-button
+                        class="m-archive-more"
+                        :class="{ show: hasNextPage }"
+                        type="primary"
+                        icon="el-icon-arrow-down"
+                        @click="appendPage"
+                        >加载更多</el-button
+                    >
+                    <!-- 分页 -->
+                    <el-pagination
+                        class="m-archive-pages"
+                        background
+                        layout="total, prev, pager, next,jumper"
+                        :hide-on-single-page="true"
+                        :page-size="per"
+                        :total="total"
+                        :current-page.sync="page"
+                        @current-change="changePage"
+                    >
+                    </el-pagination>
+                </template>
+
                 <div class="m-database-tip" v-show="isBlank">
                     ❤ 请输入搜索条件查询
                 </div>
@@ -240,12 +271,8 @@
 
 <script>
 import axios from "axios";
-import {
-    loadResource,
-    loadStat,
-    getIcons,
-} from "../service/database";
-import { __ossRoot,__iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { loadResource, loadStat, getIcons } from "../service/database";
+import { __ossRoot, __iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { school } from "@jx3box/jx3box-data/data/xf/school.json";
 // import {skillFilter,buffFilter,itemFilter}from '../assets/js/filter2'
@@ -280,7 +307,12 @@ export default {
             schools: school,
 
             html: "",
-            isPC:true
+            isPC: true,
+
+            per: 10,
+            page: 1,
+            total: 1,
+            pages: 1,
         };
     },
     computed: {
@@ -296,14 +328,20 @@ export default {
         isNumber: function() {
             return !isNaN(this.query);
         },
+        hasNextPage: function() {
+            return this.total > 1 && this.page < this.pages;
+        },
+        multipage: function() {
+            return this.type !== 'icon' && this.done && this.pages > 1;
+        },
     },
-    watch : {
-        html : function (newval){
-            this.$emit('update',newval)
-        }
+    watch: {
+        html: function(newval) {
+            this.$emit("update", newval);
+        },
     },
     methods: {
-        getData: function(type) {
+        getData: function(page = 1,append = false) {
             if (!this.query) return;
 
             this.loading = true;
@@ -311,6 +349,8 @@ export default {
             let query = this.query;
             let params = {
                 strict: ~~this.strict,
+                per: this.per,
+                page: page,
             };
 
             // 图标
@@ -338,30 +378,37 @@ export default {
 
                 // 非图标
             } else {
-                if (isNaN(query)) {
-                    loadResource(type, "name", query, params)
-                        .then((data) => {
-                            this[type] = this.transformData(data);
-                        })
-                        .finally(() => {
-                            this.done = true;
-                            this.loading = false;
-                        });
-                } else {
-                    query = parseInt(query);
-                    loadResource(type, "id", query, params)
-                        .then((data) => {
-                            this[type] = this.transformData(data);
-                        })
-                        .finally(() => {
-                            this.done = true;
-                            this.loading = false;
-                        });
-                }
+                let mode = isNaN(query) ? "name" : "id";
+                loadResource(this.type, mode, query, params)
+                    .then((data) => {
+                        if (append) {
+                            this[this.type] = this[this.type].concat(
+                                this.transformData(data.list)
+                            );
+                        } else {
+                            this[this.type] = this.transformData(data.list);
+                        }
+                        this.pages = data.pages;
+                        this.total = data.total;
+                    })
+                    .finally(() => {
+                        this.done = true;
+                        this.loading = false;
+                    });
             }
         },
         search: function() {
-            this.getData(this.type);
+            this.getData();
+        },
+        appendPage: function() {
+            this.getData(++this.page,true);
+        },
+        changePage: function(i) {
+            this.getData(i);
+        },
+        changeType : function (){
+            this.page = 1
+            this.getData()
         },
         insert: function() {
             this.dialogVisible = false;
@@ -395,9 +442,9 @@ export default {
         showIcon: function(id) {
             return __iconPath + "icon/" + id + ".png";
         },
-        checkUA : function (){
-            this.isPC = window.innerWidth > 720
-        }
+        checkUA: function() {
+            this.isPC = window.innerWidth > 720;
+        },
     },
     filters: {
         filterRaw: function(str) {
@@ -408,11 +455,10 @@ export default {
         },
     },
     created: function() {
-        this.checkUA()
-        loadStat()
-            .then((data) => {
-                this.stat = data;
-            })
+        this.checkUA();
+        loadStat().then((data) => {
+            this.stat = data;
+        });
     },
     components: {},
 };
