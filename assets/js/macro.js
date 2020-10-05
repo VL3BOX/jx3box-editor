@@ -1,5 +1,7 @@
 import JX3_MACRO from '@jx3box/jx3box-macro'
 import $ from 'jquery'
+import "@jx3box/jx3box-macro/macro.css";
+
 function macro(selector=".e-jx3macro-area"){
     try {
         $(selector).each(function(i, ele) {

@@ -1,6 +1,6 @@
 <template>
     <div class="c-article-box">
-        <div id="c-article" class="c-article" ref="article" @click="onclick">
+        <div id="c-article" class="c-article" ref="article">
             <div
                 class="c-article-chunk"
                 v-for="(text, i) in data"
@@ -33,31 +33,33 @@
 </template>
 
 <script>
-import Vue from "vue";
-import PhotoSwipePlugin from "vue-photoswipe.js";
-import "vue-photoswipe.js/dist/static/css/photoswipe.css";
-Vue.use(PhotoSwipePlugin);
+// 语法高亮
+import Prism from "prismjs";
+// 数学公式
+const MathJax = require("../assets/js/tex-mml-chtml.js");
 
+// 基本文本
 import lazyload from "../assets/js/img";
 import iframeFilter from "../assets/js/iframe";
 import fixXSS from "../assets/js/script";
 import formatLink from "../assets/js/a";
 import splitPages from "../assets/js/nextpage";
-import Prism from "prismjs";
-const MathJax = require("../assets/js/tex-mml-chtml.js");
+import { Pagination, Button } from "element-ui";
+import "element-ui/lib/theme-chalk/pagination.css";
+import "element-ui/lib/theme-chalk/button.css";
 
+// 扩展文本
 import $ from "jquery";
 import fold from "../assets/js/fold";
 import directory from "../assets/js/directory";
 import macro from "../assets/js/macro";
-import '@jx3box/jx3box-macro/macro.css'
 import qixue from "../assets/js/qixue";
-import '@jx3box/jx3box-talent/talent.css'
+import Gallery from "../assets/js/pswp.js";
 
 export default {
     name: "Article",
     props: ["content", "directorybox"],
-    data: function () {
+    data: function() {
         return {
             all: false,
             page: 1,
@@ -65,40 +67,21 @@ export default {
         };
     },
     computed: {
-        total: function () {
+        total: function() {
             return this.chunks.length;
         },
-        hasPages: function () {
+        hasPages: function() {
             return this.chunks.length > 1;
         },
-        origin: function () {
+        origin: function() {
             return this.content;
         },
-        chunks: function () {
+        chunks: function() {
             return splitPages(this.origin);
         },
     },
     methods: {
-        onclick(e) {
-            if (e.target instanceof HTMLImageElement) {
-                const items = [];
-                let index = 0;
-                $(this.$refs.article)
-                    .find("img:visible")
-                    .each((_, $el) => {
-                        if ($el === e.target) {
-                            index = items.length;
-                        }
-                        items.push({ $el, src: $el.src });
-                    });
-                this.$photoswipe.open(items, {
-                    index,
-                    zoomEl: true,
-                    shareEl: false,
-                });
-            }
-        },
-        doReg: function (data) {
+        doReg: function(data) {
             if (data) {
                 // 过滤内容
                 data = lazyload(data);
@@ -110,15 +93,16 @@ export default {
                 return "";
             }
         },
-        doDOM: function ($root) {
+        doDOM: function($root) {
             // DOM操作
             $root && Prism.highlightAllUnder($root);
             fold($root);
             macro(); //旧版
             qixue(); //旧版
             window.MathJax && window.MathJax.typesetPromise();
+            Gallery.init(this.$refs.article)
         },
-        doDir: function () {
+        doDir: function() {
             // 显示局部
             let target = "";
             if (this.hasPages && !this.all) {
@@ -130,20 +114,20 @@ export default {
             let dir = directory(target, this.directorybox);
             if (dir) this.$emit("directoryRendered");
         },
-        changePage: function (i) {
+        changePage: function(i) {
             this.page = i;
             window.scrollTo(0, 0);
             this.$nextTick(() => {
                 this.doDir();
             });
         },
-        showAll: function () {
+        showAll: function() {
             this.all = true;
             this.$nextTick(() => {
                 this.doDir();
             });
         },
-        render: function () {
+        render: function() {
             let result = [];
             for (let chunk of this.chunks) {
                 let _chunk = this.doReg(chunk);
@@ -151,7 +135,7 @@ export default {
             }
             this.data = result;
         },
-        run: function () {
+        run: function() {
             this.render();
             // 等待html加载完毕后
             this.$nextTick(() => {
@@ -168,17 +152,23 @@ export default {
         },
     },
     watch: {
-        content: function () {
+        content: function() {
             this.run();
         },
     },
-    mounted: function () {
+    mounted: function() {
         this.run();
     },
-    created: function () {},
+    created: function() {
+        
+    },
+    components: {
+        "el-pagination": Pagination,
+        "el-button": Button,
+    },
 };
 </script>
 
 <style lang="less">
-    @import '../assets/css/article.less';
+@import "../assets/css/article.less";
 </style>

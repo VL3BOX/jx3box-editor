@@ -1,5 +1,7 @@
 import JX3_QIXUE from '@jx3box/jx3box-talent'
 import $ from 'jquery'
+import "@jx3box/jx3box-talent/talent.css";
+
 function qixue(selector=".e-jx3qixue-area"){
     try {
         $(selector).each(function (i,ele){

@@ -9,7 +9,7 @@
         "lint": "vue-cli-service lint",
         "inspect": "vue inspect > output.js",
         "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest @jx3box/jx3box-macro@latest @jx3box/jx3box-talent@latest",
-        "article": "vue-cli-service build --target lib --name article src/Article.vue && cp public/article.html dist/article.html",
+        "article": "vue-cli-service build --target lib --name jx3box_article src/Article.vue --mode production",
         "tinymce": "vue-cli-service build --target lib --name tinymce src/Tinymce.vue && cp public/tinymce.html dist/tinymce.html"
     },
     "eslintConfig": {
@@ -41,6 +41,7 @@
         "element-ui": "^2.13.2",
         "jquery": "^3.5.1",
         "lodash": "^4.17.15",
+        "photoswipe": "^4.1.2",
         "prismjs": "^1.20.0",
         "vue": "^2.6.11",
         "vue-photoswipe.js": "^2.0.23"
