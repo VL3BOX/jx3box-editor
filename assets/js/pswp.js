@@ -46,7 +46,7 @@ class Gallery {
             this.options
         );
         this.pwsp = pwsp
-        pwsp.initController();
+        pwsp.initController();      //需要手动调这个API，否则访问不到items什么鬼，api文档里也没写啊
         pwsp.listen("imageLoadComplete", function(index, item) {
             pwsp.items[index]["w"] = item.$el.naturalWidth || item.$el.width;
             pwsp.items[index]["h"] = item.$el.naturalHeight || item.$el.height;
@@ -61,7 +61,7 @@ class Gallery {
     open(target) {
         let pwsp = this.pwsp;
         let i = this.bucket.indexOf(target);
-        pwsp.init();
+        pwsp.init();    //为什么打开的api不叫open要叫init太歧义了，我脑壳疼，这组件太高端
         pwsp.goTo(i);
         console.log(pwsp);
     }

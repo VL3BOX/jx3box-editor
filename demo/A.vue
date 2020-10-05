@@ -6,7 +6,7 @@
             style="padding: 20px;"
             @contentRendered="test1"
             @directoryRendered="test2"
-        />
+        ></Article>
     </div>
 </template>
 
@@ -16,21 +16,27 @@ import demohtml from "./content";
 export default {
     name: "A",
     props: [],
-    data: function () {
+    data: function() {
         return {
-            content : demohtml
+            content: demohtml,
         };
     },
     computed: {},
     methods: {
-        test1: function () {
+        test1: function() {
             console.log("文章已渲染");
         },
-        test2: function () {
+        test2: function() {
             console.log("目录已渲染");
         },
     },
-    mounted: function () {},
+    mounted: function() {
+        fetch("https://server.jx3box.com/post/find?id=100").then((res) => {
+            res.json().then((data) => {
+                this.content = data.data.post.post_content
+            })
+        });
+    },
     components: {
         Article,
     },
@@ -38,7 +44,7 @@ export default {
 </script>
 
 <style lang="less">
-    html{
-        padding:20px;
-    }
+html {
+    padding: 20px;
+}
 </style>

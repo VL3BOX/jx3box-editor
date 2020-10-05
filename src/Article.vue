@@ -1,5 +1,6 @@
 <template>
     <div class="c-article-box">
+        <!-- <div id="c-article-origin" class="c-article-origin" ref="origin"><slot></slot></div> -->
         <div id="c-article" class="c-article" ref="article">
             <div
                 class="c-article-chunk"
@@ -160,7 +161,6 @@ export default {
         this.run();
     },
     created: function() {
-        
     },
     components: {
         "el-pagination": Pagination,
