@@ -50,6 +50,9 @@ import Tinymce from "@jx3box/jx3box-editor/src/Tinymce.vue";
 # 页面远程引入文章渲染模块
 
 1. 头部引入文件
+注意应带上查询参数以防本地缓存，版本号请读取https://github.jx3box.com/jx3box-editor/package.json中的version
+app启动的时候读一次存到本地就可以。之后本地页面可以直接使用对应版本号。
+后续11月会新增一个文本物品浮层功能（关联物品百科）。
 
 ```html
 <script src="https://oss.jx3box.com/static/jx3box-lib/vue.js"></script>
