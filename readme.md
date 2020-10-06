@@ -73,7 +73,7 @@ import Tinymce from "@jx3box/jx3box-editor/src/Tinymce.vue";
 ```html
 <script>
     // 1.异步加载设置数据
-    fetch("https://server.jx3box.com/post/find?id=100").then((res) => {
+    fetch("https://server.jx3box.com/post/find?id=420").then((res) => {
         res.json().then((data) => {
             let content = data && data.data && data.data.post.post_content;
             document.getElementById("article").setAttribute("content", content);
