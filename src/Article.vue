@@ -65,6 +65,7 @@ export default {
             all: false,
             page: 1,
             data: [],
+            mode: ''
         };
     },
     computed: {
@@ -101,7 +102,9 @@ export default {
             macro(); //旧版
             qixue(); //旧版
             window.MathJax && window.MathJax.typesetPromise();
-            Gallery.init(this.$refs.article)
+            if(mode != 'app_web'){
+                Gallery.init(this.$refs.article)
+            }
         },
         doDir: function() {
             // 显示局部
@@ -160,7 +163,9 @@ export default {
     mounted: function() {
         this.run();
     },
-    created: function() {
+    beforeCreate: function() {
+        let params = new URLSearchParams(location.search);
+        this.mode = params.get('mode')
     },
     components: {
         "el-pagination": Pagination,
