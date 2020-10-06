@@ -49,21 +49,18 @@ import Tinymce from "@jx3box/jx3box-editor/src/Tinymce.vue";
 
 # 页面远程引入文章渲染模块
 
-1. 头部引入文件
-注意应带上查询参数以防本地缓存，版本号请读取https://github.jx3box.com/jx3box-editor/package.json中的version  
-app启动的时候读一次存到本地就可以，之后本地页面可以直接使用对应版本号。  
-后续11月会新增一个文本物品浮层功能（关联物品百科）。  
+1. head标签：头部引入文件
+   注意应带上查询参数以防本地缓存，版本号请读取https://github.jx3box.com/jx3box-editor/package.json中的version  
+   app 启动的时候读一次存到本地就可以，之后本地页面可以直接使用对应版本号。  
+   后续 11 月会新增一个文本物品浮层功能（关联物品百科）。
 
 ```html
-<script src="https://oss.jx3box.com/static/jx3box-lib/vue.js"></script>
-<script src="https://oss.jx3box.com/static/jx3box-common-ui/jx3box_article.umd.min.js"></script>
-<link
-    rel="stylesheet"
-    href="https://oss.jx3box.com/static/jx3box-common-ui/jx3box_article.css"
-/>
+<script src="https://oss.jx3box.com/static/jx3box-lib/vue.js?v="></script>
+<script src="https://oss.jx3box.com/static/jx3box-editor/jx3box_article.umd.min.js?v="></script>
+<link rel="stylesheet" href="https://oss.jx3box.com/static/jx3box-editor/jx3box_article.css?v="/>
 ```
 
-2. 需要插入的位置
+2. body标签：需要插入的位置
 
 ```html
 <div id="app">
@@ -71,12 +68,23 @@ app启动的时候读一次存到本地就可以，之后本地页面可以直�
 </div>
 ```
 
-3. 初始化脚本
+3. body末尾：初始化脚本
 
 ```html
 <script>
-    // 1.异步加载设置数据
-    fetch("https://server.jx3box.com/post/find?id=420",{ method: 'GET',credentials: "include" }).then((res) => {
+    
+    var username = "$token"; //使用正确的token
+    var password = "android"; //安卓端使用
+    var headers = new Headers();
+    headers.set("Authorization", "Basic " + btoa(username + ":" + password));
+
+    // 1.异步加载设置数据，将420改成正确的文章ID
+    fetch("https://server.jx3box.com/post/find?id=420", {
+        method: "GET",
+        headers: headers,
+        credentials: "include",
+        mode: "cors",
+    }).then((res) => {
         res.json().then((data) => {
             let content = data && data.data && data.data.post.post_content;
             document.getElementById("article").setAttribute("content", content);
