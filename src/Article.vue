@@ -46,8 +46,7 @@ import fixXSS from "../assets/js/script";
 import formatLink from "../assets/js/a";
 import splitPages from "../assets/js/nextpage";
 import { Pagination, Button } from "element-ui";
-import "element-ui/lib/theme-chalk/pagination.css";
-import "element-ui/lib/theme-chalk/button.css";
+import "@jx3box/jx3box-common/css/element.css";
 
 // 扩展文本
 import $ from "jquery";
