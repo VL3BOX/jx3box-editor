@@ -160,11 +160,9 @@ export default {
         },
     },
     mounted: function() {
-        this.run();
-    },
-    beforeCreate: function() {
         const params = new URLSearchParams(location.search);
-        const mode = params.get('mode') || ''
+        this.mode = params.get('mode') || ''
+        this.run();
     },
     components: {
         "el-pagination": Pagination,
