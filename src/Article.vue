@@ -56,9 +56,6 @@ import macro from "../assets/js/macro";
 import qixue from "../assets/js/qixue";
 import Gallery from "../assets/js/pswp.js";
 
-const params = new URLSearchParams(location.search);
-const mode = params.get('mode')
-
 export default {
     name: "Article",
     props: ["content", "directorybox"],
@@ -104,8 +101,7 @@ export default {
             macro(); //旧版
             qixue(); //旧版
             window.MathJax && window.MathJax.typesetPromise();
-            console.log(this.mode)
-            if(mode != 'app_web'){
+            if(this.mode != 'app_web'){
                 Gallery.init(this.$refs.article)
             }
         },
@@ -167,6 +163,8 @@ export default {
         this.run();
     },
     beforeCreate: function() {
+        const params = new URLSearchParams(location.search);
+        const mode = params.get('mode') || ''
     },
     components: {
         "el-pagination": Pagination,
