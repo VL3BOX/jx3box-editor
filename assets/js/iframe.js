@@ -4,7 +4,7 @@ function iframeFilter(str){
     if(!str) return
 
     const REG = /<iframe(.*?)src=[\'"]([^\'"]+)[\'"](.*?)>.*?<\/iframe>/gi
-    const white_list = ['player.bilibili.com','docs.qq.com']
+    const white_list = ['player.bilibili.com','docs.qq.com',"open.douyu.com"]
     
     let item;
     while ((item = REG.exec(str))) {

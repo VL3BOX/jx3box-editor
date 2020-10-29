@@ -43,8 +43,8 @@ class Gallery {
             });
 
         // 绑定事件
-        $($root).find($selector).on("click", (e) => {
-            this.open(e.target);
+        $($root).find($selector).on("click",(e)=>{
+            this.open(e.target)
         });
     }
     open(target) {
@@ -61,10 +61,8 @@ class Gallery {
                 this.items,
                 _options
             );
-            pswp.init(); //为什么打开的api不叫open要叫init太歧义了，我脑壳疼，这组件太高端
-            pswp.listen('close', ()=> {
-                $('.pswp').eq(0).removeClass('pswp--open')      //不能自己移除，不知道为啥
-            });
+
+            pswp.init();
             // console.log(pswp);
         }
     }
