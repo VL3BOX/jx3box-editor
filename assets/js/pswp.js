@@ -43,7 +43,7 @@ class Gallery {
             });
 
         // 绑定事件
-        $($root).on("click", $selector, (e) => {
+        $($root).find($selector).on("click", (e) => {
             this.open(e.target);
         });
     }
