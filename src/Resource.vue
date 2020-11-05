@@ -169,7 +169,7 @@
                                     :src="o.IconID | iconURL"
                                 />
                                 <span class="u-name">{{ o.Name }}</span>
-                                <span class="u-desc" v-html="o.DescHtml"></span>
+                                <span class="u-content" v-html="o.DescHtml"></span>
                                 <span class="u-remark">{{ o.Requirement }}</span>
                             </li>
                         </ul>
