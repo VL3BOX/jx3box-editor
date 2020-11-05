@@ -162,17 +162,15 @@
                                 @click="selectItem(o, i)"
                                 ref="item"
                             >
-                                <span class="u-id">ID:{{ o.ItemID }}</span>
+                                <span class="u-id">UiID:{{ o.UiID }}</span>
                                 <img
                                     class="u-pic"
                                     :title="'IconID:' + o.IconID"
                                     :src="o.IconID | iconURL"
                                 />
                                 <span class="u-name">{{ o.Name }}</span>
-                                <span class="u-desc">{{ o.Desc }}</span>
-                                <span class="u-remark">{{
-                                    o.Requirement
-                                }}</span>
+                                <span class="u-desc" v-html="o.DescHtml"></span>
+                                <span class="u-remark">{{ o.Requirement }}</span>
                             </li>
                         </ul>
                         <el-alert
@@ -378,18 +376,20 @@ export default {
 
                 // 非图标
             } else {
-                let mode = isNaN(query) ? "name" : "id";
-                loadResource(this.type, mode, query, params)
+                loadResource(this.type, query, params)
                     .then((data) => {
-                        if (append) {
-                            this[this.type] = this[this.type].concat(
-                                this.transformData(data.list)
-                            );
+                        if (!append) this[this.type] = [];
+                        let list;
+                        if (this.type == 'item') {
+                            list = this.transformData(data.data);
+                            this.pages = data.last_page;
+                            this.total = data.total;
                         } else {
-                            this[this.type] = this.transformData(data.list);
+                            list = this.transformData(data.list);
+                            this.pages = data.pages;
+                            this.total = data.total;
                         }
-                        this.pages = data.pages;
-                        this.total = data.total;
+                        this[this.type] = this[this.type].concat(list);
                     })
                     .finally(() => {
                         this.done = true;
