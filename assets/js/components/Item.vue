@@ -118,7 +118,6 @@ export default {
   data() {
     return {
       source: null,
-      cache: {},
     };
   },
   methods: {
@@ -139,15 +138,24 @@ export default {
       immediate: true,
       handler() {
         if (this.item_id) {
+          // 提取本地数据
+          let cache = localStorage.getItem(`item-${this.item_id}`);
+          let cache_created = localStorage.getItem(`item-${this.item_id}-created`);
           // 查看是否存在缓存
-          if (typeof this.cache[this.item_id] !== 'undefined') this.source = this.cache[this.item_id];
+          if ((cache === false || cache) && Math.round(new Date() / 1000) - cache_created <= 3600) {
+            this.source = cache === false ? null : JSON.parse(cache);
+            return;
+          }
+
           // 没有缓存则发起请求获取
           get_item(this.item_id).then((res) => {
             let data = res.data;
             if (data.code === 200) {
               let item = data.data.item;
               this.source = JSON.stringify(item) !== '{}' ? item : null;
-              this.cache[this.item_id] = this.source;
+              // 记录本地数据
+              localStorage.setItem(`item-${this.item_id}`, this.source ? JSON.stringify(this.source) : false);
+              localStorage.setItem(`item-${this.item_id}-created`, Math.round(new Date() / 1000));
             }
           });
         } else {

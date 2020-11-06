@@ -30,7 +30,7 @@
             :total="total"
         >
         </el-pagination>
-        <el-popover v-if="hover_item.id" placement="bottom-start" width="auto" trigger="hover" :visible-arrow="false"
+        <el-popover v-show="hover_item.id" placement="bottom-start" width="auto" trigger="hover" :visible-arrow="false"
                     popper-class="c-item-popover">
             <div slot="reference" class="c-item-popup" v-show="hover_item.id"
                  :style="{top:hover_item.top,left:hover_item.left,width:hover_item.width,height:hover_item.height}">
@@ -167,8 +167,8 @@ export default {
           let that = this;
           $('.c-article-box')
               .delegate(selector, 'mouseenter', function () {
+                enter({data:{that: this}});
                 $(document).bind('scroll', {that: this}, enter);
-                enter({data:{that: this}})
               })
               .delegate('.c-item-popup', 'mouseleave', function () {
                 $(document).unbind('scroll', enter);
