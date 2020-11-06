@@ -61,7 +61,7 @@
                                 class="u-item"
                                 :key="i"
                                 :class="{ on: o.isSelected }"
-                                @click="selectItem(o, i)"
+                                @click="selectItem('skill', o, i)"
                                 ref="skill"
                             >
                                 <span class="u-id">ID:{{ o.SkillID }}</span>
@@ -111,7 +111,7 @@
                                 class="u-item"
                                 :key="i"
                                 :class="{ on: o.isSelected }"
-                                @click="selectItem(o, i)"
+                                @click="selectItem('buff', o, i)"
                                 ref="buff"
                             >
                                 <span class="u-id">ID:{{ o.BuffID }}</span>
@@ -159,7 +159,7 @@
                                 :key="i"
                                 class="u-item"
                                 :class="{ on: o.isSelected }"
-                                @click="selectItem(o, i)"
+                                @click="selectItem('item', o, i)"
                                 ref="item"
                             >
                                 <span class="u-id">UiID:{{ o.UiID }}</span>
@@ -420,10 +420,10 @@ export default {
             });
             return data;
         },
-        selectItem: function(o, i) {
+        selectItem: function(type, o, i) {
             this.resetItems();
             o.isSelected = true;
-            this.html = `<pre class="e-jx3-resource">${
+            this.html = `<pre data-type="${type}" data-id="${o.id}" class="e-jx3-resource">${
                 this.$refs[this.type][i]["innerHTML"]
             }</pre>`;
         },
