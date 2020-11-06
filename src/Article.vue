@@ -30,6 +30,13 @@
             :total="total"
         >
         </el-pagination>
+        <el-popover v-if="hover_item.id" placement="bottom-start" width="auto" trigger="hover" :visible-arrow="false"
+                    popper-class="c-item-popover">
+            <div slot="reference" class="c-item-popup" v-show="hover_item.id"
+                 :style="{top:hover_item.top,left:hover_item.left,width:hover_item.width,height:hover_item.height}">
+            </div>
+            <jx3-item :item_id="hover_item.id" />
+        </el-popover>
     </div>
 </template>
 
@@ -45,7 +52,7 @@ import iframeFilter from "../assets/js/iframe";
 import fixXSS from "../assets/js/script";
 import formatLink from "../assets/js/a";
 import splitPages from "../assets/js/nextpage";
-import { Pagination, Button } from "element-ui";
+import { Pagination, Button, Popover } from "element-ui";
 import "@jx3box/jx3box-common/css/element.css";
 
 // 扩展文本
@@ -55,6 +62,7 @@ import directory from "../assets/js/directory";
 import macro from "../assets/js/macro";
 import qixue from "../assets/js/qixue";
 import Gallery from "../assets/js/pswp.js";
+import Item from "../assets/js/components/Item";
 
 export default {
     name: "Article",
@@ -64,7 +72,8 @@ export default {
             all: false,
             page: 1,
             data: [],
-            mode: ''
+            mode: '',
+            hover_item: {id: null, top: 0, left: 0, width: 0, height: 0},
         };
     },
     computed: {
@@ -153,6 +162,29 @@ export default {
                 this.doDir();
             });
         },
+        // 物品dom渲染
+        itemRender(selector=".e-jx3-resource[data-type='item']") {
+          let that = this;
+          $('.c-article-box')
+              .delegate(selector, 'mouseenter', function () {
+                $(document).bind('scroll', {that: this}, enter);
+                enter({data:{that: this}})
+              })
+              .delegate('.c-item-popup', 'mouseleave', function () {
+                $(document).unbind('scroll', enter);
+                that.hover_item.id = null;
+              })
+
+          function enter(e) {
+            if (!e.data || !e.data.that) return;
+            let $item = $(e.data.that);
+            that.hover_item.id = $item.data('id');
+            that.hover_item.top = $item.offset().top - $(document).scrollTop() + 'px';
+            that.hover_item.left = $item.offset().left + 'px';
+            that.hover_item.width = $item.outerWidth() + 'px';
+            that.hover_item.height = $item.outerHeight() + 'px';
+          }
+        },
     },
     watch: {
         content: function() {
@@ -163,10 +195,14 @@ export default {
         const params = new URLSearchParams(location.search);
         this.mode = params.get('mode') || ''
         this.run();
+        // 物品dom渲染
+        this.itemRender();
     },
     components: {
         "el-pagination": Pagination,
         "el-button": Button,
+        "el-popover": Popover,
+        "jx3-item": Item,
     },
 };
 </script>
