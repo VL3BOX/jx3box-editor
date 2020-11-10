@@ -30,53 +30,42 @@
             :total="total"
         >
         </el-pagination>
-        <el-popover
-            v-show="hover_item.id"
-            placement="bottom-start"
-            width="auto"
-            trigger="hover"
-            :visible-arrow="false"
-            popper-class="c-item-popover"
-        >
-            <div
-                slot="reference"
-                class="c-item-popup"
-                v-show="hover_item.id"
-                :style="{
-                    top: hover_item.top,
-                    left: hover_item.left,
-                    width: hover_item.width,
-                    height: hover_item.height,
-                }"
-            ></div>
-            <jx3-item :item_id="hover_item.id" />
-        </el-popover>
+        <div class="c-item-pop" :style="item_popover_style">
+            <jx3-item :item_id="item_id" />
+        </div>
     </div>
 </template>
 
 <script>
+import { Pagination, Button, Popover } from "element-ui";
+import "@jx3box/jx3box-common/css/element.css";
 // 语法高亮
 import Prism from "prismjs";
 // 数学公式
 const MathJax = require("../assets/js/tex-mml-chtml.js");
+// 相册
+import Gallery from "../assets/js/pswp.js";
+// 剑三物品
+import Item from "./Item";
+// XSS
+import execFilterXSS from "../assets/js/script";
+// const execFilterXSS = require("xss");
+const xss_options = {
+    allowCommentTag: true,
+};
 
 // 基本文本
-import lazyload from "../assets/js/img";
-import iframeFilter from "../assets/js/iframe";
-import fixXSS from "../assets/js/script";
-import formatLink from "../assets/js/a";
-import splitPages from "../assets/js/nextpage";
-import { Pagination, Button, Popover } from "element-ui";
-import "@jx3box/jx3box-common/css/element.css";
+import execLazyload from "../assets/js/img";
+import execFilterIframe from "../assets/js/iframe";
+import execFilterLink from "../assets/js/a";
+import execSplitPages from "../assets/js/nextpage";
 
 // 扩展文本
 import $ from "jquery";
-import fold from "../assets/js/fold";
-import directory from "../assets/js/directory";
-import macro from "../assets/js/macro";
-import qixue from "../assets/js/qixue";
-import Gallery from "../assets/js/pswp.js";
-import Item from "./Item";
+import renderFoldBlock from "../assets/js/fold";
+import renderDirectory from "../assets/js/directory";
+import renderMacro from "../assets/js/macro";
+import renderTalent from "../assets/js/qixue";
 
 export default {
     name: "Article",
@@ -87,7 +76,12 @@ export default {
             page: 1,
             data: [],
             mode: "",
-            hover_item: { id: null, top: 0, left: 0, width: 0, height: 0 },
+            item_id: "",
+            item_popover_style: {
+                left: 0,
+                top: 0,
+                display:'none'
+            },
         };
     },
     computed: {
@@ -101,17 +95,17 @@ export default {
             return this.content;
         },
         chunks: function() {
-            return splitPages(this.origin);
+            return execSplitPages(this.origin);
         },
     },
     methods: {
         doReg: function(data) {
             if (data) {
                 // 过滤内容
-                data = lazyload(data);
-                data = iframeFilter(data);
-                data = fixXSS(data);
-                data = formatLink(data);
+                data = execLazyload(data);
+                data = execFilterIframe(data);
+                data = execFilterXSS(data, xss_options);
+                data = execFilterLink(data);
                 return data;
             } else {
                 return "";
@@ -119,14 +113,18 @@ export default {
         },
         doDOM: function($root) {
             // DOM操作
+
+            renderFoldBlock($root);
+            renderMacro();
+            renderTalent();
+
             $root && Prism.highlightAllUnder($root);
-            fold($root);
-            macro(); //旧版
-            qixue(); //旧版
             window.MathJax && window.MathJax.typesetPromise();
             if (this.mode != "app_web") {
                 Gallery.init(this.$refs.article);
             }
+
+            this.renderItem();
         },
         doDir: function() {
             // 显示局部
@@ -137,7 +135,7 @@ export default {
             } else {
                 target = "#c-article";
             }
-            let dir = directory(target, this.directorybox);
+            let dir = renderDirectory(target, this.directorybox);
             if (dir) this.$emit("directoryRendered");
         },
         changePage: function(i) {
@@ -161,9 +159,28 @@ export default {
             }
             this.data = result;
         },
+        renderItem(selector = ".e-jx3-item") {
+            const vm = this;
+            let timer
+
+            $(".e-jx3-item").on('mouseenter',function(e) {
+                vm.item_popover_style.left = $(e.target).offset().left + 'px';
+                vm.item_popover_style.top = $(e.target).offset().top + 24 + 'px';
+                vm.item_popover_style.display = 'block';
+                vm.item_id = $(e.target).attr("data-id");
+            });
+            $('.c-item-pop').on('mouseenter',function (e){
+                vm.item_popover_style.display = 'block';
+            })
+            $(".c-item-pop").on("mouseleave", function(e) {
+                clearTimeout(timer)
+                timer = setTimeout(() => {
+                    vm.item_popover_style.display = 'none';
+                },500)
+            });
+        },
         run: function() {
             this.render();
-            this.renderItem();
 
             // 等待html加载完毕后
             this.$nextTick(() => {
@@ -177,32 +194,6 @@ export default {
                 // 目录处理
                 this.doDir();
             });
-        },
-        // 物品dom渲染
-        renderItem(selector = ".e-jx3-item") {
-            let that = this;
-
-            $(".c-article-box").on(selector,"mouseenter",function (e){
-                console.log(e)
-            })
-                // .delegate(selector, "mouseenter", function() {
-                //     enter({ data: { that: this } });
-                // })
-                // .delegate(".c-item-popup", "mouseleave", function() {
-                //     $(document).unbind("scroll", enter);
-                //     that.hover_item.id = null;
-                // });
-
-            // function enter(e) {
-            //     if (!e.data || !e.data.that) return;
-            //     let $item = $(e.data.that);
-            //     that.hover_item.id = $item.data("id");
-            //     that.hover_item.top =
-            //         $item.offset().top - $(document).scrollTop() + "px";
-            //     that.hover_item.left = $item.offset().left + "px";
-            //     that.hover_item.width = $item.outerWidth() + "px";
-            //     that.hover_item.height = $item.outerHeight() + "px";
-            // }
         },
     },
     watch: {
@@ -218,7 +209,7 @@ export default {
     components: {
         "el-pagination": Pagination,
         "el-button": Button,
-        "el-popover": Popover,
+        // "el-popover": Popover,
         "jx3-item": Item,
     },
 };

@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-editor",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "JX3BOX Article & Editor",
     "main": "index.js",
     "scripts": {
@@ -44,7 +44,8 @@
         "photoswipe": "^4.1.2",
         "prismjs": "^1.20.0",
         "vue": "^2.6.11",
-        "vue-photoswipe.js": "^2.0.23"
+        "vue-photoswipe.js": "^2.0.23",
+        "xss": "^1.0.8"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.3.0",

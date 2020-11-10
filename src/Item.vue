@@ -284,8 +284,8 @@ export default {
             handler() {
                 if (this.item_id) {
                     // 提取本地数据
-                    let cache = localStorage.getItem(`item-${this.item_id}`);
-                    let cache_created = localStorage.getItem(
+                    let cache = sessionStorage.getItem(`item-${this.item_id}`);
+                    let cache_created = sessionStorage.getItem(
                         `item-${this.item_id}-created`
                     );
                     // 查看是否存在缓存
@@ -306,13 +306,13 @@ export default {
                             this.source =
                                 JSON.stringify(item) !== "{}" ? item : null;
                             // 记录本地数据
-                            localStorage.setItem(
+                            sessionStorage.setItem(
                                 `item-${this.item_id}`,
                                 this.source
                                     ? JSON.stringify(this.source)
                                     : false
                             );
-                            localStorage.setItem(
+                            sessionStorage.setItem(
                                 `item-${this.item_id}-created`,
                                 Math.round(new Date() / 1000)
                             );
