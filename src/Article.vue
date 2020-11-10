@@ -163,12 +163,25 @@ export default {
             let outer,inner
 
             $(".e-jx3-item").on('mouseenter',function(e) {
-                vm.item_popover_style.left = $(e.target).offset().left + 'px';
-                vm.item_popover_style.top = $(e.target).offset().top + 24 + 'px';
-                vm.item_id = $(e.target).attr("data-id");
-
                 clearTimeout(outer)
+
+                vm.item_id = $(e.target).attr("data-id");
                 $('.c-item-pop').fadeIn()
+
+                // 不用看了，大概就是如果自身高度比当前鼠标位置屏幕剩余位置高就向上位移，按理直接位移指定差值就可以
+                // 但贴底不好看，再往上挪了100，按理应该还要算一下会不会在上面也溢出的，不是专业组件就先这样手打用着啊
+                // 命名就这样先狗屎吧，等有空来改
+                let self_height = $('.c-item-pop').height()
+                let win_height = window.innerHeight
+                let current_y = e.clientY
+                let will_stay_y = e.clientY + 10
+
+
+                if(self_height && ((win_height - current_y) < self_height)){
+                    will_stay_y = current_y - (self_height - (win_height - current_y)) - 100
+                }
+                vm.item_popover_style.left = e.clientX + 10 + 'px';
+                vm.item_popover_style.top = will_stay_y + 'px';
             });
             $('.e-jx3-item').on('mouseleave',function (e){
                 outer = setTimeout(() => {
