@@ -161,7 +161,7 @@ export default {
         },
         renderItem(selector = ".e-jx3-item") {
             const vm = this;
-            let timer
+            let outer,inner
 
             $(".e-jx3-item").on('mouseenter',function(e) {
                 vm.item_popover_style.left = $(e.target).offset().left + 'px';
@@ -169,12 +169,19 @@ export default {
                 vm.item_popover_style.display = 'block';
                 vm.item_id = $(e.target).attr("data-id");
             });
+            $('.e-jx3-item').on('mouseleave',function (e){
+                vm.item_popover_style.display = 'block';
+                outer = setTimeout(() => {
+                    vm.item_popover_style.display = 'none';
+                },500)
+            })
             $('.c-item-pop').on('mouseenter',function (e){
+                clearTimeout(outer)
                 vm.item_popover_style.display = 'block';
             })
             $(".c-item-pop").on("mouseleave", function(e) {
-                clearTimeout(timer)
-                timer = setTimeout(() => {
+                clearTimeout(inner)
+                inner = setTimeout(() => {
                     vm.item_popover_style.display = 'none';
                 },500)
             });
