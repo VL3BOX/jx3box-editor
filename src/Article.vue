@@ -80,7 +80,6 @@ export default {
             item_popover_style: {
                 left: 0,
                 top: 0,
-                display:'none'
             },
         };
     },
@@ -166,24 +165,25 @@ export default {
             $(".e-jx3-item").on('mouseenter',function(e) {
                 vm.item_popover_style.left = $(e.target).offset().left + 'px';
                 vm.item_popover_style.top = $(e.target).offset().top + 24 + 'px';
-                vm.item_popover_style.display = 'block';
                 vm.item_id = $(e.target).attr("data-id");
+
+                clearTimeout(outer)
+                $('.c-item-pop').fadeIn()
             });
             $('.e-jx3-item').on('mouseleave',function (e){
-                vm.item_popover_style.display = 'block';
                 outer = setTimeout(() => {
-                    vm.item_popover_style.display = 'none';
-                },500)
+                    $('.c-item-pop').fadeOut()
+                },380)
             })
             $('.c-item-pop').on('mouseenter',function (e){
                 clearTimeout(outer)
-                vm.item_popover_style.display = 'block';
+                $('.c-item-pop').fadeIn()
             })
             $(".c-item-pop").on("mouseleave", function(e) {
                 clearTimeout(inner)
                 inner = setTimeout(() => {
-                    vm.item_popover_style.display = 'none';
-                },500)
+                    $('.c-item-pop').fadeOut()
+                },280)
             });
         },
         run: function() {
