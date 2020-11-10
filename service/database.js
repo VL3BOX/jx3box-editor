@@ -1,7 +1,6 @@
 import axios from "axios";
 import { __node, __helperUrl, __iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
-const API = __node; //TODO:
-// const API = "http://localhost:3001/";
+const API = __node; 
 
 function loadResource(type, query, params) {
     switch (type) {
@@ -65,6 +64,20 @@ function getIcons(query, params) {
         .then((res) => {
             let data = res.data;
             let list = [...data.skill, ...data.buff, ...data.item];
+            // 去重
+            let _set = new Set()
+            list.forEach((item) => {
+                _set.add(item.iconID)
+            })
+            // 重组
+            let _list = []
+            _set.forEach((item) => {
+                _list.push({
+                    iconID: item,
+                    isSelected: false,
+                })
+            })
+            list = Array.from(_list)
             return list;
         })
         .catch((err) => {

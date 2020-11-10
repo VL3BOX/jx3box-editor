@@ -60,8 +60,8 @@
                                 v-for="(o, i) in skill"
                                 class="u-item"
                                 :key="i"
-                                :class="{ on: o.isSelected }"
-                                @click="selectItem('skill', o, i)"
+                                :class="{ on: !!o.isSelected }"
+                                @click="selectCommon('skill', o, i)"
                                 ref="skill"
                             >
                                 <span class="u-id">ID:{{ o.SkillID }}</span>
@@ -110,8 +110,8 @@
                                 v-for="(o, i) in buff"
                                 class="u-item"
                                 :key="i"
-                                :class="{ on: o.isSelected }"
-                                @click="selectItem('buff', o, i)"
+                                :class="{ on: !!o.isSelected }"
+                                @click="selectCommon('buff', o, i)"
                                 ref="buff"
                             >
                                 <span class="u-id">ID:{{ o.BuffID }}</span>
@@ -159,7 +159,7 @@
                                 :key="i"
                                 class="u-item"
                                 :class="{ on: o.isSelected }"
-                                @click="selectItem('item', o, i)"
+                                @click="selectItem(o, i)"
                                 ref="item"
                             >
                                 <span class="u-id">UiID:{{ o.UiID }}</span>
@@ -200,21 +200,21 @@
                                 v-for="(o, i) in icon"
                                 class="u-item"
                                 :key="i"
-                                :class="{ on: o.isSelected }"
+                                :class="{ on: !!o.isSelected }"
                                 @click="selectIcon(o)"
                                 ref="icon"
                             >
-                                <el-tooltip
+                                <!-- <el-tooltip
                                     effect="dark"
                                     :content="o.Name || query"
                                     placement="top"
-                                >
+                                > -->
                                     <img
                                         class="e-jx3-icon"
                                         :src="o.iconID | iconURL"
                                         :alt="query"
                                     />
-                                </el-tooltip>
+                                <!-- </el-tooltip> -->
                             </li>
                         </ul>
                         <el-alert
@@ -273,7 +273,6 @@ import { loadResource, loadStat, getIcons } from "../service/database";
 import { __ossRoot, __iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { school } from "@jx3box/jx3box-data/data/xf/school.json";
-// import {skillFilter,buffFilter,itemFilter}from '../assets/js/filter2'
 export default {
     name: "Resource",
     props: [],
@@ -420,12 +419,17 @@ export default {
             });
             return data;
         },
-        selectItem: function(type, o, i) {
+        selectCommon: function(type, o, i) {
             this.resetItems();
             o.isSelected = true;
             this.html = `<pre data-type="${type}" data-id="${o.id}" class="e-jx3-resource">${
                 this.$refs[this.type][i]["innerHTML"]
             }</pre>`;
+        },
+        selectItem : function (o,i){
+            this.resetItems();
+            o.isSelected = true;
+            this.html = `<a class="e-jx3-item e-jx3-item-q${o.Quality}" data-id="${o.id}" data-quality="${o.Quality}" target="_blank">[${o.Name}]</a>`
         },
         selectIcon: function(o) {
             this.resetItems();

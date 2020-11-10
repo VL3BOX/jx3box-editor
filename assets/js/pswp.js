@@ -12,7 +12,7 @@ class Gallery {
         this.options = options || {
             bgOpacity: 0.8,
             shareEl: false,
-            zoomEl: true,
+            zoomEl: false,
             closeOnScroll: false,
         };
         this.bucket = [];
@@ -37,8 +37,8 @@ class Gallery {
                 this.items.push({
                     $el: $pic,
                     src: $pic.src,
-                    w: $pic.naturalWidth || $pic.width || 0,
-                    h: $pic.naturalHeight || $pic.height || 0,
+                    w: $pic.naturalWidth || $pic.width || 400,
+                    h: $pic.naturalHeight || $pic.height || 400,
                 });
             });
 
@@ -63,7 +63,7 @@ class Gallery {
             );
 
             pswp.init();
-            // console.log(pswp);
+            console.log(pswp);
         }
     }
 }

@@ -30,11 +30,25 @@
             :total="total"
         >
         </el-pagination>
-        <el-popover v-show="hover_item.id" placement="bottom-start" width="auto" trigger="hover" :visible-arrow="false"
-                    popper-class="c-item-popover">
-            <div slot="reference" class="c-item-popup" v-show="hover_item.id"
-                 :style="{top:hover_item.top,left:hover_item.left,width:hover_item.width,height:hover_item.height}">
-            </div>
+        <el-popover
+            v-show="hover_item.id"
+            placement="bottom-start"
+            width="auto"
+            trigger="hover"
+            :visible-arrow="false"
+            popper-class="c-item-popover"
+        >
+            <div
+                slot="reference"
+                class="c-item-popup"
+                v-show="hover_item.id"
+                :style="{
+                    top: hover_item.top,
+                    left: hover_item.left,
+                    width: hover_item.width,
+                    height: hover_item.height,
+                }"
+            ></div>
             <jx3-item :item_id="hover_item.id" />
         </el-popover>
     </div>
@@ -62,7 +76,7 @@ import directory from "../assets/js/directory";
 import macro from "../assets/js/macro";
 import qixue from "../assets/js/qixue";
 import Gallery from "../assets/js/pswp.js";
-import Item from "../assets/js/components/Item";
+import Item from "./Item";
 
 export default {
     name: "Article",
@@ -72,8 +86,8 @@ export default {
             all: false,
             page: 1,
             data: [],
-            mode: '',
-            hover_item: {id: null, top: 0, left: 0, width: 0, height: 0},
+            mode: "",
+            hover_item: { id: null, top: 0, left: 0, width: 0, height: 0 },
         };
     },
     computed: {
@@ -110,8 +124,8 @@ export default {
             macro(); //旧版
             qixue(); //旧版
             window.MathJax && window.MathJax.typesetPromise();
-            if(this.mode != 'app_web'){
-                Gallery.init(this.$refs.article)
+            if (this.mode != "app_web") {
+                Gallery.init(this.$refs.article);
             }
         },
         doDir: function() {
@@ -149,6 +163,8 @@ export default {
         },
         run: function() {
             this.render();
+            this.renderItem();
+
             // 等待html加载完毕后
             this.$nextTick(() => {
                 this.$emit("contentLoaded");
@@ -163,27 +179,30 @@ export default {
             });
         },
         // 物品dom渲染
-        itemRender(selector=".e-jx3-resource[data-type='item']") {
-          let that = this;
-          $('.c-article-box')
-              .delegate(selector, 'mouseenter', function () {
-                enter({data:{that: this}});
-                $(document).bind('scroll', {that: this}, enter);
-              })
-              .delegate('.c-item-popup', 'mouseleave', function () {
-                $(document).unbind('scroll', enter);
-                that.hover_item.id = null;
-              })
+        renderItem(selector = ".e-jx3-item") {
+            let that = this;
 
-          function enter(e) {
-            if (!e.data || !e.data.that) return;
-            let $item = $(e.data.that);
-            that.hover_item.id = $item.data('id');
-            that.hover_item.top = $item.offset().top - $(document).scrollTop() + 'px';
-            that.hover_item.left = $item.offset().left + 'px';
-            that.hover_item.width = $item.outerWidth() + 'px';
-            that.hover_item.height = $item.outerHeight() + 'px';
-          }
+            $(".c-article-box").on(selector,"mouseenter",function (e){
+                console.log(e)
+            })
+                // .delegate(selector, "mouseenter", function() {
+                //     enter({ data: { that: this } });
+                // })
+                // .delegate(".c-item-popup", "mouseleave", function() {
+                //     $(document).unbind("scroll", enter);
+                //     that.hover_item.id = null;
+                // });
+
+            // function enter(e) {
+            //     if (!e.data || !e.data.that) return;
+            //     let $item = $(e.data.that);
+            //     that.hover_item.id = $item.data("id");
+            //     that.hover_item.top =
+            //         $item.offset().top - $(document).scrollTop() + "px";
+            //     that.hover_item.left = $item.offset().left + "px";
+            //     that.hover_item.width = $item.outerWidth() + "px";
+            //     that.hover_item.height = $item.outerHeight() + "px";
+            // }
         },
     },
     watch: {
@@ -193,10 +212,8 @@ export default {
     },
     mounted: function() {
         const params = new URLSearchParams(location.search);
-        this.mode = params.get('mode') || ''
+        this.mode = params.get("mode") || "";
         this.run();
-        // 物品dom渲染
-        this.itemRender();
     },
     components: {
         "el-pagination": Pagination,

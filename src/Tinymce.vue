@@ -197,5 +197,4 @@ export default {
 
 <style lang="less">
     @import '../assets/css/tinymce.less';
-    
 </style>

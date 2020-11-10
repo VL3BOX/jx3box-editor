@@ -31,11 +31,11 @@ export default {
         },
     },
     mounted: function() {
-        fetch("https://server.jx3box.com/post/find?id=420").then((res) => {
-            res.json().then((data) => {
-                this.content = data.data.post.post_content
-            })
-        });
+        // fetch("https://server.jx3box.com/post/find?id=420").then((res) => {
+        //     res.json().then((data) => {
+        //         this.content = data.data.post.post_content
+        //     })
+        // });
     },
     components: {
         Article,
