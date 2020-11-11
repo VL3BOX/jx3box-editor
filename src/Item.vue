@@ -285,16 +285,10 @@ export default {
                 if (this.item_id) {
                     // 提取本地数据
                     let cache = sessionStorage.getItem(`item-${this.item_id}`);
-                    let cache_created = sessionStorage.getItem(
-                        `item-${this.item_id}-created`
-                    );
+                    let cache_created = sessionStorage.getItem(`item-${this.item_id}-created`);
                     // 查看是否存在缓存
-                    if (
-                        (cache === false || cache) &&
-                        Math.round(new Date() / 1000) - cache_created <= 3600
-                    ) {
-                        this.source =
-                            cache === false ? null : JSON.parse(cache);
+                    if ((cache === false || cache) && Math.round(new Date() / 1000) - cache_created <= 3600) {
+                        this.source = cache === false ? null : JSON.parse(cache);
                         return;
                     }
 
@@ -303,19 +297,10 @@ export default {
                         let data = res.data;
                         if (data.code === 200) {
                             let item = data.data.item;
-                            this.source =
-                                JSON.stringify(item) !== "{}" ? item : null;
+                            this.source = JSON.stringify(item) !== "{}" ? item : null;
                             // 记录本地数据
-                            sessionStorage.setItem(
-                                `item-${this.item_id}`,
-                                this.source
-                                    ? JSON.stringify(this.source)
-                                    : false
-                            );
-                            sessionStorage.setItem(
-                                `item-${this.item_id}-created`,
-                                Math.round(new Date() / 1000)
-                            );
+                            sessionStorage.setItem(`item-${this.source.id}`, this.source ? JSON.stringify(this.source) : false);
+                            sessionStorage.setItem(`item-${this.source.id}-created`, Math.round(new Date() / 1000));
                         }
                     });
                 } else {
