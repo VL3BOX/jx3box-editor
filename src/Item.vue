@@ -276,7 +276,7 @@ export default {
         item: {
             immediate: true,
             handler() {
-                this.source = this.item;
+                if (typeof this.item !== 'undefined') this.source = this.item;
             },
         },
         item_id: {
@@ -303,7 +303,7 @@ export default {
                             sessionStorage.setItem(`item-${this.source.id}-created`, Math.round(new Date() / 1000));
                         }
                     });
-                } else {
+                } else if (typeof this.item_id !== 'undefined') {
                     this.source = null;
                 }
             },
