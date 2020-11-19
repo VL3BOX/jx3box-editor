@@ -19,7 +19,7 @@ export default (quality) => {
         case 5:
             return 'rgb(255,165,0)';
         default:
-            return 'rgb(0,0,0)'
+            return 'rgb(167,167,167)'
     }
 }
 
