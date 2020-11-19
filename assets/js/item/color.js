@@ -4,6 +4,7 @@
  * @param {*} quality
  */
 export default (quality) => {
+    quality = parseInt(quality);
     switch (quality) {
         case 0:
             return 'rgb(167,167,167)';
