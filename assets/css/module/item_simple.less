@@ -1,32 +1,26 @@
-@import './common.less';
+.m-simple-item {
+  .mb(2px);
+  padding: 2px 5px 2px 2px;
+  line-height: initial;
+  font-size: 13px;
+  background-color: #0F2222;
+  text-shadow: 1px 1px 1px #000000;
+  border-radius: 4px;
+  overflow: hidden;
 
-.m-publish-item {
-  .u-item_id {
-    .w(100%);
+  .u-icon, .u-name {
+    .dbi;
+    vertical-align: middle;
   }
 
-  .u-level {
-    margin-top: 10px;
-  }
-}
-
-.m-selector-item {
   .u-icon {
-    .w(16px);
+    width: 28px;
     .mr(8px);
-    vertical-align: middle;
   }
 
-  .u-name {
-    vertical-align: middle;
+  .u-uiid {
+    .mt(5px);
+    font-size: 12px;
+    color: lightgreen;
   }
-}
-
-.m-publish-item-header {
-  font-weight: 300;
-  margin: 20px 0 0 0;
-}
-
-.m-publish-item {
-  padding-top: 20px;
 }
