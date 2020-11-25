@@ -10,10 +10,10 @@
               v-model="visible"
               @show="item_id=item.id"
   >
-    <div class="m-simple-item" slot="reference" @mousedown="visible=false">
-      <img class="u-icon" :src="icon_url(item.IconID)" :alt="`IconID:${item.IconID}`">
-      <span class="u-name" :style="{'color':item_color(item.Quality)}" v-text="item.Name" :class="{isHidden : hideName}"></span>
-      <span class="u-uiid fr" v-text="`ID: ${item.id}`" :class="{isHidden : hideID}"></span>
+    <div class="m-simple-item" slot="reference" @mousedown="visible=false" :class="{onlyIcon : onlyIcon}">
+      <img class="u-icon" :src="icon_url(item.IconID)" :alt="`IconID:${item.IconID}`" :style="{width:iconSize,height:iconSize}">
+      <span class="u-name" :style="{'color':item_color(item.Quality)}" v-text="item.Name"></span>
+      <span class="u-uiid fr" v-text="`ID: ${item.id}`"></span>
     </div>
     <jx3-item :item_id="item_id"/>
   </el-popover>
@@ -26,7 +26,7 @@
 
   export default {
     name: "ItemSimple",
-    props: ["item","hideName","hideID"],
+    props: ["item","onlyIcon","iconSize"],
     data() {
       return {visible: false, item_id: null};
     },
@@ -51,8 +51,15 @@
   }
 
   .m-simple-item{
-    .isHidden{
-      .none !important;
+    &.onlyIcon{
+      padding:0;
+      margin:0;
+      .u-name,.u-uiid{
+        .none !important;
+      }
+      .u-icon{
+        margin:0 !important;
+      }
     }
   }
 
