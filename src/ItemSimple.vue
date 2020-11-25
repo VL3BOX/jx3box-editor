@@ -11,9 +11,9 @@
               @show="item_id=item.id"
   >
     <div class="m-simple-item" slot="reference" @mousedown="visible=false">
-      <img class="u-icon" :src="icon_url(item.IconID)" alt="`IconID:${item.IconID}`">
-      <span class="u-name" :style="{'color':item_color(item.Quality)}" v-text="item.Name"></span>
-      <span class="u-uiid fr" v-text="`ID: ${item.id}`"></span>
+      <img class="u-icon" :src="icon_url(item.IconID)" :alt="`IconID:${item.IconID}`">
+      <span class="u-name" :style="{'color':item_color(item.Quality)}" v-text="item.Name" :class="{isHidden : hideName}"></span>
+      <span class="u-uiid fr" v-text="`ID: ${item.id}`" :class="{isHidden : hideID}"></span>
     </div>
     <jx3-item :item_id="item_id"/>
   </el-popover>
@@ -26,7 +26,7 @@
 
   export default {
     name: "ItemSimple",
-    props: ["item"],
+    props: ["item","hideName","hideID"],
     data() {
       return {visible: false, item_id: null};
     },
@@ -49,7 +49,14 @@
     background-color: transparent;
     transform: translateY(-10px);
   }
+
+  .m-simple-item{
+    .isHidden{
+      .none !important;
+    }
+  }
+
 </style>
-<style lang="less" scoped>
+<style lang="less">
   @import "../assets/css/module/item_simple.less";
 </style>
