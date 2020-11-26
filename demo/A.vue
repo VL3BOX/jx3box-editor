@@ -1,7 +1,7 @@
 <template>
     <div>
         <ItemSimple :item="item1" />
-        <ItemSimple :item="item2" />
+        <ItemSimple :item="item2" only-icon="true" iconSize="56px" />
         <Article
             :content="content"
             directorybox="#directory"

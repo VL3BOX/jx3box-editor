@@ -11,7 +11,12 @@
               @show="item_id=item.id"
   >
     <div class="m-simple-item" slot="reference" @mousedown="visible=false" :class="{onlyIcon : onlyIcon}">
-      <img class="u-icon" :src="icon_url(item.IconID)" :alt="`IconID:${item.IconID}`" :style="{width:iconSize,height:iconSize}">
+      <div class="m-icon">
+        <div class="u-border"
+             :style="{backgroundImage:item_border(item),'opacity':item.Quality==5?0.9:1}"></div>
+        <div class="u-border-quest" :style="{backgroundImage:item_border_quest(item)}"></div>
+        <img class="u-icon" :src="icon_url(item.IconID)" :alt="`IconID:${item.IconID}`" :style="{width:iconSize,height:iconSize}">
+      </div>
       <span class="u-name" :style="{'color':item_color(item.Quality)}" v-text="item.Name"></span>
       <span class="u-uiid fr" v-text="`ID: ${item.id}`"></span>
     </div>
@@ -23,6 +28,8 @@
   import Item from "./Item";
   import icon_url from '../assets/js/item/icon_url.js';
   import item_color from '../assets/js/item/color.js';
+  import item_border from '../assets/js/item/border.js';
+  import item_border_quest from '../assets/js/item/border_quest.js';
 
   export default {
     name: "ItemSimple",
@@ -33,6 +40,8 @@
     methods: {
       icon_url,
       item_color,
+      item_border,
+      item_border_quest,
     },
     components: {
       "jx3-item": Item,
@@ -52,12 +61,14 @@
 
   .m-simple-item{
     &.onlyIcon{
+      .dbi;
       padding:0;
       margin:0;
+      background-color:none;
       .u-name,.u-uiid{
         .none !important;
       }
-      .u-icon{
+      .m-icon{
         margin:0 !important;
       }
     }
