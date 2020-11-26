@@ -3,7 +3,7 @@
  */
 import EquipType from './EquipType';
 
-const EquipPositon = Object.freeze({
+const EquipPosition = Object.freeze({
   HELM: EquipType.HELM,                   // 帽子
   CHEST: EquipType.CHEST,                 // 上衣
   WAIST: EquipType.WAIST,                 // 腰带
