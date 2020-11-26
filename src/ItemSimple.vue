@@ -60,6 +60,10 @@
   }
 
   .m-simple-item{
+
+    .u-border{
+      background-repeat: no-repeat;
+    }
     &.onlyIcon{
       .dbi;
       padding:0;
