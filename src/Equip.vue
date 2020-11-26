@@ -35,15 +35,17 @@ import ItemSimple from "./ItemSimple";
 import {authorLink} from '@jx3box/jx3box-common/js/utils'
 import QRcode from '@jx3box/jx3box-common-ui/src/QRcode.vue'
 import {showTime} from '@jx3box/jx3box-common/js/moment.js'
+import {get_plan} from '../service/item.js'
     export default {
-        props:['data'],
+        props:['data','id'],
         data : function(){
             return {
+                plan_data : ''
             }
         },
         computed: {
             plan : function (){
-                return this.data  
+                return this.id ? this.plan_data : this.data  
             },
             equip: function() {
                 return {
@@ -81,7 +83,13 @@ import {showTime} from '@jx3box/jx3box-common/js/moment.js'
         filters : {
             showTime
         },
-        mounted:function(){},
+        mounted:function(){
+            if(this.id){
+                get_plan(this.id).then((res) => {
+                    this.plan_data = res.data.data.plan
+                })
+            }
+        },
         components: {
             "jx3-item-simple": ItemSimple,
             QRcode
@@ -154,10 +162,14 @@ import {showTime} from '@jx3box/jx3box-common/js/moment.js'
 
         .w-qrcode-static{
             .u-txt{
+                .mt(10px);
                 color:#999;
+                .fz(12px,16px);
             }
             svg{
                 fill:#999;
+                .size(16px);
+                .y(-4px);
             }
         }
     }

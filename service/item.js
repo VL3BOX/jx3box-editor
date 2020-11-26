@@ -11,4 +11,13 @@ function get_item(item_id) {
     })
 }
 
-export { get_item };
+// 获取清单
+function get_plan(plan_id){
+    return $http({
+        url: `${__helperUrl}api/item_plan/${plan_id}`,
+        headers: {Accept: "application/prs.helper.v2+json"},
+        withCredentials: true,
+    })
+}
+
+export { get_item ,get_plan};
