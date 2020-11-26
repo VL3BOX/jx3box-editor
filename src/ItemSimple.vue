@@ -1,16 +1,16 @@
 <template>
   <el-popover v-if="item"
-              placement="right-end"
-              popper-class="m-simple-item-popup"
-              width="auto"
-              :visible-arrow="false"
-              trigger="hover"
-              transition="none"
-              :close-delay="0"
-              v-model="visible"
-              @show="item_id=item.id"
+    placement="right-end"
+    popper-class="m-simple-item-popup"
+    width="auto"
+    :visible-arrow="false"
+    trigger="hover"
+    transition="none"
+    :close-delay="0"
+    v-model="visible"
+    @show="item_id=item.id"
   >
-    <div class="m-simple-item" slot="reference" @mousedown="visible=false" :class="{onlyIcon : onlyIcon}">
+    <div class="m-simple-item" slot="reference" @mousedown="visible=false" :class="{onlyIcon : onlyIcon,withName:withName}">
       <div class="m-icon">
         <div class="u-border"
              :style="{backgroundImage:item_border(item),'opacity':item.Quality==5?0.9:1}"></div>
@@ -33,7 +33,7 @@
 
   export default {
     name: "ItemSimple",
-    props: ["item","onlyIcon","iconSize"],
+    props: ["item","onlyIcon","iconSize","withName"],
     data() {
       return {visible: false, item_id: null};
     },
@@ -70,6 +70,18 @@
       }
       .m-icon{
         margin:0 !important;
+      }
+    }
+    &.withName{
+      background: none;
+      .w(90px);
+      .x;
+      .u-name{
+        .db !important; 
+        color:#555;
+        text-shadow:none;
+        .mt(5px);
+        .bold;
       }
     }
   }

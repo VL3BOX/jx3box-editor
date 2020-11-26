@@ -6,12 +6,26 @@
             v-for="(item, label) in equip"
             :key="label"
         >
-            <jx3-item-simple :item="item" :onlyIcon="true" iconSize="56px"/>
+            <jx3-item-simple :item="item" :onlyIcon="true" iconSize="56px" :withName="true"/>
         </div>
-        <a class="u-author" :href="userpage" target="_blank">
-            <img :src="avatar" class="u-author-avatar">
-            <span class="u-author-name">{{username}}</span>
-        </a>
+        <div class="u-info">
+            <div class="u-title">{{plan.title}}</div>
+            <a class="u-author" :href="userpage" target="_blank">
+                <img :src="avatar" class="u-author-avatar">
+                <span class="u-author-name">{{plan.user_nickname}}</span>
+            </a>
+            <div class="u-time"><i class="el-icon-date"></i> {{plan.updated * 1000 | showTime}}</div>
+            <div class="u-desc">{{plan.description}}</div>
+            <div class="u-qrcodebox">
+                <QRcode :href="link" :s="120" v='static'/>
+            </div>
+        </div>
+        <div class="u-misc">
+            <a class="u-logo" :href="link" target="_blank">
+                <img svg-inline src="../assets/img/jx3box.svg" />
+                <span>配装ID:{{plan.id}}</span>
+            </a>
+        </div>
     </div>
 </template>
 
@@ -19,6 +33,8 @@
 import EquipPosition from '../service/enum/EquipPosition';
 import ItemSimple from "./ItemSimple";
 import {authorLink} from '@jx3box/jx3box-common/js/utils'
+import QRcode from '@jx3box/jx3box-common-ui/src/QRcode.vue'
+import {showTime} from '@jx3box/jx3box-common/js/moment.js'
     export default {
         props:['data'],
         data : function(){
@@ -56,12 +72,19 @@ import {authorLink} from '@jx3box/jx3box-common/js/utils'
             },
             userpage : function (){
                 return this.uid ? authorLink(this.uid) : ''
+            },
+            link : function (){
+                return this.plan ? `https://www.jx3box.com/item/#/plan_view/${this.plan.id}` : ''
             }
         },
         methods:{},
+        filters : {
+            showTime
+        },
         mounted:function(){},
         components: {
             "jx3-item-simple": ItemSimple,
+            QRcode
         },
     }
 </script>
@@ -69,10 +92,69 @@ import {authorLink} from '@jx3box/jx3box-common/js/utils'
 <style scoped lang="less">
 .c-equip{
     .dbi;
-    .size(464px,621px);
-    background:url('../assets/img/equip_bg.png') no-repeat 0 0;
-    background-color:#324f4a;
+    .size(500px,750px);
+    // background:url('../assets/img/equip_bg.png') no-repeat 0 0;
+    // background-color:#324f4a;
+    // background-color:#fff;
+    // border:6px solid #f5f7fa;
+    background-color:@bg-black;
+    border:6px solid #444;
     .r(6px);
+
+    .u-info{
+        .mt(20px);
+        .w(280px);
+        .auto(x);
+        .x;
+    }
+    .u-title{
+        .nobreak;
+        .fz(1rem,2);
+        .bold;
+        color:#fff;
+    }
+
+    .u-author{
+        // .pa;.lt(50%);
+        // transform: translate3d(-50%,-50%,0);
+        img{
+            .r(2px);
+            .size(20px);
+            .y;
+        }
+        img{
+            .mr(5px);
+        }
+        span{
+            .fz(13px,2.5);
+            color:#ccc;
+        }
+    }
+
+    .u-desc{
+        .mt(10px);
+        color: #ccc;
+        font-size: 13px;
+        line-height: 1.8;
+        .break(10);
+        .h(240px);
+    }
+
+    .u-time{
+        // .x(right);
+        color:#999;
+        .fz(12px);
+        // .mt(5px);
+    }
+
+    .u-qrcodebox{
+        .mt(60px);
+        .w(140px);
+        .auto(x);
+        .u-txt{
+            color:#ccc;
+        }
+    }
 
     .pr;
     .u-equip{
@@ -82,66 +164,96 @@ import {authorLink} from '@jx3box/jx3box-common/js/utils'
     }
 
     .u-equip-weapon_1{
-        .lt(161px,547px);
+        .lt(160px,630px);
     }
     .u-equip-weapon_2{
-        .lt(225px,547px);
+        .lt(230px,630px);
     }
 
     .u-equip-cap{
-        .lt(11px,88px);
+        .lt(12px,90px);
     }
 
     .u-equip-cloth{
-        .lt(11px,225px);
+        .lt(12px,270px);
     }
 
     .u-equip-belt{
-        .lt(11px,420px);
+        .lt(12px,450px);
     }
 
     .u-equip-wrist{
-        .lt(397px,82px);
+        .lt(400px,90px);
     }
 
     .u-equip-trousers{
-        .lt(397px,147px);
+        .lt(400px,180px);
     }
 
     .u-equip-shoes{
-        .lt(397px,211px);
+        .lt(400px,270px);
     }
 
     .u-equip-necklace{
-        .lt(397px,275px);
+        .lt(400px,360px);
     }
 
     .u-equip-pendant{
-        .lt(397px,339px);
+        .lt(400px,450px);
     }
 
     .u-equip-ring_1{
-        .lt(397px,404px);
+        .lt(400px,540px);
     }
 
     .u-equip-ring_2{
-        .lt(397px,468px);
+        .lt(400px,630px);
     }
 
-    .u-author{
-        .pa;.lt(50%);
-        transform: translate3d(-50%,-50%,0);
-        img{
-            .r(4px);
+
+    .u-misc{
+        .pa;.lt(30px,630px);
+    }
+
+    .u-logo{
+        .db;
+        svg,span{
+            transition:0.2s ease-in-out;
         }
-        span,img{
-            .db;
+        svg{
+            .size(56px);
+            fill:#fff;
         }
         span{
+            .db;
             color:#fff;
-            .fz(14px,2.5);
+            font-family: Consolas;
+            .fz(14px);
+            .bold;
+        }
+        &:hover{
+            span{
+                color:#0cf;
+            }
+            svg{
+                fill:#0cf;
+            }
         }
     }
+
+    .u-meta{
+        // .mt(5px);
+        .fz(12px);
+        .db;
+        // color:#1bbfe0;
+        color:#fff;
+        // &:hover{
+        //     color:#ff0;
+        // }
+        // .pa;.lb(20px,20px);
+    }
+
+    
 
     
 }
