@@ -47,4 +47,4 @@ const EquipPosition = Object.freeze({
   }
 })
 
-export default EquipPositon;
+export default EquipPosition;
