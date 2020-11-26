@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import EquipPositon from '../service/enum/EquipPositon';
 import ItemSimple from "./ItemSimple";
 import {authorLink} from '@jx3box/jx3box-common/js/utils'
     export default {
@@ -30,18 +31,18 @@ import {authorLink} from '@jx3box/jx3box-common/js/utils'
             },
             equip: function() {
                 return {
-                    weapon_1 : this.plan.relation_items[1][0],
-                    weapon_2 : this.plan.relation_items[2][0],
-                    cap : this.plan.relation_items['3_2'][0],
-                    cloth : this.plan.relation_items['3_1'][0],
-                    belt : this.plan.relation_items['3_3'][0],
-                    wrist : this.plan.relation_items['3_6'][0],
-                    trousers : this.plan.relation_items['3_4'][0],
-                    shoes : this.plan.relation_items['3_5'][0],
-                    necklace : this.plan.relation_items['4_1'][0],
-                    pendant : this.plan.relation_items['4_3'][0],
-                    ring_1 : this.plan.relation_items['4_2_1'][0],
-                    ring_2 : this.plan.relation_items['4_2_2'][0],
+                    weapon_1 : this.plan.relation_items[EquipPositon.MELEE_WEAPON][0],
+                    weapon_2 : this.plan.relation_items[EquipPositon.RANGE_WEAPON][0],
+                    cap : this.plan.relation_items[EquipPositon.HELM][0],
+                    cloth : this.plan.relation_items[EquipPositon.CHEST][0],
+                    belt : this.plan.relation_items[EquipPositon.WAIST][0],
+                    wrist : this.plan.relation_items[EquipPositon.BANGLE][0],
+                    trousers : this.plan.relation_items[EquipPositon.PANTS][0],
+                    shoes : this.plan.relation_items[EquipPositon.BOOTS][0],
+                    necklace : this.plan.relation_items[EquipPositon.AMULET][0],
+                    pendant : this.plan.relation_items[EquipPositon.PENDANT][0],
+                    ring_1 : this.plan.relation_items[EquipPositon.RING_1][0],
+                    ring_2 : this.plan.relation_items[EquipPositon.RING_2][0],
                 };
             },
             avatar : function (){
