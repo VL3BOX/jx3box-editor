@@ -89,7 +89,7 @@ import {showTime} from '@jx3box/jx3box-common/js/moment.js'
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 .c-equip{
     .dbi;
     .size(500px,750px);
@@ -151,8 +151,14 @@ import {showTime} from '@jx3box/jx3box-common/js/moment.js'
         .mt(60px);
         .w(140px);
         .auto(x);
-        .u-txt{
-            color:#ccc;
+
+        .w-qrcode-static{
+            .u-txt{
+                color:#999;
+            }
+            svg{
+                fill:#999;
+            }
         }
     }
 
