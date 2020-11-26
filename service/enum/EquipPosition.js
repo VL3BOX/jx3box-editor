@@ -20,20 +20,18 @@ const EquipPosition = Object.freeze({
   all() {
     // 部位配置信息
     let positions = [
-      [
-        {type: this.MELEE_WEAPON, label: "武器", AucGenre: 1},
-        {type: this.RANGE_WEAPON, label: "暗器", AucGenre: 2},
-        {type: this.HELM, label: "帽子", AucGenre: 3, AucSubType: 2},
-        {type: this.CHEST, label: "上衣", AucGenre: 3, AucSubType: 1},
-        {type: this.WAIST, label: "腰带", AucGenre: 3, AucSubType: 3},
-        {type: this.BANGLE, label: "护腕", AucGenre: 3, AucSubType: 6},
-        {type: this.PANTS, label: "下装", AucGenre: 3, AucSubType: 4},
-        {type: this.BOOTS, label: "鞋子", AucGenre: 3, AucSubType: 5},
-        {type: this.AMULET, label: "项链", AucGenre: 4, AucSubType: 1},
-        {type: this.PENDANT, label: "腰坠", AucGenre: 4, AucSubType: 3},
-        {type: this.RING_1, label: "戒指", AucGenre: 4, AucSubType: 2},
-        {type: this.RING_2, label: "戒指", AucGenre: 4, AucSubType: 2},
-      ],
+      {type: this.MELEE_WEAPON, label: "武器", AucGenre: 1},
+      {type: this.RANGE_WEAPON, label: "暗器", AucGenre: 2},
+      {type: this.HELM, label: "帽子", AucGenre: 3, AucSubType: 2},
+      {type: this.CHEST, label: "上衣", AucGenre: 3, AucSubType: 1},
+      {type: this.WAIST, label: "腰带", AucGenre: 3, AucSubType: 3},
+      {type: this.BANGLE, label: "护腕", AucGenre: 3, AucSubType: 6},
+      {type: this.PANTS, label: "下装", AucGenre: 3, AucSubType: 4},
+      {type: this.BOOTS, label: "鞋子", AucGenre: 3, AucSubType: 5},
+      {type: this.AMULET, label: "项链", AucGenre: 4, AucSubType: 1},
+      {type: this.PENDANT, label: "腰坠", AucGenre: 4, AucSubType: 3},
+      {type: this.RING_1, label: "戒指", AucGenre: 4, AucSubType: 2},
+      {type: this.RING_2, label: "戒指", AucGenre: 4, AucSubType: 2},
     ];
 
     // 重置键名
