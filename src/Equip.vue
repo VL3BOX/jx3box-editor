@@ -146,6 +146,11 @@ import {get_plan} from '../service/item.js'
         line-height: 1.8;
         .break(10);
         .h(240px);
+        white-space: pre-wrap;
+        text-align: left;
+        background: #2b2e31;
+        padding: 10px;
+        box-sizing: border-box;
     }
 
     .u-time{
@@ -171,6 +176,10 @@ import {get_plan} from '../service/item.js'
                 .size(16px);
                 .y(-4px);
             }
+            .u-pic{
+                padding: 10px 8px 8px 8px;
+                border-radius: 2px;
+            }
         }
     }
 
@@ -182,10 +191,10 @@ import {get_plan} from '../service/item.js'
     }
 
     .u-equip-weapon_1{
-        .lt(160px,630px);
+        .lt(170px,630px);
     }
     .u-equip-weapon_2{
-        .lt(230px,630px);
+        .lt(240px,630px);
     }
 
     .u-equip-cap{
