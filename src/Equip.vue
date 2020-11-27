@@ -255,8 +255,8 @@ import {get_plan} from '../service/item.js'
             .db;
             color:#fff;
             font-family: Consolas;
-            .fz(14px);
-            .bold;
+            .fz(12px);
+            // .bold;
         }
         &:hover{
             span{
