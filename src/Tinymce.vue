@@ -44,6 +44,9 @@ export default {
                 // 语言
                 language: "zh_CN",
 
+                // 设置
+                convert_urls : false,
+
                 // 样式
                 // content_css: `https://oss.jx3box.com/static/jx3box-editor/tinymce.css`,
                 body_class: "c-article c-article-editor",
