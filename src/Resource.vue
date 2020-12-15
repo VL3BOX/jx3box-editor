@@ -434,7 +434,7 @@ export default {
         selectIcon: function(o) {
             this.resetItems();
             o.isSelected = true;
-            this.html = `<img class="e-jx3-icon" src="${__ossRoot}icon/${o.iconID}.png" alt="${o.iconID}"/>`;
+            this.html = `<img class="e-jx3-icon" src="${__iconPath}icon/${o.iconID}.png" alt="${o.iconID}"/>`;
             console.log(this.html);
         },
         resetItems: function() {
