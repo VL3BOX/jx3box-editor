@@ -1,7 +1,7 @@
 <template>
     <div class="c-article-box">
         <!-- <div id="c-article-origin" class="c-article-origin" ref="origin"><slot></slot></div> -->
-        <div id="c-article" class="c-article" ref="article">
+        <div id="c-article" class="c-article" ref="article" v-if="pageable">
             <div
                 class="c-article-chunk"
                 v-for="(text, i) in data"
@@ -11,6 +11,7 @@
                 :id="'c-article-part' + ~~(i + 1)"
             ></div>
         </div>
+        <div id="c-article" class="c-article" ref="article" v-else-if="data && data.length" v-html="data[0]"></div>
         <el-button
             class="c-article-all"
             type="primary"
@@ -69,7 +70,14 @@ import renderTalent from "../assets/js/qixue";
 
 export default {
     name: "Article",
-    props: ["content", "directorybox"],
+    props: {
+        "content": String,
+        "directorybox": String,
+        "pageable": {
+            type: Boolean,
+            default: true
+        }
+    },
     data: function() {
         return {
             all: false,
@@ -94,7 +102,7 @@ export default {
             return this.content;
         },
         chunks: function() {
-            return execSplitPages(this.origin);
+            return this.pageable ? execSplitPages(this.origin) : [this.origin];
         },
     },
     methods: {
