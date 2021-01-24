@@ -15,13 +15,23 @@ function directory(from, to) {
                 <div class="c-article-directory-title" id="c-article-directory-title">
                     <span class="c-article-directory-title-label" class="c-go-top">导读</span>
                     <span class="c-article-directory-title-skip" class="c-go-top">↑ 顶部</span>
+                    <span class="c-article-directory-title-folder" class="c-go-top">↕ 折叠</span>
                 </div>
                 <div class="c-article-directory-content" id="c-article-directory-content"></div>
             </div>`
         );
 
         const $directory = $('#c-article-directory-content')
-        const $skip = $('#c-article-directory-title')
+        const $skip = $('.c-article-directory-title-skip')
+        const $folder = $('.c-article-directory-title-folder')
+
+        // 顶部按钮
+        $folder.on('click',function (){
+            $('#c-article-directory-content').slideToggle()
+        })
+        $skip.on('click',function (){
+            $(document).scrollTop(0)
+        })
 
         // 遍历捕获的目录项
         directories.each(function(i, item) {
@@ -61,7 +71,7 @@ function directory(from, to) {
             $directory.append(_item);
         });
 
-        //进行事件委托
+        // 进行事件委托
         $directory.on('click','h1,h2,h3,h4,h5,h6',function (){
             let target = $(this).data('raw').offset().top
             $(document).scrollTop(target - 112)
@@ -69,9 +79,6 @@ function directory(from, to) {
             setTimeout(()=>{
                 $(this).data('raw').removeClass('isScrollFocus')
             },3500)
-        })
-        $skip.on('click','span',function (){
-            $(document).scrollTop(0)
         })
 
         return true

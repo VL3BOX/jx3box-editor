@@ -1,8 +1,8 @@
 <template>
     <div class="c-editor-tinymce">
         <div class="c-editor-header">
-            <Upload v-if="attachmentEnable" @insert="insertAttachments"/>
-            <Resource v-if="resourceEnable" @insert="insertResource"/>
+            <Upload v-if="attachmentEnable" @insert="insertAttachments" />
+            <Resource v-if="resourceEnable" @insert="insertResource" />
             <slot></slot>
         </div>
         <editor
@@ -13,14 +13,14 @@
             placeholder="✔ 图片可右键粘贴或拖拽至编辑器内自动上传 ✔ 支持word/excel内容一键粘贴"
         />
         <el-alert class="u-tutorial" type="warning" show-icon
-                >进入特殊区域（代码块，折叠块等等）脱离或使用工具栏触发后，请使用键盘方向
-                → ↓
-                键进行脱离，回车只是正常在区块内换行。去掉样式点击第二行第一个&lt;清除格式&gt;即可复位。<a
-                    href="https://www.jx3box.com/tool/?pid=16227#/"
-                    target="_blank"
-                    >[编辑器使用指南]</a
-                >
-            </el-alert>
+            >进入特殊区域（代码块，折叠块等等）脱离或使用工具栏触发后，请使用键盘方向
+            → ↓
+            键进行脱离，回车只是正常在区块内换行。去掉样式点击第二行第一个&lt;清除格式&gt;即可复位。<a
+                href="https://www.jx3box.com/tool/?pid=16227#/"
+                target="_blank"
+                >[编辑器使用指南]</a
+            >
+        </el-alert>
     </div>
 </template>
 
@@ -33,7 +33,7 @@ const API = __server + "upload/tinymce";
 
 export default {
     name: "Tinymce",
-    props: ["content", "height", "attachmentEnable","resourceEnable"],
+    props: ["content", "height", "attachmentEnable", "resourceEnable"],
     data: function() {
         return {
             data: this.content,
@@ -45,7 +45,7 @@ export default {
                 language: "zh_CN",
 
                 // 设置
-                convert_urls : false,
+                convert_urls: false,
 
                 // 样式
                 // content_css: `https://oss.jx3box.com/static/jx3box-editor/tinymce.css`,
@@ -62,11 +62,11 @@ export default {
                     "link autolink",
                     "hr lists advlist table codeinline codesample checklist foldtext mathjax",
                     "image emoticons media videox macro qixue",
-                    "autosave code fullscreen wordcount powerpaste pagebreak printpage", // template anchor jx3icon 
+                    "autosave code fullscreen wordcount powerpaste pagebreak printpage", // template anchor jx3icon
                 ],
                 toolbar: [
                     "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | restoredraft fullscreen code",
-                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample mathjax | emoticons image media videox | macro qixue pagebreak printpage", // template anchor jx3icon 
+                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample mathjax | emoticons image media videox | macro qixue pagebreak printpage", // template anchor jx3icon
                 ],
                 mobile: {
                     toolbar_drawer: true,
@@ -171,9 +171,9 @@ export default {
         data: function(newval) {
             this.$emit("update", newval);
         },
-        content : function (newval){
-            this.data = newval
-        }
+        content: function(newval) {
+            this.data = newval;
+        },
     },
     methods: {
         setup: function(editor) {
@@ -182,22 +182,22 @@ export default {
         ready: function(editor) {
             // console.log("ID为: " + editor.id + " 的编辑器已初始化完成.");
         },
-        insertAttachments : function (data){
+        insertAttachments: function(data) {
             tinyMCE.editors["tinymce"].insertContent(data.html);
         },
-        insertResource : function (data){
+        insertResource: function(data) {
             tinyMCE.editors["tinymce"].insertContent(data);
-        }
+        },
     },
     mounted: function() {},
     components: {
         Editor,
         Upload,
-        Resource
+        Resource,
     },
 };
 </script>
 
 <style lang="less">
-    @import '../assets/css/tinymce.less';
+@import "../assets/css/tinymce.less";
 </style>
