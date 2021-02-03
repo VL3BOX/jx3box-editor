@@ -30,10 +30,10 @@
         "last 2 versions"
     ],
     "dependencies": {
-        "@jx3box/jx3box-common": "^5.6.0",
+        "@jx3box/jx3box-common": "^5.7.2",
         "@jx3box/jx3box-data": "^0.2.9",
         "@jx3box/jx3box-macro": "^1.0.1",
-        "@jx3box/jx3box-talent": "^1.0.5",
+        "@jx3box/jx3box-talent": "^1.0.7",
         "@tinymce/tinymce-vue": "^3.2.2",
         "axios": "^0.19.2",
         "core-js": "^3.6.5",
