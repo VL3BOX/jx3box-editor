@@ -103,6 +103,24 @@
                     </span>
                 </div>
             </div>
+            <!-- 家具属性 -->
+            <div class="u-furniture-attributes" v-if="source.furniture_attributes">
+                <div class="u-field u-green" v-if="source.furniture_attributes.view">
+                  <span class="u-value" v-text="`观赏提高${source.furniture_attributes.view}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.practical">
+                  <span class="u-value" v-text="`实用提高${source.furniture_attributes.practical}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.hard">
+                  <span class="u-value" v-text="`坚固提高${source.furniture_attributes.hard}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.geomantic">
+                  <span class="u-value" v-text="`风水提高${source.furniture_attributes.geomantic}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.interesting">
+                  <span class="u-value" v-text="`趣味提高${source.furniture_attributes.interesting}`"></span>
+                </div>
+            </div>
             <!-- 镶嵌 -->
             <ul v-if="source.Diamonds" class="u-diamonds u-gray">
                 <!-- 五行石 -->
@@ -141,8 +159,14 @@
             <!-- 需要阵营 -->
             <div
                 v-if="source.Requires && source.Requires[100]"
-                class="u-require-level"
-                v-text="source.Requires[5]"
+                class="u-require-Camp"
+                v-text="source.Requires[100]"
+            ></div>
+            <!-- 需求宅邸等级 -->
+            <div
+                v-if="source.Requires && source.Requires[101]"
+                class="u-require-homeland-level"
+                v-text="source.Requires[101]"
             ></div>
             <!-- 最大耐久度 -->
             <div
@@ -176,6 +200,10 @@
                     ></li>
                 </ul>
                 <br />
+            </div>
+            <!-- 图片 -->
+            <div class="u-image-url" v-if="source.ImageUrl">
+                <img :src="source.ImageUrl">
             </div>
             <!-- 描述 -->
             <p

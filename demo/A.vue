@@ -2,6 +2,7 @@
     <div>
         <ItemSimple :item="item1" />
         <ItemSimple :item="item2" only-icon="true" iconSize="56px" />
+        <ItemSimple :item="item3" only-icon="true" iconSize="56px" />
         <Article
             :content="content"
             directorybox="#directory"
@@ -25,6 +26,7 @@ export default {
             content: demohtml,
             item1: null,
             item2: null,
+            item3: null,
         };
     },
     computed: {},
@@ -56,6 +58,14 @@ export default {
             if (data.code === 200) {
                 let item = data.data.item;
                 this.item2 = JSON.stringify(item) !== "{}" ? item : null;
+            }
+        });
+
+        get_item('10_202').then((res) => {
+            let data = res.data;
+            if (data.code === 200) {
+                let item = data.data.item;
+                this.item3 = JSON.stringify(item) !== "{}" ? item : null;
             }
         });
     },
