@@ -159,7 +159,7 @@
             <!-- 需要阵营 -->
             <div
                 v-if="source.Requires && source.Requires[100]"
-                class="u-require-Camp"
+                class="u-require-camp"
                 v-text="source.Requires[100]"
             ></div>
             <!-- 需求宅邸等级 -->
