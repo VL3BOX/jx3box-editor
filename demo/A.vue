@@ -71,7 +71,7 @@ export default {
             }
         });
 
-        get_item('10_497').then((res) => {
+        get_item('10_98').then((res) => {
             let data = res.data;
             if (data.code === 200) {
                 let item = data.data.item;

@@ -4,6 +4,7 @@
         class="c-item"
         :class="{
             'c-item-equipment': source.AucGenre >= 1 && source.AucGenre <= 4,
+            'c-item-furniture': source.AucGenre == 21,
         }"
     >
         <div class="c-item-wrapper">
