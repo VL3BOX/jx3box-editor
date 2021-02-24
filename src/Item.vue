@@ -203,7 +203,7 @@
             </div>
             <!-- 图片 -->
             <div class="u-image-url" v-if="source.ImageUrl">
-                <img :src="source.ImageUrl">
+                <img :src="source.ImageUrl" @error.once="source.ImageUrl=null">
             </div>
             <!-- 描述 -->
             <p
@@ -273,6 +273,16 @@
             >
                 该装备未精炼、镶嵌、附魔、穿戴前可以放入账号储物箱共享。
             </div>
+            <!-- 家具可交互可缩放 -->
+            <div  v-if="source.furniture_attributes" class="u-furniture-can">
+              <span v-if="source.furniture_attributes.interact">可交互</span>
+              <span
+                  v-if="source.furniture_attributes.scale_range"
+                  v-text="`可缩放(${source.furniture_attributes.scale_range.replace(';',' - ')}倍)`"
+              ></span>
+            </div>
+            <!-- 物品来源 -->
+            <div  v-if="source.GetType" class="u-get-type" v-text="`物品来源：${source.GetType}`"></div>
         </div>
     </div>
 </template>
