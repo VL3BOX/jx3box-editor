@@ -4,6 +4,7 @@
         class="c-item"
         :class="{
             'c-item-equipment': source.AucGenre >= 1 && source.AucGenre <= 4,
+            'c-item-furniture': source.AucGenre == 21,
         }"
     >
         <div class="c-item-wrapper">
@@ -103,6 +104,24 @@
                     </span>
                 </div>
             </div>
+            <!-- 家具属性 -->
+            <div class="u-furniture-attributes" v-if="source.furniture_attributes">
+                <div class="u-field u-green" v-if="source.furniture_attributes.view">
+                  <span class="u-value" v-text="`观赏提高${source.furniture_attributes.view}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.practical">
+                  <span class="u-value" v-text="`实用提高${source.furniture_attributes.practical}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.hard">
+                  <span class="u-value" v-text="`坚固提高${source.furniture_attributes.hard}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.geomantic">
+                  <span class="u-value" v-text="`风水提高${source.furniture_attributes.geomantic}`"></span>
+                </div>
+                <div class="u-field u-green" v-if="source.furniture_attributes.interesting">
+                  <span class="u-value" v-text="`趣味提高${source.furniture_attributes.interesting}`"></span>
+                </div>
+            </div>
             <!-- 镶嵌 -->
             <ul v-if="source.Diamonds" class="u-diamonds u-gray">
                 <!-- 五行石 -->
@@ -141,8 +160,14 @@
             <!-- 需要阵营 -->
             <div
                 v-if="source.Requires && source.Requires[100]"
-                class="u-require-level"
-                v-text="source.Requires[5]"
+                class="u-require-camp"
+                v-text="source.Requires[100]"
+            ></div>
+            <!-- 需求宅邸等级 -->
+            <div
+                v-if="source.Requires && source.Requires[101]"
+                class="u-require-homeland-level"
+                v-text="source.Requires[101]"
             ></div>
             <!-- 最大耐久度 -->
             <div
@@ -176,6 +201,10 @@
                     ></li>
                 </ul>
                 <br />
+            </div>
+            <!-- 图片 -->
+            <div class="u-image-url" v-if="source.ImageUrl">
+                <img :src="source.ImageUrl" @error.once="source.ImageUrl=null">
             </div>
             <!-- 描述 -->
             <p
@@ -245,6 +274,16 @@
             >
                 该装备未精炼、镶嵌、附魔、穿戴前可以放入账号储物箱共享。
             </div>
+            <!-- 家具可交互可缩放 -->
+            <div  v-if="source.furniture_attributes" class="u-furniture-can">
+              <span v-if="source.furniture_attributes.interact">可交互</span>
+              <span
+                  v-if="source.furniture_attributes.scale_range"
+                  v-text="`可缩放(${source.furniture_attributes.scale_range.replace(';',' - ')}倍)`"
+              ></span>
+            </div>
+            <!-- 物品来源 -->
+            <div  v-if="source.GetType" class="u-get-type" v-text="`物品来源：${source.GetType}`"></div>
         </div>
     </div>
 </template>
