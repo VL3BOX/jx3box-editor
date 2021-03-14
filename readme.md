@@ -2,6 +2,14 @@
 
 手动更新 cdn `https://oss.jx3box.com/static/`
 
+# Dev
+```
+$ npm install 
+$ npm run serve
+$ open http://localhost:8080  //文章渲染
+$ open http://localhost:8080/tinymce  //编辑器
+```
+
 ## Step.1 Install
 
 ```

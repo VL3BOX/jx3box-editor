@@ -28,7 +28,7 @@
 import Editor from "@tinymce/tinymce-vue";
 import Upload from "./Upload";
 import Resource from "./Resource";
-import { __server } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __server } from "@jx3box/jx3box-common/data/jx3box.json";
 const API = __server + "upload/tinymce";
 
 export default {

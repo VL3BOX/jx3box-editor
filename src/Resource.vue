@@ -169,8 +169,13 @@
                                     :src="o.IconID | iconURL"
                                 />
                                 <span class="u-name">{{ o.Name }}</span>
-                                <span class="u-content" v-html="o.DescHtml"></span>
-                                <span class="u-remark">{{ o.Requirement }}</span>
+                                <span
+                                    class="u-content"
+                                    v-html="o.DescHtml"
+                                ></span>
+                                <span class="u-remark">{{
+                                    o.Requirement
+                                }}</span>
                             </li>
                         </ul>
                         <el-alert
@@ -209,11 +214,11 @@
                                     :content="o.Name || query"
                                     placement="top"
                                 > -->
-                                    <img
-                                        class="e-jx3-icon"
-                                        :src="o.iconID | iconURL"
-                                        :alt="query"
-                                    />
+                                <img
+                                    class="e-jx3-icon"
+                                    :src="o.iconID | iconURL"
+                                    :alt="query"
+                                />
                                 <!-- </el-tooltip> -->
                             </li>
                         </ul>
@@ -270,7 +275,7 @@
 <script>
 import axios from "axios";
 import { loadResource, loadStat, getIcons } from "../service/database";
-import { __ossRoot, __iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __ossRoot, __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { school } from "@jx3box/jx3box-data/data/xf/school.json";
 export default {
@@ -329,7 +334,7 @@ export default {
             return this.total > 1 && this.page < this.pages;
         },
         multipage: function() {
-            return this.type !== 'icon' && this.done && this.pages > 1;
+            return this.type !== "icon" && this.done && this.pages > 1;
         },
     },
     watch: {
@@ -338,7 +343,7 @@ export default {
         },
     },
     methods: {
-        getData: function(page = 1,append = false) {
+        getData: function(page = 1, append = false) {
             if (!this.query) return;
 
             this.loading = true;
@@ -379,7 +384,7 @@ export default {
                     .then((data) => {
                         if (!append) this[this.type] = [];
                         let list;
-                        if (this.type == 'item') {
+                        if (this.type == "item") {
                             list = this.transformData(data.data);
                             this.pages = data.last_page;
                             this.total = data.total;
@@ -400,14 +405,14 @@ export default {
             this.getData();
         },
         appendPage: function() {
-            this.getData(++this.page,true);
+            this.getData(++this.page, true);
         },
         changePage: function(i) {
             this.getData(i);
         },
-        changeType : function (){
-            this.page = 1
-            this.getData()
+        changeType: function() {
+            this.page = 1;
+            this.getData();
         },
         insert: function() {
             this.dialogVisible = false;
@@ -422,14 +427,16 @@ export default {
         selectCommon: function(type, o, i) {
             this.resetItems();
             o.isSelected = true;
-            this.html = `<pre data-type="${type}" data-id="${o.id}" class="e-jx3-resource">${
+            this.html = `<pre data-type="${type}" data-id="${
+                o.id
+            }" class="e-jx3-resource">${
                 this.$refs[this.type][i]["innerHTML"]
             }</pre>`;
         },
-        selectItem : function (o,i){
+        selectItem: function(o, i) {
             this.resetItems();
             o.isSelected = true;
-            this.html = `<a class="e-jx3-item e-jx3-item-q${o.Quality}" data-id="${o.id}" data-quality="${o.Quality}" target="_blank" href="${o.Link}">[${o.Name}]</a>`
+            this.html = `<a class="e-jx3-item e-jx3-item-q${o.Quality}" data-id="${o.id}" data-quality="${o.Quality}" target="_blank" href="${o.Link}">[${o.Name}]</a>`;
         },
         selectIcon: function(o) {
             this.resetItems();

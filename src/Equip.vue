@@ -6,140 +6,153 @@
             v-for="(item, label) in equip"
             :key="label"
         >
-            <jx3-item-simple :item="item" :onlyIcon="true" iconSize="56px" :withName="true"/>
+            <jx3-item-simple
+                :item="item"
+                :onlyIcon="true"
+                iconSize="56px"
+                :withName="true"
+            />
         </div>
         <div class="u-info">
-            <div class="u-title">{{plan.title}}</div>
+            <div class="u-title">{{ plan.title }}</div>
             <a class="u-author" :href="userpage" target="_blank">
-                <img :src="avatar" class="u-author-avatar">
-                <span class="u-author-name">{{plan.user_nickname}}</span>
+                <img :src="avatar" class="u-author-avatar" />
+                <span class="u-author-name">{{ plan.user_nickname }}</span>
             </a>
-            <div class="u-time"><i class="el-icon-date"></i> {{plan.updated * 1000 | showTime}}</div>
-            <div class="u-desc">{{plan.description}}</div>
+            <div class="u-time">
+                <i class="el-icon-date"></i>
+                {{ (plan.updated * 1000) | showTime }}
+            </div>
+            <div class="u-desc">{{ plan.description }}</div>
             <div class="u-qrcodebox">
-                <QRcode :href="link" :s="120" v='static'/>
+                <QRcode :href="link" :s="120" v="static" />
             </div>
         </div>
         <div class="u-misc">
             <a class="u-logo" :href="link" target="_blank">
                 <img svg-inline src="../assets/img/jx3box.svg" />
-                <span>配装ID:{{plan.id}}</span>
+                <span>配装ID:{{ plan.id }}</span>
             </a>
         </div>
     </div>
 </template>
 
 <script>
-import EquipPosition from '../service/enum/EquipPosition';
+import EquipPosition from "../service/enum/EquipPosition";
 import ItemSimple from "./ItemSimple";
-import {authorLink} from '@jx3box/jx3box-common/js/utils'
-import QRcode from '@jx3box/jx3box-common-ui/src/QRcode.vue'
-import {showTime} from '@jx3box/jx3box-common/js/moment.js'
-import {get_plan} from '../service/item.js'
-    export default {
-        props:['data','id'],
-        data : function(){
+import { authorLink } from "@jx3box/jx3box-common/js/utils";
+import QRcode from "@jx3box/jx3box-common-ui/src/QRcode.vue";
+import { showTime } from "@jx3box/jx3box-common/js/moment.js";
+import { get_plan } from "../service/item.js";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+export default {
+    props: ["data", "id"],
+    data: function() {
+        return {
+            plan_data: "",
+        };
+    },
+    computed: {
+        plan: function() {
+            return this.id ? this.plan_data : this.data;
+        },
+        equip: function() {
             return {
-                plan_data : ''
-            }
+                weapon_1: this.plan.relation_items[
+                    EquipPosition.MELEE_WEAPON
+                ][0],
+                weapon_2: this.plan.relation_items[
+                    EquipPosition.RANGE_WEAPON
+                ][0],
+                cap: this.plan.relation_items[EquipPosition.HELM][0],
+                cloth: this.plan.relation_items[EquipPosition.CHEST][0],
+                belt: this.plan.relation_items[EquipPosition.WAIST][0],
+                wrist: this.plan.relation_items[EquipPosition.BANGLE][0],
+                trousers: this.plan.relation_items[EquipPosition.PANTS][0],
+                shoes: this.plan.relation_items[EquipPosition.BOOTS][0],
+                necklace: this.plan.relation_items[EquipPosition.AMULET][0],
+                pendant: this.plan.relation_items[EquipPosition.PENDANT][0],
+                ring_1: this.plan.relation_items[EquipPosition.RING_1][0],
+                ring_2: this.plan.relation_items[EquipPosition.RING_2][0],
+            };
         },
-        computed: {
-            plan : function (){
-                return this.id ? this.plan_data : this.data  
-            },
-            equip: function() {
-                return {
-                    weapon_1 : this.plan.relation_items[EquipPosition.MELEE_WEAPON][0],
-                    weapon_2 : this.plan.relation_items[EquipPosition.RANGE_WEAPON][0],
-                    cap : this.plan.relation_items[EquipPosition.HELM][0],
-                    cloth : this.plan.relation_items[EquipPosition.CHEST][0],
-                    belt : this.plan.relation_items[EquipPosition.WAIST][0],
-                    wrist : this.plan.relation_items[EquipPosition.BANGLE][0],
-                    trousers : this.plan.relation_items[EquipPosition.PANTS][0],
-                    shoes : this.plan.relation_items[EquipPosition.BOOTS][0],
-                    necklace : this.plan.relation_items[EquipPosition.AMULET][0],
-                    pendant : this.plan.relation_items[EquipPosition.PENDANT][0],
-                    ring_1 : this.plan.relation_items[EquipPosition.RING_1][0],
-                    ring_2 : this.plan.relation_items[EquipPosition.RING_2][0],
-                };
-            },
-            avatar : function (){
-                return this.plan ? this.plan.user_avatar : ''
-            },
-            username : function (){
-                return this.plan ? this.plan.user_nickname : ''
-            },
-            uid : function (){
-                return this.plan ? this.plan.user_id : ''
-            },
-            userpage : function (){
-                return this.uid ? authorLink(this.uid) : ''
-            },
-            link : function (){
-                return this.plan ? `https://www.jx3box.com/item/#/plan_view/${this.plan.id}` : ''
-            }
+        avatar: function() {
+            return this.plan ? this.plan.user_avatar : "";
         },
-        methods:{},
-        filters : {
-            showTime
+        username: function() {
+            return this.plan ? this.plan.user_nickname : "";
         },
-        mounted:function(){
-            if(this.id){
-                get_plan(this.id).then((res) => {
-                    this.plan_data = res.data.data.plan
-                })
-            }
+        uid: function() {
+            return this.plan ? this.plan.user_id : "";
         },
-        components: {
-            "jx3-item-simple": ItemSimple,
-            QRcode
+        userpage: function() {
+            return this.uid ? authorLink(this.uid) : "";
         },
-    }
+        link: function() {
+            return this.plan ? __Root + `item/#/plan_view/${this.plan.id}` : "";
+        },
+    },
+    methods: {},
+    filters: {
+        showTime,
+    },
+    mounted: function() {
+        if (this.id) {
+            get_plan(this.id).then((res) => {
+                this.plan_data = res.data.data.plan;
+            });
+        }
+    },
+    components: {
+        "jx3-item-simple": ItemSimple,
+        QRcode,
+    },
+};
 </script>
 
 <style lang="less">
-.c-equip{
+.c-equip {
     .dbi;
-    .size(500px,750px);
+    .size(500px, 750px);
     // background:url('../assets/img/equip_bg.png') no-repeat 0 0;
     // background-color:#324f4a;
     // background-color:#fff;
     // border:6px solid #f5f7fa;
-    background-color:@bg-black;
-    border:6px solid #444;
+    background-color: @bg-black;
+    border: 6px solid #444;
     .r(6px);
 
-    .u-info{
+    .u-info {
         .mt(20px);
         .w(280px);
         .auto(x);
         .x;
     }
-    .u-title{
+    .u-title {
         .nobreak;
-        .fz(1rem,2);
+        .fz(1rem, 2);
         .bold;
-        color:#fff;
+        color: #fff;
     }
 
-    .u-author{
+    .u-author {
         // .pa;.lt(50%);
         // transform: translate3d(-50%,-50%,0);
-        img{
+        img {
             .r(2px);
             .size(20px);
             .y;
         }
-        img{
+        img {
             .mr(5px);
         }
-        span{
-            .fz(13px,2.5);
-            color:#ccc;
+        span {
+            .fz(13px, 2.5);
+            color: #ccc;
         }
     }
 
-    .u-desc{
+    .u-desc {
         .mt(10px);
         color: #ccc;
         font-size: 13px;
@@ -153,30 +166,30 @@ import {get_plan} from '../service/item.js'
         box-sizing: border-box;
     }
 
-    .u-time{
+    .u-time {
         // .x(right);
-        color:#999;
+        color: #999;
         .fz(12px);
         // .mt(5px);
     }
 
-    .u-qrcodebox{
+    .u-qrcodebox {
         .mt(60px);
         .w(140px);
         .auto(x);
 
-        .w-qrcode-static{
-            .u-txt{
+        .w-qrcode-static {
+            .u-txt {
                 .mt(10px);
-                color:#999;
-                .fz(12px,16px);
+                color: #999;
+                .fz(12px, 16px);
             }
-            svg{
-                fill:#999;
+            svg {
+                fill: #999;
                 .size(16px);
                 .y(-4px);
             }
-            .u-pic{
+            .u-pic {
                 padding: 10px 8px 8px 8px;
                 border-radius: 2px;
             }
@@ -184,105 +197,105 @@ import {get_plan} from '../service/item.js'
     }
 
     .pr;
-    .u-equip{
+    .u-equip {
         .pa;
-        .u-name{.none;}
-        .u-uiid{.none;}
+        .u-name {
+            .none;
+        }
+        .u-uiid {
+            .none;
+        }
     }
 
-    .u-equip-weapon_1{
-        .lt(170px,630px);
+    .u-equip-weapon_1 {
+        .lt(170px, 630px);
     }
-    .u-equip-weapon_2{
-        .lt(240px,630px);
-    }
-
-    .u-equip-cap{
-        .lt(12px,90px);
+    .u-equip-weapon_2 {
+        .lt(240px, 630px);
     }
 
-    .u-equip-cloth{
-        .lt(12px,270px);
+    .u-equip-cap {
+        .lt(12px, 90px);
     }
 
-    .u-equip-belt{
-        .lt(12px,450px);
+    .u-equip-cloth {
+        .lt(12px, 270px);
     }
 
-    .u-equip-wrist{
-        .lt(400px,90px);
+    .u-equip-belt {
+        .lt(12px, 450px);
     }
 
-    .u-equip-trousers{
-        .lt(400px,180px);
+    .u-equip-wrist {
+        .lt(400px, 90px);
     }
 
-    .u-equip-shoes{
-        .lt(400px,270px);
+    .u-equip-trousers {
+        .lt(400px, 180px);
     }
 
-    .u-equip-necklace{
-        .lt(400px,360px);
+    .u-equip-shoes {
+        .lt(400px, 270px);
     }
 
-    .u-equip-pendant{
-        .lt(400px,450px);
+    .u-equip-necklace {
+        .lt(400px, 360px);
     }
 
-    .u-equip-ring_1{
-        .lt(400px,540px);
+    .u-equip-pendant {
+        .lt(400px, 450px);
     }
 
-    .u-equip-ring_2{
-        .lt(400px,630px);
+    .u-equip-ring_1 {
+        .lt(400px, 540px);
     }
 
-
-    .u-misc{
-        .pa;.lt(30px,630px);
+    .u-equip-ring_2 {
+        .lt(400px, 630px);
     }
 
-    .u-logo{
+    .u-misc {
+        .pa;
+        .lt(30px, 630px);
+    }
+
+    .u-logo {
         .db;
-        svg,span{
-            transition:0.2s ease-in-out;
+        svg,
+        span {
+            transition: 0.2s ease-in-out;
         }
-        svg{
+        svg {
             .size(56px);
-            fill:#fff;
+            fill: #fff;
         }
-        span{
+        span {
             .db;
-            color:#fff;
+            color: #fff;
             font-family: Consolas;
             .fz(12px);
             // .bold;
         }
-        &:hover{
-            span{
-                color:#0cf;
+        &:hover {
+            span {
+                color: #0cf;
             }
-            svg{
-                fill:#0cf;
+            svg {
+                fill: #0cf;
             }
         }
     }
 
-    .u-meta{
+    .u-meta {
         // .mt(5px);
         .fz(12px);
         .db;
         // color:#1bbfe0;
-        color:#fff;
+        color: #fff;
         // &:hover{
         //     color:#ff0;
         // }
         // .pa;.lb(20px,20px);
     }
-
-    
-
-    
 }
-    
 </style>

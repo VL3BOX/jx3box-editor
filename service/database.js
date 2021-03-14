@@ -1,5 +1,5 @@
 import axios from "axios";
-import { __node, __helperUrl, __iconPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __node, __helperUrl, __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 const API = __node; 
 
 function loadResource(type, query, params) {

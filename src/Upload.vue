@@ -96,11 +96,11 @@
 
 <script>
 import axios from "axios";
-import { __server } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __server } from "@jx3box/jx3box-common/data/jx3box.json";
 const API = __server + "upload";
 
-import allow_types from "@jx3box/jx3box-common/js/conf";
-const imgtypes = ["jpg", "png", "gif", "bmp","webp"];
+import allow_types from "@jx3box/jx3box-common/data/conf";
+const imgtypes = ["jpg", "png", "gif", "bmp", "webp"];
 
 export default {
     name: "Upload",
@@ -195,19 +195,19 @@ export default {
                 file.selected ? this.selectedCount++ : this.selectedCount--;
             }
         },
-        buildHTML : function (){
+        buildHTML: function() {
             let list = [];
             this.fileList.forEach((file) => {
                 if (file.selected) {
                     file.is_img
                         ? list.push(`<img src="${file.url}" />`)
                         : list.push(
-                                `<a target="_blank" href="${file.url}">${file.name}</a>`
-                            );
+                              `<a target="_blank" href="${file.url}">${file.name}</a>`
+                          );
                 }
             });
-            this.insertList = list.join(" \n"); 
-            return this.insertList 
+            this.insertList = list.join(" \n");
+            return this.insertList;
         },
         insert: function() {
             // 关闭窗口
@@ -249,5 +249,5 @@ export default {
 </script>
 
 <style lang="less">
-    @import '../assets/css/upload.less';
+@import "../assets/css/upload.less";
 </style>
