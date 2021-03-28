@@ -16,7 +16,7 @@
             >进入特殊区域（代码块，折叠块等等）脱离或使用工具栏触发后，请使用键盘方向
             → ↓
             键进行脱离，回车只是正常在区块内换行。去掉样式点击第二行第一个&lt;清除格式&gt;即可复位。<a
-                href="https://www.jx3box.com/tool/?pid=16227#/"
+                href="https://www.jx3box.com/tool/16227"
                 target="_blank"
                 >[编辑器使用指南]</a
             >
@@ -60,19 +60,19 @@ export default {
                 contextmenu: "",
                 plugins: [
                     "link autolink",
-                    "hr lists advlist table codeinline codesample checklist foldtext mathjax",
+                    "hr lists advlist table codeinline codesample checklist foldtext latex",
                     "image emoticons media videox macro qixue",
                     "autosave code fullscreen wordcount powerpaste pagebreak printpage", // template anchor jx3icon
                 ],
                 toolbar: [
                     "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | restoredraft fullscreen code",
-                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample mathjax | emoticons image media videox | macro qixue pagebreak printpage", // template anchor jx3icon
+                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample latex | emoticons image media videox | macro qixue pagebreak printpage", // template anchor jx3icon
                 ],
                 mobile: {
                     toolbar_drawer: true,
                     toolbar: [
                         "undo emoticons bold forecolor backcolor removeformat pagebreak fullscreen",
-                        "hr alignleft aligncenter alignright alignjustify indent outdent bullist numlist checklist table blockquote codesample mathjax macro qixue media",
+                        "hr alignleft aligncenter alignright alignjustify indent outdent bullist numlist checklist table blockquote codesample latex macro qixue media",
                     ],
                 },
                 block_formats:

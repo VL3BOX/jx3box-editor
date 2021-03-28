@@ -8,6 +8,7 @@ $ npm install
 $ npm run serve
 $ open http://localhost:8080  //文章渲染
 $ open http://localhost:8080/tinymce  //编辑器
+$ tinymce http://localhost:5000
 ```
 
 ## Step.1 Install

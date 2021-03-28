@@ -1,5 +1,4 @@
-export default `<a class="e-jx3-item e-jx3-item-q4" href="https://www.jx3box.com/item/#/view/10_310" data-id="10_310" data-quality="4" data-mce-href="https://www.jx3box.com/item/#/view/10_310" data-mce-selected="inline-boundary">[我独醒椅]&#65279;</a>  <a class="e-jx3-item e-jx3-item-q5" target="_blank" data-id="6_4396" data-quality="5">[幽月·乱花]</a>
-
+export default `<p><a class="e-jx3-item e-jx3-item-q4" href="https://www.jx3box.com/item/#/view/10_310" data-id="10_310" data-quality="4">[我独醒椅]</a> <a class="e-jx3-item e-jx3-item-q5" target="_blank" data-id="6_4396" data-quality="5">[幽月·乱花]</a></p>
 <h1 style="text-align: center;">团队监控数据完全指南</h1>
 <h2 style="text-align: center;">（二） 团控数据基本结构</h2>
 <h4>空数据</h4>
