@@ -60,7 +60,6 @@ import execFilterLink from "../assets/js/a";
 import execSplitPages from "../assets/js/nextpage";
 
 // 扩展文本
-import $ from "jquery";
 import renderFoldBlock from "../assets/js/fold";
 import renderDirectory from "../assets/js/directory";
 import renderMacro from "../assets/js/macro";
@@ -134,7 +133,7 @@ export default {
                 Gallery.init(this.$refs.article);
             }
             // 物品
-            renderItem();
+            renderItem(this);
         },
         doDir: function() {
             // 显示局部
