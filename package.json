@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-editor",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "description": "JX3BOX Article & Editor",
     "main": "index.js",
     "scripts": {
@@ -40,6 +40,7 @@
         "csslab": "^4.0.3",
         "element-ui": "^2.13.2",
         "jquery": "^3.5.1",
+        "katex": "^0.13.0",
         "lodash": "^4.17.15",
         "photoswipe": "^4.1.2",
         "prismjs": "^1.20.0",

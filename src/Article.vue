@@ -42,8 +42,6 @@ import { Pagination, Button, Popover } from "element-ui";
 import "@jx3box/jx3box-common/css/element.css";
 // 语法高亮
 import Prism from "prismjs";
-// 数学公式
-const MathJax = require("../assets/js/tex-mml-chtml.js");
 // 相册
 import Gallery from "../assets/js/pswp.js";
 // 剑三物品
@@ -67,6 +65,8 @@ import renderFoldBlock from "../assets/js/fold";
 import renderDirectory from "../assets/js/directory";
 import renderMacro from "../assets/js/macro";
 import renderTalent from "../assets/js/qixue";
+import renderKatex from "../assets/js/katex";
+import renderItem from "../assets/js/item";
 
 export default {
     name: "Article",
@@ -119,19 +119,22 @@ export default {
             }
         },
         doDOM: function($root) {
-            // DOM操作
-
+            // 折叠块
             renderFoldBlock($root);
+            // 宏
             renderMacro();
+            // 奇穴
             renderTalent();
-
+            // 代码
             $root && Prism.highlightAllUnder($root);
-            window.MathJax && window.MathJax.typesetPromise();
+            // Tatex
+            renderKatex()
+            // 画廊
             if (this.mode != "app_web") {
                 Gallery.init(this.$refs.article);
             }
-
-            this.renderItem();
+            // 物品
+            renderItem();
         },
         doDir: function() {
             // 显示局部
@@ -165,47 +168,6 @@ export default {
                 result.push(_chunk);
             }
             this.data = result;
-        },
-        renderItem(selector = ".e-jx3-item") {
-            const vm = this;
-            let outer,inner
-
-            $(".e-jx3-item").on('mouseenter',function(e) {
-                clearTimeout(outer)
-
-                vm.item_id = $(e.target).attr("data-id");
-                $('.c-item-pop').fadeIn()
-
-                // 不用看了，大概就是如果自身高度比当前鼠标位置屏幕剩余位置高就向上位移，按理直接位移指定差值就可以
-                // 但贴底不好看，再往上挪了100，按理应该还要算一下会不会在上面也溢出的，不是专业组件就先这样手打用着啊
-                // 命名就这样先狗屎吧，等有空来改
-                let self_height = $('.c-item-pop').height()
-                let win_height = window.innerHeight
-                let current_y = e.clientY
-                let will_stay_y = e.clientY + 10
-
-
-                if(self_height && ((win_height - current_y) < self_height)){
-                    will_stay_y = current_y - (self_height - (win_height - current_y)) - 100
-                }
-                vm.item_popover_style.left = e.clientX + 10 + 'px';
-                vm.item_popover_style.top = will_stay_y + 'px';
-            });
-            $('.e-jx3-item').on('mouseleave',function (e){
-                outer = setTimeout(() => {
-                    $('.c-item-pop').fadeOut()
-                },380)
-            })
-            $('.c-item-pop').on('mouseenter',function (e){
-                clearTimeout(outer)
-                $('.c-item-pop').fadeIn()
-            })
-            $(".c-item-pop").on("mouseleave", function(e) {
-                clearTimeout(inner)
-                inner = setTimeout(() => {
-                    $('.c-item-pop').fadeOut()
-                },280)
-            });
         },
         run: function() {
             this.render();

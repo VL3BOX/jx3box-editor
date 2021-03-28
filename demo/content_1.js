@@ -1,5 +1,5 @@
 export default 
-`<span class="math-tex">\\( a^2+b^2=c^2 \\)</span>
+`
 <a href="https://oss.jx3box.com/2020/01/%E5%87%8C%E9%9B%AA%E9%98%81%E8%AE%A1%E7%AE%97%E5%99%A83.2%EF%BC%88%E6%9B%B4%E6%96%B0%E5%A4%A7%E9%99%84%E9%AD%94%EF%BC%89.xlsx">凌雪阁计算器</a>
 <h1>一级标题·字体111111111111111111111111111</h1>
 <p><span style="font-size: 12px;">12px字体</span>，<span style="font-size: 14px;">14px字体</span>，16px字体，<span style="font-size: 18px;">18px字体</span>，<span style="font-size: 22px;">22px字体</span>，<span style="font-size: 24px;">24px字体</span>，<span style="font-size: 26px;">26px字体</span>，<span style="font-size: 26px;">28px字体</span>，<span style="font-size: 32px;">32px字体</span>，<span style="font-size: 48px;">48px字体</span>，<span style="font-size: 72px;">72px字体</span></p>

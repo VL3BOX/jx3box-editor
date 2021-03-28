@@ -48,7 +48,7 @@ export default {
                 convert_urls: false,
 
                 // 样式
-                // content_css: `https://oss.jx3box.com/static/jx3box-editor/tinymce.css`,
+                content_css: `https://oss.jx3box.com/static/tinymce/skins/content/default/content.min.css`,
                 body_class: "c-article c-article-editor",
                 height: this.height || 800,
                 autosave_ask_before_unload: false,
@@ -129,14 +129,6 @@ export default {
                     "000000",
                     "黑色",
                 ],
-                mathjax: {
-                    lib:
-                        "https://oss.jx3box.com/static/tinymce/plugins/mathjax/tex-mml-chtml.js", //required path to mathjax
-                    //symbols: {start: '\\(', end: '\\)'}, //optional: mathjax symbols
-                    className: "math-tex", //optional: mathjax element class
-                    configUrl:
-                        "https://oss.jx3box.com/static/tinymce/plugins/mathjax/config.js", //optional: mathjax config js
-                },
 
                 // Image
                 image_advtab: true,
