@@ -11,14 +11,19 @@
                 :id="'c-article-part' + ~~(i + 1)"
             ></div>
         </div>
-        <div id="c-article" class="c-article" ref="article" v-else-if="data && data.length" v-html="data[0]"></div>
+        <div
+            id="c-article"
+            class="c-article"
+            ref="article"
+            v-else-if="data && data.length"
+            v-html="data[0]"
+        ></div>
         <el-button
             class="c-article-all"
             type="primary"
             v-if="!all && hasPages"
             @click="showAll"
-            >加载全部</el-button
-        >
+        >加载全部</el-button>
         <el-pagination
             class="c-article-pages"
             v-if="!all"
@@ -29,11 +34,11 @@
             :current-page="page"
             layout="total, prev, pager, next, jumper"
             :total="total"
-        >
-        </el-pagination>
+        ></el-pagination>
         <div class="c-item-pop" :style="item_popover_style">
             <jx3-item :item_id="item_id" />
         </div>
+        <gallery :images="images" :index="gallery_index" @close="index = null"></gallery>
     </div>
 </template>
 
@@ -43,7 +48,7 @@ import "@jx3box/jx3box-common/css/element.css";
 // 语法高亮
 import Prism from "prismjs";
 // 相册
-import Gallery from "../assets/js/pswp.js";
+import gallery from "vue-gallery-slideshow";
 // 剑三物品
 import Item from "./Item";
 // XSS
@@ -66,46 +71,51 @@ import renderMacro from "../assets/js/macro";
 import renderTalent from "../assets/js/qixue";
 import renderKatex from "../assets/js/katex";
 import renderItem from "../assets/js/item";
+import renderGallery from "../assets/js/gallery";
 
 export default {
     name: "Article",
     props: {
-        "content": String,
-        "directorybox": String,
-        "pageable": {
+        content: String,
+        directorybox: String,
+        pageable: {
             type: Boolean,
-            default: true
-        }
+            default: true,
+        },
     },
-    data: function() {
+    data: function () {
         return {
             all: false,
             page: 1,
             data: [],
             mode: "",
+            // 物品
             item_id: "",
             item_popover_style: {
                 left: 0,
                 top: 0,
             },
+            // 画廊
+            gallery_index: null,
+            images: [],
         };
     },
     computed: {
-        total: function() {
+        total: function () {
             return this.chunks.length;
         },
-        hasPages: function() {
+        hasPages: function () {
             return this.chunks.length > 1;
         },
-        origin: function() {
+        origin: function () {
             return this.content;
         },
-        chunks: function() {
+        chunks: function () {
             return this.pageable ? execSplitPages(this.origin) : [this.origin];
         },
     },
     methods: {
-        doReg: function(data) {
+        doReg: function (data) {
             if (data) {
                 // 过滤内容
                 data = execLazyload(data);
@@ -117,25 +127,24 @@ export default {
                 return "";
             }
         },
-        doDOM: function($root) {
+        doDOM: function ($root) {
             // 折叠块
             renderFoldBlock($root);
+            // 代码
+            $root && Prism.highlightAllUnder($root);
+            // Tatex
+            renderKatex();
+
+            // 画廊（需要在宏、奇穴、物品等之前渲染以排除下方自动生成图片）
+            renderGallery(this)
             // 宏
             renderMacro();
             // 奇穴
             renderTalent();
-            // 代码
-            $root && Prism.highlightAllUnder($root);
-            // Tatex
-            renderKatex()
-            // 画廊
-            if (this.mode != "app_web") {
-                Gallery.init(this.$refs.article);
-            }
             // 物品
             renderItem(this);
         },
-        doDir: function() {
+        doDir: function () {
             // 显示局部
             let target = "";
             if (this.hasPages && !this.all) {
@@ -147,20 +156,20 @@ export default {
             let dir = renderDirectory(target, this.directorybox);
             if (dir) this.$emit("directoryRendered");
         },
-        changePage: function(i) {
+        changePage: function (i) {
             this.page = i;
             window.scrollTo(0, 0);
             this.$nextTick(() => {
                 this.doDir();
             });
         },
-        showAll: function() {
+        showAll: function () {
             this.all = true;
             this.$nextTick(() => {
                 this.doDir();
             });
         },
-        render: function() {
+        render: function () {
             let result = [];
             for (let chunk of this.chunks) {
                 let _chunk = this.doReg(chunk);
@@ -168,7 +177,7 @@ export default {
             }
             this.data = result;
         },
-        run: function() {
+        run: function () {
             this.render();
 
             // 等待html加载完毕后
@@ -186,11 +195,11 @@ export default {
         },
     },
     watch: {
-        content: function() {
+        content: function () {
             this.run();
         },
     },
-    mounted: function() {
+    mounted: function () {
         const params = new URLSearchParams(location.search);
         this.mode = params.get("mode") || "";
         this.run();
@@ -200,6 +209,7 @@ export default {
         "el-button": Button,
         // "el-popover": Popover,
         "jx3-item": Item,
+        "gallery":gallery,
     },
 };
 </script>

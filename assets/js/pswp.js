@@ -63,7 +63,6 @@ class Gallery {
             );
 
             pswp.init();
-            console.log(pswp);
         }
     }
 }
