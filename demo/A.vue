@@ -11,6 +11,7 @@
             @contentRendered="test1"
             @directoryRendered="test2"
         ></Article>
+        <div id="directory"></div>
     </div>
 </template>
 
