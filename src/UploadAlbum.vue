@@ -1,44 +1,35 @@
 <template>
     <div class="c-upload-album">
-        <el-upload
-            :action="API"
-            with-credentials
-            list-type="picture-card"
-            :auto-upload="false"
-            :accept="accept"
-            :limit="10"
-            multiple
-            :file-list="fileList"
-            :on-change="change"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            ref="uploadbox"
-        >
-            <i slot="default" class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
+        <Upload @insert="updateFileList" text="批量上传图片" />
+        <div class="c-upload-album-list" v-if="imgList && imgList.length">
+            <draggable v-model="imgList">
+                <transition-group>
+                    <div class="u-album-item" v-for="(item,i) in imgList" :key="i">
+                        <img class="u-pic" :src="item.url | showThumbnail" />
+                        <i class="u-mask"></i>
+                        <i class="u-op u-preview el-icon-zoom-in" @click="previewHandle(item)"></i>
+                        <i class="u-op u-delete el-icon-delete" @click="deleteHandle(i)"></i>
+                    </div>
+                </transition-group>
+            </draggable>
+        </div>
+        <el-dialog class="c-upload-album-preview" :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt />
         </el-dialog>
     </div>
 </template>
 
 <script>
-import allow_types from "@jx3box/jx3box-common/data/conf";
-import { __server } from "@jx3box/jx3box-common/data/jx3box.json";
-import axios from "axios";
-// import draggable from 'vuedraggable'
-const imgtypes = ["jpg", "png", "gif", "bmp"];
-const API = __server + "upload";
-// const API = 'http://localhost:5160/' + "upload";
+import Upload from "./Upload.vue";
+import { getThumbnail } from "@jx3box/jx3box-common/js/utils.js";
+import draggable from "vuedraggable";
+
 export default {
     name: "album",
     props: ["data"],
     data: function () {
         return {
-            API,
-            fileList: this.data || [],
-            accept: allow_types.accept,
-            sizeLimit: allow_types.sizeLimit,
+            imgList: this.data || [],
             dialogImageUrl: "",
             dialogVisible: false,
         };
@@ -52,137 +43,111 @@ export default {
             immediate: true,
             deep: true,
             handler: function (newval) {
-                this.fileList = newval || [];
+                this.imgList = newval || [];
             },
         },
-        fileList: {
+        imgList: {
             deep: true,
             handler: function (newval) {
-                this.$emit("update", this.imglist);
+                this.$emit("update", newval);
             },
         },
     },
-    computed: {
-        imglist: function () {
-            let imglist = [];
-            this.fileList.forEach((img) => {
-                imglist.push({
-                    name: img.name,
-                    url: img.url,
-                });
-            });
-            return imglist;
-        },
-    },
+    computed: {},
     methods: {
-        change: function (file, fileList) {
-            if (file.status != "success") {
-                // 判断大小
-                if (file.size > this.sizeLimit) {
-                    this.$message.error("文件超出大小限制");
-                    this.removeFile(fileList, file.uid);
-                    return;
-                }
-
-                // 构建数据
-                let fdata = new FormData();
-                fdata.append("file", file.raw);
-
-                // 异步上传
-                axios
-                    .post(API, fdata, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                        withCredentials: true,
-                    })
-                    .then((res) => {
-                        // 提醒
-                        this.$message({
-                            message: "上传成功",
-                            type: "success",
-                        });
-
-                        // 修改path
-                        file.url = res.data.data.list[0];
-
-                        // // 分析文件类型
-                        // let ext = file.name.split(".").pop();
-                        // let is_img = imgtypes.includes(ext);
-
-                        // // 额外赋值
-                        // file.is_img = is_img;
-                        // file.selected = false;
-
-                        // 修改状态加入仓库
-                        file.status = "success";
-                        this.fileList.push(file);
+        updateFileList: function (data) {
+            let upload_list = data.list;
+            let img_list = [];
+            upload_list.forEach((item) => {
+                if (item.is_img) {
+                    img_list.push({
+                        name: item.name,
+                        url: item.url,
                     });
-            }
+                }
+            });
+            this.imgList = img_list;
         },
-        handleRemove(file, fileList) {
-            this.fileList = fileList;
-        },
-        handlePictureCardPreview(file) {
-            this.dialogImageUrl = file.url;
+        previewHandle: function (item) {
+            this.dialogImageUrl = item.url;
             this.dialogVisible = true;
         },
-        removeFile: function (fileList, uid) {
-            fileList.forEach((file, i) => {
-                if (file.uid == uid) {
-                    fileList.splice(i, 1);
-                }
-            });
+        deleteHandle: function (i) {
+            this.imgList.splice(i, 1);
+        },
+    },
+    filters: {
+        showThumbnail: function (val) {
+            return getThumbnail(val, 146);
         },
     },
     mounted: function () {},
     components: {
-        // draggable
+        draggable,
+        Upload,
     },
 };
 </script>
 
 <style lang="less">
-.c-upload-album {
-    .el-dialog__body {
-        padding-top: 0;
-    }
+.c-upload-album-list {
+    border: 2px dashed #eee;
+    padding: 8px 0 0 8px;
+    margin-top: 20px;
+    .r(4px);
 
-    .el-upload-list li {
-        outline: none;
-    }
-
-    .el-upload-list__item {
+    .u-album-item {
+        .pr;
+        .size(148px);
+        img {
+            .db;
+            .size(100%);
+        }
+        overflow: hidden;
+        background-color: #fff;
+        border: 1px solid #c0ccda;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0 8px 8px 0;
+        display: inline-block;
         &:hover {
-            border: 1px solid #13ce66;
-        }
-    }
-
-    // 列表
-    .u-file-wrapper {
-        .size(100%);
-        &.isSelected {
-        }
-        &.disabled {
-            cursor: default;
-            opacity: 0.38;
-            border-color: #eee;
-            .u-fileplaceholder {
-                fill: #aaa;
+            .u-mask,
+            .u-op {
+                .db;
             }
         }
+    }
+
+    .u-mask,
+    .u-op {
+        .pa;
+        .none;
+    }
+    .u-op {
         .pointer;
     }
-    .u-filebox {
-        .x;
-        padding: 37px;
+    .u-mask {
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: opacity 0.3s;
+        .lt(0);
+        .size(100%);
+        .none;
+        cursor: move;
     }
-    .u-fileplaceholder {
-        width: 40px;
-        height: 40px;
-        fill: @primary;
+    .u-delete,
+    .u-preview {
+        .fz(20px);
+        color: #fff;
+        .lt(50%);
+        .size(20px);
+        transform: translate(-50%, -50%);
     }
-    .u-filename {
-        .db;
-        .nobreak;
+    .u-delete {
+        .ml(20px);
+    }
+    .u-preview {
+        .ml(-20px);
     }
 }
 </style>
