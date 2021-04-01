@@ -4,7 +4,7 @@
         <div class="c-upload-album-list" v-if="imgList && imgList.length">
             <draggable v-model="imgList">
                 <transition-group>
-                    <div class="u-album-item" v-for="(item,i) in imgList" :key="i">
+                    <div class="u-album-item" v-for="(item,i) in imgList" :key="item">
                         <img class="u-pic" :src="item.url | showThumbnail" />
                         <i class="u-mask"></i>
                         <i class="u-op u-preview el-icon-zoom-in" @click="previewHandle(item)"></i>
