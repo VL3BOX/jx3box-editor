@@ -29,8 +29,8 @@ import Editor from "@tinymce/tinymce-vue";
 import Upload from "./Upload";
 import Resource from "./Resource";
 import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
-const API = __cms + "api/cms/upload/tinymce";
-// const API = 'http://localhost:5120/' + "api/cms/upload/tinymce";
+const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
+const API = API_Root + "api/cms/upload/tinymce";
 
 export default {
     name: "Tinymce",
