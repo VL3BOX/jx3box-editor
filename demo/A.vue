@@ -4,6 +4,7 @@
         <ItemSimple :item="item2" only-icon="true" iconSize="56px" />
         <ItemSimple :item="item3" only-icon="true" iconSize="56px" />
         <ItemSimple :item="item4" only-icon="true" iconSize="56px" />
+        <buff-simple :buff="buff" only-icon iconSize="56px" />
         <Article
             :content="content"
             directorybox="#directory"
@@ -17,9 +18,11 @@
 
 <script>
 import ItemSimple from "../src/ItemSimple.vue";
+import BuffSimple from '../src/BuffSimple.vue';
 import Article from "../src/Article.vue";
 import demohtml from "./content";
 import {get_item} from "../service/item";
+import { get_buff } from '../service/buff'
 export default {
     name: "A",
     props: [],
@@ -30,6 +33,7 @@ export default {
             item2: null,
             item3: null,
             item4: null,
+            buff: null
         };
     },
     computed: {},
@@ -47,6 +51,13 @@ export default {
         //         this.content = data.data.post.post_content
         //     })
         // });
+
+        get_buff('16911').then(res => {
+            const data = res.data
+            const [buffItem] = data.list
+            console.log(buffItem)
+            this.buff = buffItem
+        })
 
         get_item('10_310').then((res) => {
             let data = res.data;
@@ -83,6 +94,7 @@ export default {
     components: {
         Article,
         ItemSimple,
+        BuffSimple
     },
 };
 </script>
