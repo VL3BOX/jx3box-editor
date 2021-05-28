@@ -6,7 +6,8 @@ const get_skill = (skill_id) => {
   if (!skill_id) return
   return $http({
     method: 'GET',
-    url: `${__node}api/skill/${skill_id}`,
+    // https://node.jx3box.com/skill/id/103?strict=0&per=10&page=1
+    url: `${__node}skill/id/${skill_id}`,
     headers: {Accept: "application/prs.helper.v2+json"},
     withCredentials: true,
   })

@@ -52,7 +52,7 @@ export default {
         //     })
         // });
 
-        get_buff('16911').then(res => {
+        get_buff('218').then(res => {
             const data = res.data
             const [buffItem] = data.list
             console.log(buffItem)

@@ -7,14 +7,6 @@
   padding: 2px;
   font-family: "SimHei", "STHeiti", "Microsoft YaHei";
 
-  &.c-buff-equipment {
-      width: @max-width;
-  }
-
-  &.c-buff-furniture {
-      min-width: 200px;
-  }
-
   * {
       box-sizing: border-box;
   }
@@ -61,128 +53,8 @@
       .u-desc {
           margin: 0;
       }
-
-      .u-orange {
-          color: #ffa500;
-      }
-
-      .u-yellow {
-          color: #ffff00;
-      }
-
-      .u-green {
-          color: #00d24b;
-      }
-
-      .u-white {
-          color: #ffffff;
-      }
-
-      .u-gray {
-          color: #adadad;
-      }
-
-      .u-max-strength-level {
-          .pr;
-          color: #7ee3a3;
-
-          span {
-              .pa;
-              top: 0;
-              right: 0;
-          }
-      }
-
-      .u-max-exist-time {
-          color: #cfcfcf;
-      }
-
-      .u-weapon-type-label {
-          & + .u-type-label {
-              .fr;
-              transform: translateY(-100%);
-          }
-      }
-
-      .u-attributes {
-          .pr;
-          padding-right: @field-padding-right;
-
-          .u-orange {
-              color: #ff9600;
-          }
-
-          .u-green {
-              color: #00c848;
-          }
-
-          .u-speed {
-              .pa;
-              top: 0;
-              right: 0;
-          }
-
-          .u-horse-attribute {
-              .u-horse-icon {
-                  float: left;
-                  .w(22px);
-                  .mt(3px);
-
-                  & + .u-horse-desc {
-                      .ml(22px);
-                  }
-              }
-          }
-      }
-
-      .u-diamonds {
-          margin: 0;
-          padding: 0;
-          list-style: none;
-
-          .u-diamond {
-              .u-square,
-              .u-text {
-                  display: inline-block;
-                  vertical-align: middle;
-              }
-
-              .u-square {
-                  width: 1.1em;
-                  height: 1.1em;
-                  margin-right: 3px;
-                  border: 1px solid #999999;
-              }
-
-              .u-text {
-                  margin-top: -1px;
-              }
-          }
-      }
-
-      .u-can-shared {
-          color: #4fff6c;
-      }
-
-      .u-furniture-can {
-          span {
-              .pr(10px);
-          }
-      }
   }
 }
-
-// .c-buff-popup {
-//     position: fixed;
-//     .z(99999);
-// }
-
-// .c-buff-popover {
-//     padding: 0;
-//     background-color: transparent;
-//     box-shadow: none;
-//     transform: translateY(-8px);
-// }
 
 .c-buff-pop{
   position: fixed;

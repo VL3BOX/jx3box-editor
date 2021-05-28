@@ -1,12 +1,11 @@
 <template>
     <div v-if="buffInfo" class="c-buff">
         <div class="c-buff-wrapper">
-            <!-- {{ buffInfo }} -->
             <!-- buff 名称 -->
             <h4 class="u-title" v-text="buffInfo.Name"></h4>
 
             <!-- buff 描述 -->
-            <div v-text="buffInfo.Desc"></div>
+            <div class="u-desc" v-text="buffInfo.Desc"></div>
         </div>
     </div>
 </template>
