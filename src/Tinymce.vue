@@ -5,6 +5,9 @@
             <Resource v-if="resourceEnable" @insert="insertResource" />
             <slot></slot>
         </div>
+        <div>
+            <Emotion @selected="emotionSelected"></Emotion>
+        </div>
         <editor
             id="tinymce"
             v-model="data"
@@ -29,6 +32,8 @@ import Editor from "@tinymce/tinymce-vue";
 import Upload from "./Upload";
 import Resource from "./Resource";
 import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
 const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
 const API = API_Root + "api/cms/upload/tinymce";
 
@@ -181,12 +186,18 @@ export default {
         insertResource: function(data) {
             tinyMCE.editors["tinymce"].insertContent(data);
         },
+        emotionSelected: function(key) {
+            const pathKey = key.slice(1);
+            const IMAGE = `<img class="t-emotion" src="${__ossRoot}image/emotion/${pathKey}.gif" alt="${key}" />`
+            tinyMCE.editors["tinymce"].insertContent(IMAGE)
+        }
     },
     mounted: function() {},
     components: {
         Editor,
         Upload,
         Resource,
+        Emotion
     },
 };
 </script>

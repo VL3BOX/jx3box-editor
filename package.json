@@ -32,6 +32,7 @@
     "dependencies": {
         "@jx3box/jx3box-common": "^6.3.5",
         "@jx3box/jx3box-data": "^0.2.9",
+        "@jx3box/jx3box-emotion": "^1.0.4",
         "@jx3box/jx3box-macro": "^1.0.1",
         "@jx3box/jx3box-talent": "^1.0.9",
         "@tinymce/tinymce-vue": "^3.2.2",
