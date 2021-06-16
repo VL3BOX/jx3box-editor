@@ -8,7 +8,7 @@
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
         "inspect": "vue inspect > output.js",
-        "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest @jx3box/jx3box-macro@latest @jx3box/jx3box-talent@latest",
+        "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest @jx3box/jx3box-macro@latest @jx3box/jx3box-talent@latest @jx3box/jx3box-emotion@latest",
         "article": "vue-cli-service build --target lib --name jx3box_article src/Article.vue --mode production",
         "tinymce": "vue-cli-service build --target lib --name tinymce src/Tinymce.vue && cp public/tinymce.html dist/tinymce.html"
     },
@@ -30,11 +30,11 @@
         "last 2 versions"
     ],
     "dependencies": {
-        "@jx3box/jx3box-common": "^6.3.5",
+        "@jx3box/jx3box-common": "^6.4.6",
         "@jx3box/jx3box-data": "^0.2.9",
         "@jx3box/jx3box-emotion": "^1.0.4",
         "@jx3box/jx3box-macro": "^1.0.1",
-        "@jx3box/jx3box-talent": "^1.0.9",
+        "@jx3box/jx3box-talent": "^1.1.0",
         "@tinymce/tinymce-vue": "^3.2.2",
         "axios": "^0.19.2",
         "core-js": "^3.6.5",
