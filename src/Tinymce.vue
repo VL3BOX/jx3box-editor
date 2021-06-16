@@ -5,9 +5,7 @@
             <Resource v-if="resourceEnable" @insert="insertResource" />
             <slot></slot>
         </div>
-        <div>
-            <Emotion @selected="emotionSelected"></Emotion>
-        </div>
+        <Emotion class="c-editor-emotion" @selected="emotionSelected"></Emotion>
         <editor
             id="tinymce"
             v-model="data"
