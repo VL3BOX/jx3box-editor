@@ -1,10 +1,10 @@
 <template>
     <div class="c-upload-album">
         <Upload @insert="updateFileList" text="批量上传图片" />
-        <div class="c-upload-album-list" v-if="imgList && imgList.length">
-            <draggable v-model="imgList">
+        <div class="c-upload-album-list">
+            <draggable v-model="imgList" v-if="imgList && imgList.length">
                 <transition-group>
-                    <div class="u-album-item" v-for="(item,i) in imgList" :key="item">
+                    <div class="u-album-item" v-for="(item,i) in imgList" :key="i">
                         <img class="u-pic" :src="item.url | showThumbnail" />
                         <i class="u-mask"></i>
                         <i class="u-op u-preview el-icon-zoom-in" @click="previewHandle(item)"></i>
@@ -12,6 +12,7 @@
                     </div>
                 </transition-group>
             </draggable>
+            <div class="u-null"><i class="el-icon-warning-outline"></i> 当前没有任何图片</div>
         </div>
         <el-dialog class="c-upload-album-preview" :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt />
@@ -96,9 +97,17 @@ export default {
     margin-top: 20px;
     .r(4px);
 
+    @h:148px;
+    min-height:@h;
+    .u-null{
+        .x;
+        .fz(12px,@h);
+        color:#999;
+    }
+
     .u-album-item {
         .pr;
-        .size(148px);
+        .size(@h);
         img {
             .db;
             .size(100%);
