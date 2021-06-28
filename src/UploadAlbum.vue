@@ -4,7 +4,7 @@
         <div class="c-upload-album-list">
             <draggable v-model="imgList" v-if="imgList && imgList.length">
                 <transition-group>
-                    <div class="u-album-item" v-for="(item,i) in imgList" :key="i">
+                    <div class="u-album-item" v-for="(item,i) in imgList" :key="item.name + item.url">
                         <img class="u-pic" :src="item.url | showThumbnail" />
                         <i class="u-mask"></i>
                         <i class="u-op u-preview el-icon-zoom-in" @click="previewHandle(item)"></i>
@@ -12,7 +12,7 @@
                     </div>
                 </transition-group>
             </draggable>
-            <div class="u-null"><i class="el-icon-warning-outline"></i> 当前没有任何图片</div>
+            <div class="u-null" v-else><i class="el-icon-warning-outline"></i> 当前没有任何图片</div>
         </div>
         <el-dialog class="c-upload-album-preview" :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt />
