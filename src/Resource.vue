@@ -114,7 +114,7 @@
                                 @click="selectCommon('buff', o, i)"
                                 ref="buff"
                             >
-                                <span class="u-id">ID:{{ o.BuffID }}</span>
+                                <span class="u-id">ID:{{ o.BuffID }}<span class="u-detach">{{o.DetachType | showDetachType}}</span></span>
                                 <img
                                     class="u-pic"
                                     :title="'IconID:' + o.IconID"
@@ -276,6 +276,7 @@
 import axios from "axios";
 import { loadResource, loadStat, getIcons } from "../service/database";
 import { __ossRoot, __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import detach_types from "@jx3box/jx3box-data/data/bps/detach_type.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { school } from "@jx3box/jx3box-data/data/xf/school.json";
 export default {
@@ -464,6 +465,13 @@ export default {
         iconURL: function(id) {
             return __iconPath + "icon/" + id + ".png";
         },
+        showDetachType : function (val){
+            if(val && detach_types[val]){
+                return detach_types[val]
+            }else{
+                return ''
+            }
+        }
     },
     created: function() {
         this.checkUA();

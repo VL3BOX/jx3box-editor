@@ -16,8 +16,7 @@
         position: relative;
         white-space: normal;
 
-        font-family: -apple-system, "Microsoft YaHei", Trebuchet MS, Calibri,
-            BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, sans-serif;
+        font-family: -apple-system, "Microsoft YaHei", Trebuchet MS, Calibri, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, sans-serif;
         text-rendering: optimizelegibility;
 
         .u-pic {
@@ -40,14 +39,15 @@
             line-height: 2;
             font-weight: bold;
             display: block;
-            em{
-                font-style:normal;
+            em {
+                font-style: normal;
                 font-weight: normal;
-                color:#999;
+                color: #999;
                 .fz(12px);
             }
         }
-        .u-desc,.u-content {
+        .u-desc,
+        .u-content {
             font-size: 12px;
             display: block;
             white-space: pre-wrap;
@@ -58,11 +58,17 @@
             position: absolute;
             right: 5px;
             top: 5px;
+            .x(right);
+        }
+
+        .u-detach {
+            .mt(4px);
+            .db;
         }
         .u-remark {
             display: none;
         }
-        .u-primary{
+        .u-primary {
             .db;
         }
     }
