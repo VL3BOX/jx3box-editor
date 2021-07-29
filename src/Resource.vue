@@ -162,7 +162,7 @@
                                 @click="selectItem(o, i)"
                                 ref="item"
                             >
-                                <span class="u-id">UiID:{{ o.UiID }}</span>
+                                <span class="u-id">ID:{{ o.id }}</span>
                                 <img
                                     class="u-pic"
                                     :title="'IconID:' + o.IconID"
