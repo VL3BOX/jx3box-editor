@@ -1,53 +1,35 @@
 <template>
     <div class="c-resource">
         <!-- 上传触发按钮 -->
-        <el-button class="u-switch" type="primary" @click="dialogVisible = true"
-            ><img
-                class="u-icon"
-                svg-inline
-                src="../assets/img/jx3.svg"
-            />剑三资源</el-button
-        >
+        <el-button class="u-switch" type="primary" @click="dialogVisible = true">
+            <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />剑三资源
+        </el-button>
 
         <!-- 弹出界面 -->
-        <el-dialog
-            class="c-large-dialog"
-            title="剑三数据库"
-            :visible.sync="dialogVisible"
-        >
+        <el-dialog class="c-large-dialog" title="剑三数据库" :visible.sync="dialogVisible">
             <div class="c-resource-content" v-loading="loading">
                 <div class="m-database-search">
-                    <el-input
+                    <el-radio-group class="u-client" v-model="client" @change="search">
+                        <el-radio-button label="std">正式服</el-radio-button>
+                        <el-radio-button label="origin">怀旧服</el-radio-button>
+                    </el-radio-group>
+                    <el-input class="u-input"
                         placeholder="请输入 ID 或 名称"
                         v-model="query"
                         @change="search"
                         @keyup.enter.native="search"
                     >
                         <template slot="prepend">ID ／名称</template>
-                        <template slot="append" v-if="isPC"
-                            ><el-switch
-                                v-model="strict"
-                                active-text="精确匹配"
-                                @change="search"
-                            >
-                            </el-switch
-                        ></template>
+                        <template slot="append" v-if="isPC">
+                            <el-switch v-model="strict" active-text="精确匹配" @change="search"></el-switch>
+                        </template>
                     </el-input>
                 </div>
 
-                <el-tabs
-                    class="m-database-tabs"
-                    v-model="type"
-                    type="card"
-                    @tab-click="changeType"
-                >
+                <el-tabs class="m-database-tabs" v-model="type" type="card" @tab-click="changeType">
                     <el-tab-pane label="技能" name="skill">
                         <span slot="label">
-                            <img
-                                class="u-icon"
-                                svg-inline
-                                src="../assets/img/skill.svg"
-                            />
+                            <img class="u-icon" svg-inline src="../assets/img/skill.svg" />
                             <b>技能</b>
                             <em class="u-count">{{ stat.skill }}</em>
                         </span>
@@ -71,15 +53,15 @@
                                     :src="o.IconID | iconURL"
                                 />
                                 <span class="u-primary">
-                                    <span class="u-name"
-                                        >{{ o.Name }}
-                                        <em v-if="o.SkillName"
-                                            >({{ o.SkillName }})</em
-                                        >
+                                    <span class="u-name">
+                                        {{ o.Name }}
+                                        <em v-if="o.SkillName">({{ o.SkillName }})</em>
                                     </span>
-                                    <span class="u-content">{{
+                                    <span class="u-content">
+                                        {{
                                         o.Desc | filterRaw
-                                    }}</span>
+                                        }}
+                                    </span>
                                 </span>
                             </li>
                         </ul>
@@ -88,16 +70,11 @@
                             title="没有找到相关条目"
                             type="info"
                             show-icon
-                        >
-                        </el-alert>
+                        ></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="Buff" name="buff">
                         <span slot="label">
-                            <img
-                                class="u-icon"
-                                svg-inline
-                                src="../assets/img/buff.svg"
-                            />
+                            <img class="u-icon" svg-inline src="../assets/img/buff.svg" />
                             <b>Buff</b>
                             <em class="u-count">{{ stat.buff }}</em>
                         </span>
@@ -114,19 +91,20 @@
                                 @click="selectCommon('buff', o, i)"
                                 ref="buff"
                             >
-                                <span class="u-id">ID:{{ o.BuffID }}<span class="u-detach">{{o.DetachType | showDetachType}}</span></span>
+                                <span class="u-id">
+                                    ID:{{ o.BuffID }}
+                                    <span class="u-detach">{{o.DetachType | showDetachType}}</span>
+                                </span>
                                 <img
                                     class="u-pic"
                                     :title="'IconID:' + o.IconID"
                                     :src="o.IconID | iconURL"
                                 />
                                 <span class="u-primary">
-                                    <span class="u-name"
-                                        >{{ o.Name }}
-                                        <em v-if="o.BuffName"
-                                            >({{ o.BuffName }})</em
-                                        ></span
-                                    >
+                                    <span class="u-name">
+                                        {{ o.Name }}
+                                        <em v-if="o.BuffName">({{ o.BuffName }})</em>
+                                    </span>
                                     <span class="u-content">{{ o.Desc }}</span>
                                 </span>
                             </li>
@@ -136,16 +114,11 @@
                             title="没有找到相关条目"
                             type="info"
                             show-icon
-                        >
-                        </el-alert>
+                        ></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="物品" name="item">
                         <span slot="label">
-                            <img
-                                class="u-icon"
-                                svg-inline
-                                src="../assets/img/item.svg"
-                            />
+                            <img class="u-icon" svg-inline src="../assets/img/item.svg" />
                             <b>物品</b>
                             <em class="u-count">{{ stat.item }}</em>
                         </span>
@@ -169,13 +142,12 @@
                                     :src="o.IconID | iconURL"
                                 />
                                 <span class="u-name">{{ o.Name }}</span>
-                                <span
-                                    class="u-content"
-                                    v-html="o.DescHtml"
-                                ></span>
-                                <span class="u-remark">{{
+                                <span class="u-content" v-html="o.DescHtml"></span>
+                                <span class="u-remark">
+                                    {{
                                     o.Requirement
-                                }}</span>
+                                    }}
+                                </span>
                             </li>
                         </ul>
                         <el-alert
@@ -183,16 +155,11 @@
                             title="没有找到相关条目"
                             type="info"
                             show-icon
-                        >
-                        </el-alert>
+                        ></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="图标" name="icon">
                         <span slot="label">
-                            <img
-                                class="u-icon"
-                                svg-inline
-                                src="../assets/img/icons.svg"
-                            />
+                            <img class="u-icon" svg-inline src="../assets/img/icons.svg" />
                             <b>图标</b>
                             <em class="u-count">{{ stat.icon }}</em>
                         </span>
@@ -213,12 +180,8 @@
                                     effect="dark"
                                     :content="o.Name || query"
                                     placement="top"
-                                > -->
-                                <img
-                                    class="e-jx3-icon"
-                                    :src="o.iconID | iconURL"
-                                    :alt="query"
-                                />
+                                >-->
+                                <img class="e-jx3-icon" :src="o.iconID | iconURL" :alt="query" />
                                 <!-- </el-tooltip> -->
                             </li>
                         </ul>
@@ -227,8 +190,7 @@
                             title="没有找到相关条目"
                             type="info"
                             show-icon
-                        >
-                        </el-alert>
+                        ></el-alert>
                     </el-tab-pane>
                 </el-tabs>
 
@@ -240,8 +202,7 @@
                         type="primary"
                         icon="el-icon-arrow-down"
                         @click="appendPage"
-                        >加载更多</el-button
-                    >
+                    >加载更多</el-button>
                     <!-- 分页 -->
                     <el-pagination
                         class="m-archive-pages"
@@ -252,21 +213,20 @@
                         :total="total"
                         :current-page.sync="page"
                         @current-change="changePage"
-                    >
-                    </el-pagination>
+                    ></el-pagination>
                 </template>
 
-                <div class="m-database-tip" v-show="isBlank">
-                    ❤ 请输入搜索条件查询
-                </div>
+                <div class="m-database-tip" v-show="isBlank">❤ 请输入搜索条件查询</div>
             </div>
 
             <!-- 插入按钮 -->
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="insert">{{
+                <el-button type="primary" @click="insert">
+                    {{
                     buttonTXT
-                }}</el-button>
+                    }}
+                </el-button>
             </span>
         </el-dialog>
     </div>
@@ -282,13 +242,14 @@ import { school } from "@jx3box/jx3box-data/data/xf/school.json";
 export default {
     name: "Resource",
     props: [],
-    data: function() {
+    data: function () {
         return {
             dialogVisible: false,
 
             type: "skill",
             query: "",
             strict: false,
+            client : location.hostname.includes('origin') ? 'origin' : 'std',
 
             skill: [],
             buff: [],
@@ -319,32 +280,32 @@ export default {
         };
     },
     computed: {
-        buttonTXT: function() {
+        buttonTXT: function () {
             return this.selectedCount ? "插 入" : "确 定";
         },
-        isBlank: function() {
+        isBlank: function () {
             return !this.query && !this[this.type]["length"];
         },
-        selectedCount: function() {
+        selectedCount: function () {
             return !!this.html;
         },
-        isNumber: function() {
+        isNumber: function () {
             return !isNaN(this.query);
         },
-        hasNextPage: function() {
+        hasNextPage: function () {
             return this.total > 1 && this.page < this.pages;
         },
-        multipage: function() {
+        multipage: function () {
             return this.type !== "icon" && this.done && this.pages > 1;
         },
     },
     watch: {
-        html: function(newval) {
+        html: function (newval) {
             this.$emit("update", newval);
         },
     },
     methods: {
-        getData: function(page = 1, append = false) {
+        getData: function (page = 1, append = false) {
             if (!this.query) return;
 
             this.loading = true;
@@ -354,6 +315,7 @@ export default {
                 strict: ~~this.strict,
                 per: this.per,
                 page: page,
+                client : this.client
             };
 
             // 图标
@@ -402,30 +364,30 @@ export default {
                     });
             }
         },
-        search: function() {
+        search: function () {
             this.getData();
         },
-        appendPage: function() {
+        appendPage: function () {
             this.getData(++this.page, true);
         },
-        changePage: function(i) {
+        changePage: function (i) {
             this.getData(i);
         },
-        changeType: function() {
+        changeType: function () {
             this.page = 1;
             this.getData();
         },
-        insert: function() {
+        insert: function () {
             this.dialogVisible = false;
             this.$emit("insert", this.html);
         },
-        transformData: function(data) {
+        transformData: function (data) {
             data.forEach((item) => {
                 item.isSelected = false;
             });
             return data;
         },
-        selectCommon: function(type, o, i) {
+        selectCommon: function (type, o, i) {
             this.resetItems();
             o.isSelected = true;
             this.html = `<pre data-type="${type}" data-id="${
@@ -434,46 +396,46 @@ export default {
                 this.$refs[this.type][i]["innerHTML"]
             }</pre>`;
         },
-        selectItem: function(o, i) {
+        selectItem: function (o, i) {
             this.resetItems();
             o.isSelected = true;
             this.html = `<a class="e-jx3-item e-jx3-item-q${o.Quality}" data-id="${o.id}" data-quality="${o.Quality}" target="_blank" href="${o.Link}">[${o.Name}]</a>`;
         },
-        selectIcon: function(o) {
+        selectIcon: function (o) {
             this.resetItems();
             o.isSelected = true;
             this.html = `<img class="e-jx3-icon" src="${__iconPath}icon/${o.iconID}.png" alt="${o.iconID}"/>`;
             console.log(this.html);
         },
-        resetItems: function() {
+        resetItems: function () {
             let data = this[this.type];
             data.forEach((item) => {
                 item.isSelected = false;
             });
         },
-        showIcon: function(id) {
+        showIcon: function (id) {
             return __iconPath + "icon/" + id + ".png";
         },
-        checkUA: function() {
+        checkUA: function () {
             this.isPC = window.innerWidth > 720;
         },
     },
     filters: {
-        filterRaw: function(str) {
+        filterRaw: function (str) {
             return str && str.replace(/\\n/g, "\n");
         },
-        iconURL: function(id) {
+        iconURL: function (id) {
             return __iconPath + "icon/" + id + ".png";
         },
-        showDetachType : function (val){
-            if(val && detach_types[val]){
-                return detach_types[val]
-            }else{
-                return ''
+        showDetachType: function (val) {
+            if (val && detach_types[val]) {
+                return detach_types[val];
+            } else {
+                return "";
             }
-        }
+        },
     },
-    created: function() {
+    created: function () {
         this.checkUA();
         loadStat().then((data) => {
             this.stat = data;
