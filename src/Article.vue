@@ -69,6 +69,7 @@ import renderFoldBlock from "../assets/js/fold";
 import renderDirectory from "../assets/js/directory";
 import renderMacro from "../assets/js/macro";
 import renderTalent from "../assets/js/qixue";
+import renderTalent2 from "../assets/js/talent2";
 import renderKatex from "../assets/js/katex";
 import renderItem from "../assets/js/item";
 import renderGallery from "../assets/js/gallery";
@@ -141,6 +142,7 @@ export default {
             renderMacro();
             // 奇穴
             renderTalent();
+            renderTalent2();
             // 物品
             renderItem(this);
         },
