@@ -64,6 +64,7 @@ export default
 <h3>三级标题·表情、图片、媒体3</h3>
 <p>表情💯</p>
 <p>图片<img src="https://oss.jx3box.com/upload/post/2020/5/18/blobid051.jpg"></p>
+<p><img loading="lazy" src="https://console.cnyixun.com/upload/post/2021/5/29/7898_3119895.png"></p>
 <p>媒体<video controls="controls" width="300" height="150">
 <source src="https://static.jx3.xoyo.com/video/20090828/CG1_fengqidaoxiang.mp4" type="video/mp4"></video></p>
 <p>B站<iframe src="//player.bilibili.com/player.html?aid=6083521&amp;cid=10838288&amp;page=5" frameborder="no" scrolling="no" allowfullscreen="allowfullscreen">哈哈</iframe></p>

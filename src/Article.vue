@@ -38,7 +38,7 @@
         <div class="c-item-pop" :style="item_popover_style">
             <jx3-item :item_id="item_id" />
         </div>
-        <gallery :images="images" :index="gallery_index" @close="index = null"></gallery>
+        <!-- <gallery :images="images" :index="gallery_index" @close="index = null"></gallery> -->
     </div>
 </template>
 
@@ -48,7 +48,10 @@ import "@jx3box/jx3box-common/css/element.css";
 // 语法高亮
 import Prism from "prismjs";
 // 相册
-import gallery from "vue-gallery-slideshow";
+// import gallery from "vue-gallery-slideshow";
+import Vue from 'vue'
+import hevueImgPreview from 'hevue-img-preview'
+Vue.use(hevueImgPreview)
 // 剑三物品
 import Item from "./Item";
 // XSS
@@ -72,7 +75,8 @@ import renderTalent from "../assets/js/qixue";
 import renderTalent2 from "../assets/js/talent2";
 import renderKatex from "../assets/js/katex";
 import renderItem from "../assets/js/item";
-import renderGallery from "../assets/js/gallery";
+// import renderGallery from "../assets/js/gallery";
+import renderImgPreview from "../assets/js/renderImgPreview"
 
 export default {
     name: "Article",
@@ -137,7 +141,8 @@ export default {
             renderKatex();
 
             // 画廊（需要在宏、奇穴、物品等之前渲染以排除下方自动生成图片）
-            renderGallery(this)
+            // renderGallery(this)
+            renderImgPreview(this);
             // 宏
             renderMacro();
             // 奇穴
@@ -195,6 +200,9 @@ export default {
                 this.doDir();
             });
         },
+        inited: function (viewer) {
+            this.$viewer = viewer
+        }
     },
     watch: {
         content: function () {
@@ -211,7 +219,8 @@ export default {
         "el-button": Button,
         // "el-popover": Popover,
         "jx3-item": Item,
-        "gallery":gallery,
+        // "gallery":gallery,
+        // VueViewer
     },
 };
 </script>
