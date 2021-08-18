@@ -20,7 +20,7 @@
 import ItemSimple from "../src/ItemSimple.vue";
 import BuffSimple from '../src/BuffSimple.vue';
 import Article from "../src/Article.vue";
-import demohtml from "./content";
+import demohtml from "./content_1";
 import {get_item} from "../service/item";
 import { get_buff } from '../service/buff'
 export default {
