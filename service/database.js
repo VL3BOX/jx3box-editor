@@ -45,17 +45,6 @@ function loadStat() {
         });
 }
 
-function getIconsStat() {
-    return axios
-        .get(__iconPath + "data/stat.json")
-        .then((res) => {
-            return res.data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
 function getIcons(query, params) {
     return axios
         .get(__node + "icon/name/" + query, {
@@ -85,4 +74,4 @@ function getIcons(query, params) {
         });
 }
 
-export { loadResource, loadStat, getIconsStat, getIcons };
+export { loadResource, loadStat,getIcons };

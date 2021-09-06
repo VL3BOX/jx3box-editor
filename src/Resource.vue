@@ -50,7 +50,7 @@
                                 <img
                                     class="u-pic"
                                     :title="'IconID:' + o.IconID"
-                                    :src="o.IconID | iconURL"
+                                    :src="iconURL(o.IconID)"
                                 />
                                 <span class="u-primary">
                                     <span class="u-name">
@@ -98,7 +98,7 @@
                                 <img
                                     class="u-pic"
                                     :title="'IconID:' + o.IconID"
-                                    :src="o.IconID | iconURL"
+                                    :src="iconURL(o.IconID)"
                                 />
                                 <span class="u-primary">
                                     <span class="u-name">
@@ -139,7 +139,7 @@
                                 <img
                                     class="u-pic"
                                     :title="'IconID:' + o.IconID"
-                                    :src="o.IconID | iconURL"
+                                    :src="iconURL(o.IconID)"
                                 />
                                 <span class="u-name">{{ o.Name }}</span>
                                 <span class="u-content" v-html="o.DescHtml"></span>
@@ -181,7 +181,7 @@
                                     :content="o.Name || query"
                                     placement="top"
                                 >-->
-                                <img class="e-jx3-icon" :src="o.iconID | iconURL" :alt="query" />
+                                <img class="e-jx3-icon" :src="iconURL(o.iconID)" :alt="query" />
                                 <!-- </el-tooltip> -->
                             </li>
                         </ul>
@@ -298,6 +298,9 @@ export default {
         multipage: function () {
             return this.type !== "icon" && this.done && this.pages > 1;
         },
+        iconDir : function (){
+            return this.client == 'origin' ? 'origin_icon' : 'icon'
+        }
     },
     watch: {
         html: function (newval) {
@@ -404,7 +407,7 @@ export default {
         selectIcon: function (o) {
             this.resetItems();
             o.isSelected = true;
-            this.html = `<img class="e-jx3-icon" src="${__iconPath}icon/${o.iconID}.png" alt="${o.iconID}"/>`;
+            this.html = `<img class="e-jx3-icon" src="${__iconPath}${this.iconDir}/${o.iconID}.png" alt="${o.iconID}"/>`;
             console.log(this.html);
         },
         resetItems: function () {
@@ -413,19 +416,16 @@ export default {
                 item.isSelected = false;
             });
         },
-        showIcon: function (id) {
-            return __iconPath + "icon/" + id + ".png";
-        },
         checkUA: function () {
             this.isPC = window.innerWidth > 720;
+        },
+        iconURL: function (id) {
+            return __iconPath + this.iconDir + "/" + id + ".png";
         },
     },
     filters: {
         filterRaw: function (str) {
             return str && str.replace(/\\n/g, "\n");
-        },
-        iconURL: function (id) {
-            return __iconPath + "icon/" + id + ".png";
         },
         showDetachType: function (val) {
             if (val && detach_types[val]) {
