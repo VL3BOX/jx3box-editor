@@ -43,7 +43,7 @@
             ></span>
             <span class="u-uiid fr" v-text="`ID: ${item.id}`"></span>
         </div>
-        <jx3-item :item_id="item_id" />
+        <jx3-item :item_id="item_id" :jx3-client-type="jx3ClientType" />
     </el-popover>
 </template>
 
@@ -56,7 +56,7 @@ import item_border_quest from "../assets/js/item/border_quest.js";
 
 export default {
     name: "ItemSimple",
-    props: ["item", "onlyIcon", "iconSize", "withName"],
+    props: ["item", "onlyIcon", "iconSize", "withName", "jx3ClientType"],
     data() {
         return { visible: false, item_id: null };
     },

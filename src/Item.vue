@@ -298,9 +298,10 @@ import color from "../assets/js/item/color.js";
 
 export default {
     name: "Item",
-    props: ["item", "item_id"],
+    props: ["item", "item_id", "jx3ClientType"],
     data() {
         return {
+            jx3_client_type: this.jx3ClientType == 2 ? 2 : 1,
             source: null,
         };
     },
@@ -323,9 +324,9 @@ export default {
             handler() {
                 if (this.item_id) {
                     // 提取本地数据
-                    let cache = sessionStorage.getItem(`item-${this.item_id}`);
+                    let cache = sessionStorage.getItem(`item-${this.jx3_client_type}-${this.item_id}`);
                     let cache_created = sessionStorage.getItem(
-                        `item-${this.item_id}-created`
+                        `item-${this.jx3_client_type}-${this.item_id}-created`
                     );
                     // 查看是否存在缓存
                     if (
@@ -338,7 +339,7 @@ export default {
                     }
 
                     // 没有缓存则发起请求获取
-                    get_item(this.item_id).then((res) => {
+                    get_item(this.item_id, this.jx3_client_type).then((res) => {
                         let data = res.data;
                         if (data.code === 200) {
                             let item = data.data.item;
@@ -346,13 +347,13 @@ export default {
                                 JSON.stringify(item) !== "{}" ? item : null;
                             // 记录本地数据
                             sessionStorage.setItem(
-                                `item-${this.source.id}`,
+                                `item-${this.jx3_client_type}-${this.source.id}`,
                                 this.source
                                     ? JSON.stringify(this.source)
                                     : false
                             );
                             sessionStorage.setItem(
-                                `item-${this.source.id}-created`,
+                                `item-${this.jx3_client_type}-${this.source.id}-created`,
                                 Math.round(new Date() / 1000)
                             );
                         }

@@ -4,6 +4,8 @@
         <ItemSimple :item="item2" only-icon="true" iconSize="56px" />
         <ItemSimple :item="item3" only-icon="true" iconSize="56px" />
         <ItemSimple :item="item4" only-icon="true" iconSize="56px" />
+        <ItemSimple :item="item5" jx3-client-type="1" only-icon="true" iconSize="56px" />
+        <ItemSimple :item="item6" jx3-client-type="2" only-icon="true" iconSize="56px" />
         <buff-simple :buff="buff" only-icon iconSize="56px" />
         <Article
             :content="content"
@@ -33,6 +35,8 @@ export default {
             item2: null,
             item3: null,
             item4: null,
+            item5: null,
+            item6: null,
             buff: null
         };
     },
@@ -88,6 +92,22 @@ export default {
             if (data.code === 200) {
                 let item = data.data.item;
                 this.item4 = JSON.stringify(item) !== "{}" ? item : null;
+            }
+        });
+
+        get_item('5_3028', 1).then((res) => {
+            let data = res.data;
+            if (data.code === 200) {
+                let item = data.data.item;
+                this.item5 = JSON.stringify(item) !== "{}" ? item : null;
+            }
+        });
+
+        get_item('5_3028', 2).then((res) => {
+            let data = res.data;
+            if (data.code === 200) {
+                let item = data.data.item;
+                this.item6 = JSON.stringify(item) !== "{}" ? item : null;
             }
         });
     },
