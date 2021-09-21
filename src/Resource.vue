@@ -21,12 +21,56 @@
                     >
                         <template slot="prepend">ID ／名称</template>
                         <template slot="append" v-if="isPC">
-                            <el-switch v-model="strict" active-text="精确匹配" @change="search"></el-switch>
+                            <el-switch v-model="strict" active-text="精确匹配" @change="search" title="仅对Buff/Skill有效"></el-switch>
                         </template>
                     </el-input>
                 </div>
 
                 <el-tabs class="m-database-tabs" v-model="type" type="card" @tab-click="changeType">
+                    <el-tab-pane label="Buff" name="buff">
+                        <span slot="label">
+                            <img class="u-icon" svg-inline src="../assets/img/buff.svg" />
+                            <b>Buff</b>
+                            <em class="u-count">{{ stat.buff }}</em>
+                        </span>
+                        <p v-if="buff.length && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到
+                            <b>{{ buff.length }}</b> 条记录
+                        </p>
+                        <ul class="m-resource-list">
+                            <li
+                                v-for="(o, i) in buff"
+                                class="u-item"
+                                :key="i"
+                                :class="{ on: !!o.isSelected }"
+                                @click="selectCommon('buff', o, i)"
+                                ref="buff"
+                            >
+                                <span class="u-id">
+                                    ID:{{ o.BuffID }}
+                                    <span class="u-detach">{{o.DetachType | showDetachType}}</span>
+                                </span>
+                                <img
+                                    class="u-pic"
+                                    :title="'IconID:' + o.IconID"
+                                    :src="iconURL(o.IconID)"
+                                />
+                                <span class="u-primary">
+                                    <span class="u-name">
+                                        {{ o.Name }}
+                                        <em v-if="o.BuffName">({{ o.BuffName }})</em>
+                                    </span>
+                                    <span class="u-content">{{ o.Desc }}</span>
+                                </span>
+                            </li>
+                        </ul>
+                        <el-alert
+                            v-if="!buff.length && done"
+                            title="没有找到相关条目"
+                            type="info"
+                            show-icon
+                        ></el-alert>
+                    </el-tab-pane>
                     <el-tab-pane label="技能" name="skill">
                         <span slot="label">
                             <img class="u-icon" svg-inline src="../assets/img/skill.svg" />
@@ -67,50 +111,6 @@
                         </ul>
                         <el-alert
                             v-if="!skill.length && done"
-                            title="没有找到相关条目"
-                            type="info"
-                            show-icon
-                        ></el-alert>
-                    </el-tab-pane>
-                    <el-tab-pane label="Buff" name="buff">
-                        <span slot="label">
-                            <img class="u-icon" svg-inline src="../assets/img/buff.svg" />
-                            <b>Buff</b>
-                            <em class="u-count">{{ stat.buff }}</em>
-                        </span>
-                        <p v-if="buff.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到
-                            <b>{{ buff.length }}</b> 条记录
-                        </p>
-                        <ul class="m-resource-list">
-                            <li
-                                v-for="(o, i) in buff"
-                                class="u-item"
-                                :key="i"
-                                :class="{ on: !!o.isSelected }"
-                                @click="selectCommon('buff', o, i)"
-                                ref="buff"
-                            >
-                                <span class="u-id">
-                                    ID:{{ o.BuffID }}
-                                    <span class="u-detach">{{o.DetachType | showDetachType}}</span>
-                                </span>
-                                <img
-                                    class="u-pic"
-                                    :title="'IconID:' + o.IconID"
-                                    :src="iconURL(o.IconID)"
-                                />
-                                <span class="u-primary">
-                                    <span class="u-name">
-                                        {{ o.Name }}
-                                        <em v-if="o.BuffName">({{ o.BuffName }})</em>
-                                    </span>
-                                    <span class="u-content">{{ o.Desc }}</span>
-                                </span>
-                            </li>
-                        </ul>
-                        <el-alert
-                            v-if="!buff.length && done"
                             title="没有找到相关条目"
                             type="info"
                             show-icon
@@ -238,7 +238,6 @@ import { loadResource, loadStat, getIcons } from "../service/database";
 import { __ossRoot, __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "@jx3box/jx3box-data/data/bps/detach_type.json";
 import User from "@jx3box/jx3box-common/js/user";
-import { school } from "@jx3box/jx3box-data/data/xf/school.json";
 export default {
     name: "Resource",
     props: [],
@@ -246,7 +245,7 @@ export default {
         return {
             dialogVisible: false,
 
-            type: "skill",
+            type: "buff",
             query: "",
             strict: false,
             client : location.hostname.includes('origin') ? 'origin' : 'std',
@@ -268,7 +267,6 @@ export default {
             loading: false,
 
             isSuper: false,
-            schools: school,
 
             html: "",
             isPC: true,
