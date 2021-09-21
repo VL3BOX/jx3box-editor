@@ -10,28 +10,14 @@
         <div class="c-item-wrapper">
             <!-- 精炼等级 -->
             <div v-if="source.MaxStrengthLevel" class="u-max-strength-level">
-                <span
-                    v-text="`精炼等级：0 / ${source.MaxStrengthLevel}`"
-                ></span>
+                <span v-text="`精炼等级：0 / ${source.MaxStrengthLevel}`"></span>
             </div>
             <!-- 物品名称 -->
-            <h4
-                class="u-title"
-                :style="{ color: color(source.Quality) }"
-                v-text="source.Name"
-            ></h4>
+            <h4 class="u-title" :style="{ color: color(source.Quality) }" v-text="source.Name"></h4>
             <!-- 绑定状态 -->
-            <div
-                v-if="source.BindType > 1"
-                class="u-bind"
-                v-text="bind(source.BindType)"
-            ></div>
+            <div v-if="source.BindType > 1" class="u-bind" v-text="bind(source.BindType)"></div>
             <!-- 唯一 -->
-            <div
-                v-if="parseInt(source.MaxExistAmount) === 1"
-                class="unique"
-                v-text="'唯一'"
-            ></div>
+            <div v-if="parseInt(source.MaxExistAmount) === 1" class="unique" v-text="'唯一'"></div>
             <!-- 存在时间 -->
             <div
                 v-if="parseInt(source.MaxExistTime) > 0"
@@ -45,23 +31,12 @@
                 v-text="'最大拥有数：' + source.MaxExistAmount"
             ></div>
             <!-- 武器类别 -->
-            <div v-if="source.AucGenre == 1" class="u-weapon-type-label">
-                近身武器
-            </div>
-            <div v-if="source.AucGenre == 2" class="u-weapon-type-label">
-                远程武器
-            </div>
+            <div v-if="source.AucGenre == 1" class="u-weapon-type-label">近身武器</div>
+            <div v-if="source.AucGenre == 2" class="u-weapon-type-label">远程武器</div>
             <!-- 物品类型文案 -->
-            <div
-                v-if="source.TypeLabel"
-                class="u-type-label"
-                v-text="source.TypeLabel"
-            ></div>
+            <div v-if="source.TypeLabel" class="u-type-label" v-text="source.TypeLabel"></div>
             <!-- 装备属性 -->
-            <div
-                class="u-attributes"
-                v-if="source.attributes && source.attributes.length"
-            >
+            <div class="u-attributes" v-if="source.attributes && source.attributes.length">
                 <div
                     v-for="(attribute, key) in source.attributes"
                     :key="key"
@@ -85,14 +60,11 @@
                             class="u-horse-icon"
                             :src="icon_url(attribute.icon_id)"
                         />
-                        <div
-                            class="u-horse-desc"
-                            v-html="attribute.label"
-                        ></div>
+                        <div class="u-horse-desc" v-html="attribute.label"></div>
                     </span>
                     <span v-else class="u-value">
                         <span v-text="attribute.label"></span>
-                        <span
+                        <!-- <span
                             class="u-yellow"
                             v-text="
                                 attribute_percent(
@@ -100,36 +72,32 @@
                                     attribute.value
                                 )
                             "
-                        ></span>
+                        ></span> -->
                     </span>
                 </div>
             </div>
             <!-- 家具属性 -->
             <div class="u-furniture-attributes" v-if="source.furniture_attributes">
                 <div class="u-field u-green" v-if="source.furniture_attributes.view">
-                  <span class="u-value" v-text="`观赏提高${source.furniture_attributes.view}`"></span>
+                    <span class="u-value" v-text="`观赏提高${source.furniture_attributes.view}`"></span>
                 </div>
                 <div class="u-field u-green" v-if="source.furniture_attributes.practical">
-                  <span class="u-value" v-text="`实用提高${source.furniture_attributes.practical}`"></span>
+                    <span class="u-value" v-text="`实用提高${source.furniture_attributes.practical}`"></span>
                 </div>
                 <div class="u-field u-green" v-if="source.furniture_attributes.hard">
-                  <span class="u-value" v-text="`坚固提高${source.furniture_attributes.hard}`"></span>
+                    <span class="u-value" v-text="`坚固提高${source.furniture_attributes.hard}`"></span>
                 </div>
                 <div class="u-field u-green" v-if="source.furniture_attributes.geomantic">
-                  <span class="u-value" v-text="`风水提高${source.furniture_attributes.geomantic}`"></span>
+                    <span class="u-value" v-text="`风水提高${source.furniture_attributes.geomantic}`"></span>
                 </div>
                 <div class="u-field u-green" v-if="source.furniture_attributes.interesting">
-                  <span class="u-value" v-text="`趣味提高${source.furniture_attributes.interesting}`"></span>
+                    <span class="u-value" v-text="`趣味提高${source.furniture_attributes.interesting}`"></span>
                 </div>
             </div>
             <!-- 镶嵌 -->
             <ul v-if="source.Diamonds" class="u-diamonds u-gray">
                 <!-- 五行石 -->
-                <li
-                    class="u-diamond"
-                    v-for="(label, key) in source.Diamonds"
-                    :key="key"
-                >
+                <li class="u-diamond" v-for="(label, key) in source.Diamonds" :key="key">
                     <span class="u-square"></span>
                     <span class="u-text" v-text="`镶嵌孔：${label}`"></span>
                 </li>
@@ -204,26 +172,18 @@
             </div>
             <!-- 图片 -->
             <div class="u-image-url" v-if="source.ImageUrl">
-                <img :src="source.ImageUrl" @error.once="source.ImageUrl=null">
+                <img :src="source.ImageUrl" @error.once="source.ImageUrl=null" />
             </div>
             <!-- 描述 -->
             <p
                 v-if="source.DescHtml"
                 class="u-desc u-yellow"
-                v-html="source.DescHtml"
+                v-html="formatDescHtml(source.DescHtml)"
             ></p>
             <!-- 五彩石属性 -->
-            <p
-                v-if="source.WuCaiHtml"
-                class="u-desc"
-                v-html="source.WuCaiHtml"
-            ></p>
+            <p v-if="source.WuCaiHtml" class="u-desc" v-html="source.WuCaiHtml"></p>
             <!-- 品质等级 -->
-            <div
-                v-if="source.Level"
-                class="u-level u-yellow"
-                v-text="'品质等级' + source.Level"
-            ></div>
+            <div v-if="source.Level" class="u-level u-yellow" v-text="'品质等级' + source.Level"></div>
             <!-- 装备分数 -->
             <div
                 v-if="source.EquipmentRating"
@@ -243,11 +203,7 @@
                 v-text="'使用间隔' + second_format(source.CoolDown)"
             ></div>
             <!-- 外观名称 -->
-            <div
-                v-if="source.Appearance"
-                class="u-appearance"
-                v-text="'外观名称：' + source.Appearance"
-            ></div>
+            <div v-if="source.Appearance" class="u-appearance" v-text="'外观名称：' + source.Appearance"></div>
             <!-- 可收集门派 -->
             <div
                 v-if="source.CanExterior"
@@ -261,9 +217,7 @@
                         !(source.AucGenre >= 1 && source.AucGenre <= 4)
                 "
                 class="u-can-shared"
-            >
-                该物品可以放入账号储物箱共享。
-            </div>
+            >该物品可以放入账号储物箱共享。</div>
             <div
                 v-if="
                     source.CanShared &&
@@ -271,19 +225,17 @@
                         source.AucGenre <= 4
                 "
                 class="u-can-shared"
-            >
-                该装备未精炼、镶嵌、附魔、穿戴前可以放入账号储物箱共享。
-            </div>
+            >该装备未精炼、镶嵌、附魔、穿戴前可以放入账号储物箱共享。</div>
             <!-- 家具可交互可缩放 -->
-            <div  v-if="source.furniture_attributes" class="u-furniture-can">
-              <span v-if="source.furniture_attributes.interact">可交互</span>
-              <span
-                  v-if="source.furniture_attributes.scale_range"
-                  v-text="`可缩放(${source.furniture_attributes.scale_range.replace(';',' - ')}倍)`"
-              ></span>
+            <div v-if="source.furniture_attributes" class="u-furniture-can">
+                <span v-if="source.furniture_attributes.interact">可交互</span>
+                <span
+                    v-if="source.furniture_attributes.scale_range"
+                    v-text="`可缩放(${source.furniture_attributes.scale_range.replace(';',' - ')}倍)`"
+                ></span>
             </div>
             <!-- 物品来源 -->
-            <div  v-if="source.GetType" class="u-get-type" v-text="`物品来源：${source.GetType}`"></div>
+            <div v-if="source.GetType" class="u-get-type" v-text="`物品来源：${source.GetType}`"></div>
         </div>
     </div>
 </template>
@@ -298,10 +250,9 @@ import color from "../assets/js/item/color.js";
 
 export default {
     name: "Item",
-    props: ["item", "item_id", "jx3ClientType"],
+    props: ["item", "item_id"],
     data() {
         return {
-            jx3_client_type: this.jx3ClientType == 2 ? 2 : 1,
             source: null,
         };
     },
@@ -311,6 +262,9 @@ export default {
         attribute_percent,
         bind,
         color,
+        formatDescHtml : function (str){
+            return str.replace(/font=\d+\s>/g,'')
+        }
     },
     watch: {
         item: {
@@ -324,9 +278,9 @@ export default {
             handler() {
                 if (this.item_id) {
                     // 提取本地数据
-                    let cache = sessionStorage.getItem(`item-${this.jx3_client_type}-${this.item_id}`);
+                    let cache = sessionStorage.getItem(`item-${this.item_id}`);
                     let cache_created = sessionStorage.getItem(
-                        `item-${this.jx3_client_type}-${this.item_id}-created`
+                        `item-${this.item_id}-created`
                     );
                     // 查看是否存在缓存
                     if (
@@ -339,7 +293,7 @@ export default {
                     }
 
                     // 没有缓存则发起请求获取
-                    get_item(this.item_id, this.jx3_client_type).then((res) => {
+                    get_item(this.item_id).then((res) => {
                         let data = res.data;
                         if (data.code === 200) {
                             let item = data.data.item;
@@ -347,13 +301,13 @@ export default {
                                 JSON.stringify(item) !== "{}" ? item : null;
                             // 记录本地数据
                             sessionStorage.setItem(
-                                `item-${this.jx3_client_type}-${this.source.id}`,
+                                `item-${this.source.id}`,
                                 this.source
                                     ? JSON.stringify(this.source)
                                     : false
                             );
                             sessionStorage.setItem(
-                                `item-${this.jx3_client_type}-${this.source.id}-created`,
+                                `item-${this.source.id}-created`,
                                 Math.round(new Date() / 1000)
                             );
                         }
