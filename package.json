@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-editor",
-    "version": "0.7.7",
+    "version": "0.7.8",
     "description": "JX3BOX Article & Editor",
     "main": "index.js",
     "scripts": {
@@ -30,9 +30,9 @@
         "last 2 versions"
     ],
     "dependencies": {
-        "@jx3box/jx3box-common": "^6.6.0",
-        "@jx3box/jx3box-data": "^1.4.7",
-        "@jx3box/jx3box-emotion": "^1.0.6",
+        "@jx3box/jx3box-common": "^6.6.5",
+        "@jx3box/jx3box-data": "^1.6.0",
+        "@jx3box/jx3box-emotion": "^1.0.7",
         "@jx3box/jx3box-macro": "^1.0.1",
         "@jx3box/jx3box-talent": "^1.1.0",
         "@tinymce/tinymce-vue": "^3.2.2",

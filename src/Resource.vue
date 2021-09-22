@@ -236,7 +236,7 @@
 import axios from "axios";
 import { loadResource, loadStat, getIcons } from "../service/database";
 import { __ossRoot, __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import detach_types from "@jx3box/jx3box-data/data/bps/detach_type.json";
+import detach_types from "../assets/data/detach_type.json";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Resource",
