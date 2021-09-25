@@ -1,6 +1,6 @@
 import axios from "axios";
 import { __node, __helperUrl, __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
-const API = __node; 
+const API = __node;
 
 function loadResource(type, query, params) {
     switch (type) {
@@ -8,8 +8,10 @@ function loadResource(type, query, params) {
             return axios
                 .get(`${__helperUrl}api/item/search`, {
                     params: {keyword: query, page: params.page, limit: params.per},
-                }, {
-                    headers: {Accept: "application/prs.helper.v2+json"},
+                    headers: {
+                        Accept: "application/prs.helper.v2+json",
+                        'JX3-Client-Type': params.client == 'origin' ? 2 : 1,
+                    },
                     withCredentials: true,
                 })
                 .then((res) => {
