@@ -250,7 +250,7 @@ import color from "../assets/js/item/color.js";
 
 export default {
     name: "Item",
-    props: ["item", "item_id"],
+    props: ["item", "item_id","jx3ClientType"],
     data() {
         return {
             source: null,
@@ -293,7 +293,7 @@ export default {
                     }
 
                     // 没有缓存则发起请求获取
-                    get_item(this.item_id).then((res) => {
+                    get_item(this.item_id,this.jx3ClientType).then((res) => {
                         let data = res.data;
                         if (data.code === 200) {
                             let item = data.data.item;

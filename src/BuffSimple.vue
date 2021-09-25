@@ -33,7 +33,7 @@
             </span>
             <span class="u-uiid fr" v-text="`ID: ${buff.BuffID}`"></span>
         </div>
-        <buff-item :buff_id="buff_id"></buff-item>
+        <buff-item :buff_id="buff_id" :jx3-client-type="jx3ClientType"></buff-item>
     </el-popover>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
     <div>
         <ItemSimple :item="item1" />
-        <ItemSimple :item="item2" only-icon="true" iconSize="56px" />
-        <ItemSimple :item="item3" only-icon="true" iconSize="56px" />
-        <ItemSimple :item="item4" only-icon="true" iconSize="56px" />
+        <ItemSimple :item="item2" :only-icon="true" iconSize="56px" />
+        <ItemSimple :item="item3" :only-icon="true" iconSize="56px" />
+        <ItemSimple :item="item4" :only-icon="true" iconSize="56px" />
         <ItemSimple :item="item5" jx3-client-type="1" only-icon="true" iconSize="56px" />
         <ItemSimple :item="item6" jx3-client-type="2" only-icon="true" iconSize="56px" />
         <buff-simple :buff="buff" only-icon iconSize="56px" />
@@ -20,15 +20,15 @@
 
 <script>
 import ItemSimple from "../src/ItemSimple.vue";
-import BuffSimple from '../src/BuffSimple.vue';
+import BuffSimple from "../src/BuffSimple.vue";
 import Article from "../src/Article.vue";
 import demohtml from "./content_1";
-import {get_item} from "../service/item";
-import { get_buff } from '../service/buff'
+import { get_item } from "../service/item";
+import { get_buff } from "../service/buff";
 export default {
     name: "A",
     props: [],
-    data: function() {
+    data: function () {
         return {
             content: demohtml,
             item1: null,
@@ -37,33 +37,33 @@ export default {
             item4: null,
             item5: null,
             item6: null,
-            buff: null
+            buff: null,
         };
     },
     computed: {},
     methods: {
-        test1: function() {
+        test1: function () {
             console.log("文章已渲染");
         },
-        test2: function() {
+        test2: function () {
             console.log("目录已渲染");
         },
     },
-    mounted: function() {
+    mounted: function () {
         // fetch("https://server.jx3box.com/post/find?id=420").then((res) => {
         //     res.json().then((data) => {
         //         this.content = data.data.post.post_content
         //     })
         // });
 
-        get_buff('218').then(res => {
-            const data = res.data
-            const [buffItem] = data.list
-            console.log(buffItem)
-            this.buff = buffItem
-        })
+        get_buff("218").then((res) => {
+            const data = res.data;
+            const [buffItem] = data.list;
+            console.log(buffItem);
+            this.buff = buffItem;
+        });
 
-        get_item('10_310').then((res) => {
+        get_item("10_310").then((res) => {
             let data = res.data;
             if (data.code === 200) {
                 let item = data.data.item;
@@ -71,7 +71,7 @@ export default {
             }
         });
 
-        get_item('6_4396').then((res) => {
+        get_item("6_4396").then((res) => {
             let data = res.data;
             if (data.code === 200) {
                 let item = data.data.item;
@@ -79,7 +79,7 @@ export default {
             }
         });
 
-        get_item('10_202').then((res) => {
+        get_item("10_202").then((res) => {
             let data = res.data;
             if (data.code === 200) {
                 let item = data.data.item;
@@ -87,7 +87,7 @@ export default {
             }
         });
 
-        get_item('10_98').then((res) => {
+        get_item("10_98").then((res) => {
             let data = res.data;
             if (data.code === 200) {
                 let item = data.data.item;
@@ -95,7 +95,7 @@ export default {
             }
         });
 
-        get_item('5_3028', 1).then((res) => {
+        get_item("5_3028", 1).then((res) => {
             let data = res.data;
             if (data.code === 200) {
                 let item = data.data.item;
@@ -103,7 +103,7 @@ export default {
             }
         });
 
-        get_item('5_3028', 2).then((res) => {
+        get_item("5_3028", 2).then((res) => {
             let data = res.data;
             if (data.code === 200) {
                 let item = data.data.item;
@@ -114,7 +114,7 @@ export default {
     components: {
         Article,
         ItemSimple,
-        BuffSimple
+        BuffSimple,
     },
 };
 </script>
