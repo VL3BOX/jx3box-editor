@@ -2,11 +2,11 @@ import $ from "jquery";
 
 function renderItem(vm, selector = ".e-jx3-item") {
     let outer, inner;
-
     $(selector).on("mouseenter", function(e) {
         clearTimeout(outer);
 
         vm.item_id = $(e.target).attr("data-id");
+        vm.item_client = $(e.target).attr("data-client") == 'origin' ? 2 : 1;
         $(".c-item-pop").fadeIn();
 
         let self_height = $(".c-item-pop").height();

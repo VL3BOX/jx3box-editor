@@ -36,7 +36,7 @@
             :total="total"
         ></el-pagination>
         <div class="c-item-pop" :style="item_popover_style">
-            <jx3-item :item_id="item_id" />
+            <jx3-item :item_id="item_id" :jx3ClientType="item_client" />
         </div>
         <!-- <gallery :images="images" :index="gallery_index" @close="index = null"></gallery> -->
     </div>
@@ -100,6 +100,7 @@ export default {
                 left: 0,
                 top: 0,
             },
+            item_client : 1,
             // 画廊
             gallery_index: null,
             images: [],
