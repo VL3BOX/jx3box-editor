@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { get_buff } from '../service/buff.js'
+import { getBuff } from '../service/database.js'
 export default {
     name: 'BuffItem',
     props: ['buff', 'buff_id'],
@@ -40,7 +40,7 @@ export default {
                     }
 
                     // 没有缓存则发起请求获取数据
-                    get_buff(val).then(res => {
+                    getBuff(val).then(res => {
                         const data = res.data
                         const [buff] = data.list
                         // console.log(data)

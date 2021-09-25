@@ -400,13 +400,13 @@ export default {
         selectItem: function (o, i) {
             this.resetItems();
             o.isSelected = true;
-            this.html = `<a class="e-jx3-item e-jx3-item-q${o.Quality}" data-id="${o.id}" data-quality="${o.Quality}" data-client="${this.client}" target="_blank" href="${o.Link}">[${o.Name}]</a>`;
+            this.html = `<a class="e-jx3-item e-jx3-item-q${o.Quality}" data-mode="" data-id="${o.id}" data-quality="${o.Quality}" data-client="${this.client}" data-name="" data-desc="" data-level="${o.Level}" target="_blank" href="${o.Link}">[${o.Name}]</a>`;
         },
         selectIcon: function (o) {
             this.resetItems();
             o.isSelected = true;
             this.html = `<img class="e-jx3-icon" src="${__iconPath}${this.iconDir}/${o.iconID}.png" alt="${o.iconID}"/>`;
-            console.log(this.html);
+            // console.log(this.html);
         },
         resetItems: function () {
             let data = this[this.type];

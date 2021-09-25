@@ -24,7 +24,7 @@ import BuffSimple from "../src/BuffSimple.vue";
 import Article from "../src/Article.vue";
 import demohtml from "./content_1";
 import { get_item } from "../service/item";
-import { get_buff } from "../service/buff";
+import { getBuff } from "../service/database";
 export default {
     name: "A",
     props: [],
@@ -56,7 +56,7 @@ export default {
         //     })
         // });
 
-        get_buff("218").then((res) => {
+        getBuff("218").then((res) => {
             const data = res.data;
             const [buffItem] = data.list;
             console.log(buffItem);

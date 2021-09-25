@@ -1,16 +1,16 @@
 import axios from "axios";
 import { __node, __helperUrl, __iconPath } from "@jx3box/jx3box-common/data/jx3box.json";
-const API = __node;
+import { $node } from "@jx3box/jx3box-common/js/https";
 
 function loadResource(type, query, params) {
     switch (type) {
-        case 'item':
+        case "item":
             return axios
                 .get(`${__helperUrl}api/item/search`, {
-                    params: {keyword: query, page: params.page, limit: params.per},
+                    params: { keyword: query, page: params.page, limit: params.per },
                     headers: {
                         Accept: "application/prs.helper.v2+json",
-                        'JX3-Client-Type': params.client == 'origin' ? 2 : 1,
+                        "JX3-Client-Type": params.client == "origin" ? 2 : 1,
                     },
                     withCredentials: true,
                 })
@@ -56,19 +56,19 @@ function getIcons(query, params) {
             let data = res.data;
             let list = [...data.skill, ...data.buff, ...data.item];
             // 去重
-            let _set = new Set()
+            let _set = new Set();
             list.forEach((item) => {
-                _set.add(item.iconID)
-            })
+                _set.add(item.iconID);
+            });
             // 重组
-            let _list = []
+            let _list = [];
             _set.forEach((item) => {
                 _list.push({
                     iconID: item,
                     isSelected: false,
-                })
-            })
-            list = Array.from(_list)
+                });
+            });
+            list = Array.from(_list);
             return list;
         })
         .catch((err) => {
@@ -76,4 +76,22 @@ function getIcons(query, params) {
         });
 }
 
-export { loadResource, loadStat,getIcons };
+function getBuff(id, client = "std", level) {
+    return $node().get("/buff/id" + id, {
+        params: {
+            client: client,
+            level: level,
+        },
+    });
+}
+
+function getSkill(id, client = "origin", level) {
+    return $node().get("/skill/id" + id, {
+        params: {
+            client: client,
+            level: level,
+        },
+    });
+}
+
+export { loadResource, loadStat, getIcons, getBuff, getSkill };
