@@ -33,12 +33,12 @@
             </span>
             <span class="u-uiid fr" v-text="`ID: ${buff.BuffID}`"></span>
         </div>
-        <buff-item :buff_id="buff_id" :jx3-client-type="jx3ClientType"></buff-item>
+        <buff-item :buff_id="buff_id" :buff="buff"></buff-item>
     </el-popover>
 </template>
 
 <script>
-import BuffItem from '../components/BuffItem'
+import BuffItem from './Buff.vue'
 import icon_url from "../assets/js/item/icon_url.js"
 export default {
     name: 'BuffSimple',
