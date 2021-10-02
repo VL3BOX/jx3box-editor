@@ -278,38 +278,28 @@ export default {
             handler() {
                 if (this.item_id) {
                     // 提取本地数据
-                    let cache = sessionStorage.getItem(`item-${this.item_id}`);
-                    let cache_created = sessionStorage.getItem(
-                        `item-${this.item_id}-created`
-                    );
+                    let cacheName = `item-${this.jx3ClientType}-${this.item_id}`;
+                    let cache = sessionStorage.getItem(cacheName);
+                    let createdCacheName = `${cacheName}-created`;
+                    let createdCache = sessionStorage.getItem(createdCacheName);
                     // 查看是否存在缓存
                     if (
                         (cache === false || cache) &&
-                        Math.round(new Date() / 1000) - cache_created <= 3600
+                        Math.round(new Date() / 1000) - createdCache <= 3600
                     ) {
-                        this.source =
-                            cache === false ? null : JSON.parse(cache);
+                        this.source = cache === false ? null : JSON.parse(cache);
                         return;
                     }
 
                     // 没有缓存则发起请求获取
-                    get_item(this.item_id,this.jx3ClientType).then((res) => {
+                    get_item(this.item_id, this.jx3ClientType).then((res) => {
                         let data = res.data;
                         if (data.code === 200) {
                             let item = data.data.item;
-                            this.source =
-                                JSON.stringify(item) !== "{}" ? item : null;
+                            this.source = JSON.stringify(item) !== "{}" ? item : null;
                             // 记录本地数据
-                            sessionStorage.setItem(
-                                `item-${this.source.id}`,
-                                this.source
-                                    ? JSON.stringify(this.source)
-                                    : false
-                            );
-                            sessionStorage.setItem(
-                                `item-${this.source.id}-created`,
-                                Math.round(new Date() / 1000)
-                            );
+                            sessionStorage.setItem(cacheName, this.source ? JSON.stringify(this.source) : false);
+                            sessionStorage.setItem(createdCacheName, Math.round(new Date() / 1000));
                         }
                     });
                 } else if (typeof this.item_id !== "undefined") {
