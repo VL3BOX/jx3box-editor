@@ -24,7 +24,7 @@ function loadResource(type, query, params) {
         default:
             let condition = isNaN(query) ? "name" : "id";
             return axios
-                .get(API + `${type}/${condition}/${query}`, {
+                .get(__node + `${type}/${condition}/${query}`, {
                     params: params,
                 })
                 .then((res) => {
