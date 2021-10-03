@@ -1,20 +1,19 @@
-<!-- buff浮窗 -->
 <template>
-    <div class="m-simple-buff">
+    <div class="m-simple-skill">
         <el-popover
-            v-if="buff && mode !== 'full'"
+            v-if="skill && mode !== 'full'"
             placement="right-end"
-            popper-class="m-simple-buff-popup"
+            popper-class="m-simple-skill-popup"
             width="auto"
             :visible-arrow="false"
             trigger="hover"
             transition="none"
             :close-delay="0"
             v-model="visible"
-            @show="buff_id = buff.BuffID"
+            @show="skill_id = skill.SkillID"
         >
             <div
-                class="m-simple-buff"
+                class="m-simple-skill"
                 slot="reference"
                 @mousedown="visible = false"
                 :class="{
@@ -25,43 +24,43 @@
                 <div class="m-icon">
                     <img
                         class="u-icon"
-                        :src="icon_url(buff.IconID)"
-                        :alt="`IconID:${buff.IconID}`"
+                        :src="icon_url(skill.IconID)"
+                        :alt="`IconID:${skill.IconID}`"
                         :style="{ width: iconSize, height: iconSize }"
                     />
                 </div>
-                <span class="u-name">[{{ buff.BuffName }}]</span>
-                <span class="u-uiid fr" v-text="`ID: ${buff.BuffID}`"></span>
+                <span class="u-name">[{{ skill.SkillName }}]</span>
+                <span class="u-uiid fr" v-text="`ID: ${skill.SkillID}`"></span>
             </div>
-            <buff-item :buff_id="buff_id" :buff="buff"></buff-item>
+            <skill-item :skill_id="skill_id" :skill="skill"></skill-item>
         </el-popover>
-        <pre class="m-full-buff" v-if="buff && mode === 'full'">
-            <span class="u-id">ID:{{ buff.BuffID }}</span>
+
+        <pre class="m-full-skill" v-if="skill && mode === 'full'">
+            <span class="u-id">ID:{{ skill.SkillID }}</span>
             <img
                 class="u-pic"
-                :src="icon_url(buff.IconID)"
-                :alt="`IconID:${buff.IconID}`"
+                :src="icon_url(skill.IconID)"
+                :alt="`IconID:${skill.IconID}`"
             />
-            <div class="u-buff-name">{{ buff.Name }}</div>
-            <div class="u-buff-desc">{{ buff.Desc }}</div>
+            <div class="u-skill-name">{{ skill.Name }}</div>
+            <div class="u-skill-desc">{{ skill.Desc }}</div>
         </pre>
     </div>
 </template>
 
 <script>
-import BuffItem from "./Buff.vue";
 import icon_url from "../assets/js/item/icon_url.js";
+import skillItem from "./Skill.vue";
 export default {
-    name: "BuffSimple",
     components: {
-        BuffItem,
+        skillItem,
     },
     props: {
         mode: {
             type: String,
             default: "icon", // text full icon
         },
-        buff: {
+        skill: {
             type: Object,
             default: null,
         },
@@ -70,10 +69,12 @@ export default {
             default: "",
         },
     },
-    data: () => ({
-        visible: false,
-        buff_id: null,
-    }),
+    data() {
+        return {
+            visible: false,
+            skill_id: null,
+        };
+    },
     methods: {
         icon_url,
     },
@@ -81,8 +82,8 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/module/buff_simple.less";
-.m-simple-buff-popup {
+@import "../assets/css/module/skill_simple.less";
+.m-simple-skill-popup {
     min-width: initial;
     padding: 0;
     border: none;
@@ -91,7 +92,10 @@ export default {
     transform: translateY(-10px);
 }
 
-.m-simple-buff {
+.m-simple-skill {
+    .u-name {
+        color: #fff;
+    }
     &.onlyIcon {
         .dbi;
         padding: 0;
@@ -116,6 +120,7 @@ export default {
         .u-name {
             .db !important;
             cursor: pointer;
+            text-decoration: underline;
             color: #555;
             text-shadow: none;
             .mt(5px);
@@ -123,7 +128,7 @@ export default {
         }
     }
 }
-.m-full-buff {
+.m-full-skill {
     display: block;
     border: 1px solid #eee;
     background: #fafafa;
@@ -162,7 +167,7 @@ export default {
         box-shadow: 0 0 1px inset rgb(0 0 0 / 20%);
     }
 
-    .u-buff-name {
+    .u-skill-name {
         font-size: 14px;
         line-height: 2;
         font-weight: bold;
@@ -173,7 +178,7 @@ export default {
         }
     }
 
-    .u-buff-desc {
+    .u-skill-desc {
         font-size: 12px;
         display: block;
         white-space: pre-wrap;

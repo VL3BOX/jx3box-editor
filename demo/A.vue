@@ -6,7 +6,8 @@
         <ItemSimple :item="item4" :only-icon="true" iconSize="56px" />
         <ItemSimple :item="item5" jx3-client-type="1" only-icon="true" iconSize="56px" />
         <ItemSimple :item="item6" jx3-client-type="2" only-icon="true" iconSize="56px" />
-        <buff-simple :buff="buff" only-icon iconSize="56px" />
+        <buff-simple :buff="buff" mode="full" iconSize="56px" />
+        <skill-simple :skill="skill" mode="full" iconSize="56px" />
         <Article
             :content="content"
             directorybox="#directory"
@@ -21,10 +22,11 @@
 <script>
 import ItemSimple from "../src/ItemSimple.vue";
 import BuffSimple from "../src/BuffSimple.vue";
+import SkillSimple from "../src/SkillSimple.vue";
 import Article from "../src/Article.vue";
 import demohtml from "./content_1";
 import { get_item } from "../service/item";
-import { getBuff } from "../service/database";
+import { getBuff, getSkill } from "../service/database";
 export default {
     name: "A",
     props: [],
@@ -38,6 +40,7 @@ export default {
             item5: null,
             item6: null,
             buff: null,
+            skill: null
         };
     },
     computed: {},
@@ -61,6 +64,13 @@ export default {
             const [buffItem] = data.list;
             console.log(buffItem);
             this.buff = buffItem;
+        });
+
+        getSkill("236", 'std').then((res) => {
+            const data = res.data;
+            const [skillItem] = data.list;
+            console.log(skillItem);
+            this.skill = skillItem;
         });
 
         get_item("10_310").then((res) => {
@@ -115,6 +125,7 @@ export default {
         Article,
         ItemSimple,
         BuffSimple,
+        SkillSimple
     },
 };
 </script>
