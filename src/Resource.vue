@@ -44,7 +44,7 @@
                             <b>{{ buff.length }}</b> 条记录
                             <div class="u-mode">
                                 插入模式：
-                                <el-radio-group v-model="buff_mode" size="mini">
+                                <el-radio-group v-model="buff_mode" size="mini" @change="changeMode">
                                     <el-radio-button label="simple">简版</el-radio-button>
                                     <el-radio-button label="full">完整版</el-radio-button>
                                 </el-radio-group>
@@ -97,7 +97,7 @@
                             <b>{{ skill.length }}</b> 条记录
                             <div class="u-mode">
                                 插入模式：
-                                <el-radio-group v-model="skill_mode" size="mini">
+                                <el-radio-group v-model="skill_mode" size="mini" @change="changeMode">
                                     <el-radio-button label="simple">简版</el-radio-button>
                                     <el-radio-button label="full">完整版</el-radio-button>
                                 </el-radio-group>
@@ -419,6 +419,9 @@ export default {
             });
             return data;
         },
+        changeMode : function (){
+            this.resetItems();
+        },
         selectBuff: function (o, i) {
             this.resetItems();
             o.isSelected = true;
@@ -479,6 +482,7 @@ export default {
             data.forEach((item) => {
                 item.isSelected = false;
             });
+            this.html = ''
         },
         checkUA: function () {
             this.isPC = window.innerWidth > 720;
