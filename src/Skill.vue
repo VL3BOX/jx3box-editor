@@ -1,91 +1,68 @@
 <template>
-    <div class="c-skill">
-        <div class="c-skill-wrapper">
-            <h4 class="u-title" v-if="skillInfo.Name">{{ skillInfo.Name }}</h4>
-
-            <div class="u-desc">{{ skillInfo.Desc }}</div>
+    <div class="w-skill" v-if="data">
+        <div class="w-skill-wrapper">
+            <img class="w-skill-icon" :src="(data.IconID || 13) | iconLink" :alt="data.Name" />
+            <div class="w-skill-content">
+                <span class="w-skill-name">{{data.Name}}</span>
+                <span class="w-skill-desc">{{data.Desc}}</span>
+                <span class="w-skill-meta">ID : {{data.SkillID}}</span>
+                <span class="w-skill-meta">Level : {{data.Level}}</span>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import { getSkill } from '../service/database.js';
-import weaponTypes from '../assets/data/weapon_type.json';
-import { school } from '@jx3box/jx3box-data/data/xf/school.json'
+import { getSkill } from "../service/database.js";
+import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
-    name: 'Skill',
-    props: ['skill', 'skill_id'],
-    data() {
-        return {
-            skillInfo: null,
-
-            // maps
-            weaponTypes,
-        }
+    name: "Skill",
+    props: ["client", "id", "level"],
+    data: () => ({
+        data: null,
+    }),
+    computed: {
+        params: function () {
+            return [this.client, this.id, this.level];
+        },
     },
     watch: {
-        skill: {
+        params: {
             immediate: true,
-            handler(val) {
-                if (typeof val !== "undefined") this.skillInfo = val;
-            },
-        },
-        skill_id: {
-            immediate: true,
+            deep: true,
             handler(val) {
                 if (val) {
+                    let [client, id, level] = val;
                     // 读取本地数据
-                    const cache = sessionStorage.getItem(`skill-${val}`);
-                    const cache_created = sessionStorage.getItem(
-                        `skill-${val}-created`
+                    const cache = sessionStorage.getItem(
+                        `skill-${client}-${id}-${level}`
                     );
+                    if (cache) {
+                        this.data = JSON.parse(cache);
+                        // 没有缓存则发起请求获取数据
+                    } else {
+                        id &&
+                            getSkill(...this.params).then((res) => {
+                                let data = res.data?.list?.[0];
+                                this.data = data;
 
-                    // 检查缓存是否有效
-                    if (
-                        cache &&
-                        Math.round(new Date() / 1000) - cache_created <= 3600
-                    ) {
-                        this.skillInfo = JSON.parse(cache);
-                        return;
+                                // 将数据放入 sessionStorage
+                                sessionStorage.setItem(
+                                    `skill-${client}-${id}-${level}`,
+                                    JSON.stringify(data)
+                                );
+                            });
                     }
-
-                    // 没有缓存则发起请求获取数据
-                    getSkill(val, 'std').then((res) => {
-                        const data = res.data;
-                        const [skill] = data.list;
-                        // console.log(data)
-                        this.skillInfo = skill;
-
-                        // 将数据放入 sessionStorage
-                        sessionStorage.setItem(
-                            `skill-${skill.SkillID}`,
-                            JSON.stringify(skill)
-                        );
-                        sessionStorage.setItem(
-                            `skill-${skill.SkillID}-created`,
-                            Math.round(new Date() / 1000)
-                        );
-                    });
-                } else if (typeof this.skill_id !== "undefined") {
-                    this.skillInfo = null;
                 }
             },
         },
     },
     filters: {
-        schoolName: function (val){
-            let name = ''
-            Object.entries(school).forEach(([school, key]) => {
-                if (key == val) {
-                    name = school
-                }
-            })
-            return name
-        }
-    }
-}
+        iconLink,
+    },
+};
 </script>
 
-<style lang="less">
-@import '../assets/css/module/skill.less';
+<style scoped lang="less">
+@import "../assets/css/module/skill.less";
 </style>

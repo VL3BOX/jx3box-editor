@@ -35,8 +35,24 @@
             layout="total, prev, pager, next, jumper"
             :total="total"
         ></el-pagination>
-        <div class="c-item-pop" :style="item_popover_style">
-            <jx3-item :item_id="item_id" :jx3ClientType="item_client" />
+        <div class="w-jx3-element-pop" :style="jx3_element.style">
+            <jx3-item
+                :item_id="item.id"
+                :jx3ClientType="item.client"
+                v-show="jx3_element.type == 'item'"
+            />
+            <jx3-buff
+                :client="buff.client"
+                :id="buff.id"
+                :level="buff.level"
+                v-show="jx3_element.type == 'buff'"
+            />
+            <jx3-skill
+                :client="skill.client"
+                :id="skill.id"
+                :level="skill.level"
+                v-show="jx3_element.type == 'skill'"
+            />
         </div>
         <!-- <gallery :images="images" :index="gallery_index" @close="index = null"></gallery> -->
     </div>
@@ -45,15 +61,16 @@
 <script>
 import { Pagination, Button, Popover } from "element-ui";
 import "@jx3box/jx3box-common/css/element.css";
+
 // 语法高亮
 import Prism from "prismjs";
+
 // 相册
 // import gallery from "vue-gallery-slideshow";
-import Vue from 'vue'
-import hevueImgPreview from 'hevue-img-preview'
-Vue.use(hevueImgPreview)
-// 剑三物品
-import Item from "./Item";
+import Vue from "vue";
+import hevueImgPreview from "hevue-img-preview";
+Vue.use(hevueImgPreview);
+
 // XSS
 import execFilterXSS from "../assets/js/script";
 // const execFilterXSS = require("xss");
@@ -74,9 +91,14 @@ import renderMacro from "../assets/js/macro";
 import renderTalent from "../assets/js/qixue";
 import renderTalent2 from "../assets/js/talent2";
 import renderKatex from "../assets/js/katex";
-import renderItem from "../assets/js/item";
 // import renderGallery from "../assets/js/gallery";
-import renderImgPreview from "../assets/js/renderImgPreview"
+import renderImgPreview from "../assets/js/renderImgPreview";
+
+// 剑三
+import Item from "./Item";
+import Buff from "./Buff";
+import Skill from "./Skill";
+import renderJx3Element from "../assets/js/jx3_element";
 
 export default {
     name: "Article",
@@ -90,20 +112,41 @@ export default {
     },
     data: function () {
         return {
+            // 作品
             all: false,
             page: 1,
             data: [],
             mode: "",
-            // 物品
-            item_id: "",
-            item_popover_style: {
-                left: 0,
-                top: 0,
-            },
-            item_client : 1,
+
             // 画廊
             gallery_index: null,
             images: [],
+
+            // 物品
+            item: {
+                id: "",
+                client: 1,
+            },
+            // BUFF
+            buff: {
+                client: "std",
+                id: "",
+                level: "",
+            },
+            // SKILL
+            skill: {
+                client: "std",
+                id: "",
+                level: "",
+            },
+            jx3_element: {
+                style: {
+                    top: 0,
+                    left: 0,
+                    display: "none",
+                },
+                type: "",
+            },
         };
     },
     computed: {
@@ -150,7 +193,7 @@ export default {
             renderTalent();
             renderTalent2();
             // 物品
-            renderItem(this);
+            renderJx3Element(this);
         },
         doDir: function () {
             // 显示局部
@@ -202,8 +245,8 @@ export default {
             });
         },
         inited: function (viewer) {
-            this.$viewer = viewer
-        }
+            this.$viewer = viewer;
+        },
     },
     watch: {
         content: function () {
@@ -220,6 +263,8 @@ export default {
         "el-button": Button,
         // "el-popover": Popover,
         "jx3-item": Item,
+        "jx3-buff": Buff,
+        "jx3-skill": Skill,
         // "gallery":gallery,
         // VueViewer
     },

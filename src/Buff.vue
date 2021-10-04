@@ -1,75 +1,68 @@
 <template>
-    <div class="c-buff" v-if="buffInfo">
-        <div class="c-buff-wrapper">
-            <!-- buff 名称 -->
-            <h4 class="u-title" v-text="buffInfo.Name"></h4>
-
-            <!-- buff 描述 -->
-            <div class="u-desc" v-text="buffInfo.Desc"></div>
+    <div class="w-buff" v-if="data">
+        <div class="w-buff-wrapper">
+            <img class="w-buff-icon" :src="data.IconID | iconLink" :alt="data.Name" />
+            <div class="w-buff-content">
+                <span class="w-buff-name">{{data.Name}}</span>
+                <span class="w-buff-desc">{{data.Desc}}</span>
+                <span class="w-buff-meta">ID : {{data.BuffID}}</span>
+                <span class="w-buff-meta">Level : {{data.Level}}</span>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import { getBuff } from '../service/database.js'
+import { getBuff } from "../service/database.js";
+import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Buff",
-    props: ["buff", "buff_id"],
+    props: ["client", "id", "level"],
     data: () => ({
-        buffInfo: null,
+        data: null,
     }),
-    watch: {
-        buff: {
-            immediate: true,
-            handler(val) {
-                if (typeof val !== "undefined") this.buffInfo = val;
-            },
+    computed: {
+        params: function () {
+            return [this.client, this.id, this.level];
         },
-        buff_id: {
+    },
+    watch: {
+        params: {
             immediate: true,
+            deep: true,
             handler(val) {
                 if (val) {
+                    let [client, id, level] = val;
                     // 读取本地数据
-                    const cache = sessionStorage.getItem(`buff-${val}`);
-                    const cache_created = sessionStorage.getItem(
-                        `buff-${val}-created`
+                    const cache = sessionStorage.getItem(
+                        `buff-${client}-${id}-${level}`
                     );
+                    if (cache) {
+                        this.data = JSON.parse(cache);
+                        // 没有缓存则发起请求获取数据
+                    } else {
+                        id &&
+                            getBuff(...this.params).then((res) => {
+                                let data = res.data?.list?.[0];
+                                this.data = data;
 
-                    // 检查缓存是否有效
-                    if (
-                        cache &&
-                        Math.round(new Date() / 1000) - cache_created <= 3600
-                    ) {
-                        this.buffInfo = JSON.parse(cache);
-                        return;
+                                // 将数据放入 sessionStorage
+                                sessionStorage.setItem(
+                                    `buff-${client}-${id}-${level}`,
+                                    JSON.stringify(data)
+                                );
+                            });
                     }
-
-                    // 没有缓存则发起请求获取数据
-                    getBuff(val).then((res) => {
-                        const data = res.data;
-                        const [buff] = data.list;
-                        // console.log(data)
-                        this.buffInfo = buff;
-
-                        // 将数据放入 sessionStorage
-                        sessionStorage.setItem(
-                            `buff-${buff.BuffID}`,
-                            JSON.stringify(buff)
-                        );
-                        sessionStorage.setItem(
-                            `buff-${buff.BuffID}-created`,
-                            Math.round(new Date() / 1000)
-                        );
-                    });
-                } else if (typeof this.buff_id !== "undefined") {
-                    this.buffInfo = null;
                 }
             },
         },
     },
+    filters: {
+        iconLink,
+    },
 };
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 @import "../assets/css/module/buff.less";
 </style>

@@ -76,7 +76,7 @@ function getIcons(query, params) {
         });
 }
 
-function getBuff(id, client = "std", level) {
+function getBuff(client = "std", id, level) {
     return $node().get("/buff/id/" + id, {
         params: {
             client: client,
@@ -85,7 +85,7 @@ function getBuff(id, client = "std", level) {
     });
 }
 
-function getSkill(id, client = "origin", level) {
+function getSkill(client = "std", id, level) {
     return $node().get("/skill/id/" + id, {
         params: {
             client: client,
