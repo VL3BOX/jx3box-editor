@@ -66,11 +66,11 @@ export default {
                     "link autolink",
                     "hr lists advlist table codeinline codesample checklist foldtext latex",
                     "image emoticons media videox macro qixue talent2",
-                    "autosave code fullscreen wordcount powerpaste pagebreak printpage", // template anchor jx3icon
+                    "autosave code fullscreen wordcount powerpaste pagebreak printpage pz", // template anchor jx3icon
                 ],
                 toolbar: [
                     "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | restoredraft fullscreen code",
-                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample latex | emoticons image media videox | macro qixue talent2 pagebreak printpage", // template anchor jx3icon
+                    "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample latex | emoticons image media videox | macro pz qixue talent2 pagebreak printpage", // template anchor jx3icon
                 ],
                 mobile: {
                     toolbar_drawer: true,

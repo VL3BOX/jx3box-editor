@@ -1,4 +1,7 @@
-export default `<a class="e-jx3-buff w-jx3-element isBuff" href="https://origin.jx3box.com/app/database/?type=buff&amp;query=124&amp;level=1" data-type="buff" data-client="origin" data-id="124" data-level="1">[花语酥心]</a>
+export default `
+<div class="e-pz-iframe"><iframe style="border:none;background:none;max-width:100%;overflow:hidden;" src="https://www.jx3box.com/pz/iframe.html?id=70" width="1280" height="720" frameborder="0"></iframe></div>
+
+<a class="e-jx3-buff w-jx3-element isBuff" href="https://origin.jx3box.com/app/database/?type=buff&amp;query=124&amp;level=1" data-type="buff" data-client="origin" data-id="124" data-level="1">[花语酥心]</a>
 
 <br />
 

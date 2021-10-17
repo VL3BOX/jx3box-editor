@@ -88,7 +88,7 @@ import Tinymce from "@jx3box/jx3box-editor/src/Tinymce.vue";
     headers.set("Authorization", "Basic " + btoa(username + ":" + password));
 
     // 1.异步加载设置数据，将420改成正确的文章ID
-    fetch("https://server.jx3box.com/post/find?id=420", {
+    fetch("https://cms.jx3box.com/api/cms/post/420", {
         method: "GET",
         headers: headers,
         credentials: "include",
