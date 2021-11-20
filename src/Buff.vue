@@ -5,6 +5,7 @@
             <div class="w-buff-content">
                 <span class="w-buff-name">{{data.Name}}</span>
                 <span class="w-buff-desc">{{data.Desc}}</span>
+                <span class="w-buff-type" v-if="data.DetachType">※ {{data.DetachType | showDetachType}}</span>
                 <span class="w-buff-meta">ID : {{data.BuffID}}</span>
                 <span class="w-buff-meta">Level : {{data.Level}}</span>
             </div>
@@ -15,6 +16,7 @@
 <script>
 import { getBuff } from "../service/database.js";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
+import detach_types from "../assets/data/detach_type.json";
 export default {
     name: "Buff",
     props: ["client", "id", "level"],
@@ -62,6 +64,15 @@ export default {
             return iconLink(id, this.client);
         },
     },
+    filters : {
+        showDetachType: function (val) {
+            if (val && detach_types[val]) {
+                return detach_types[val];
+            } else {
+                return "";
+            }
+        },
+    }
 };
 </script>
 
