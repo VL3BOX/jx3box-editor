@@ -1,7 +1,7 @@
 <template>
     <div class="w-skill" v-if="data">
         <div class="w-skill-wrapper">
-            <img class="w-skill-icon" :src="(data.IconID || 13) | iconLink" :alt="data.Name" />
+            <img class="w-skill-icon" :src="iconLink(data.IconID || 13)" :alt="data.Name" />
             <div class="w-skill-content">
                 <span class="w-skill-name">{{data.Name}}</span>
                 <span class="w-skill-desc">{{data.Desc}}</span>
@@ -57,9 +57,11 @@ export default {
             },
         },
     },
-    filters: {
-        iconLink,
-    },
+    methods : {
+        iconLink : function (id){
+            return iconLink(id,this.client)
+        }
+    }
 };
 </script>
 

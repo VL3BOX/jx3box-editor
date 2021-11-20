@@ -58,7 +58,7 @@
                         <img
                             v-if="attribute.icon_id > 0"
                             class="u-horse-icon"
-                            :src="icon_url(attribute.icon_id)"
+                            :src="iconLink(attribute.icon_id)"
                         />
                         <div class="u-horse-desc" v-html="attribute.label"></div>
                     </span>
@@ -72,7 +72,7 @@
                                     attribute.value
                                 )
                             "
-                        ></span> -->
+                        ></span>-->
                     </span>
                 </div>
             </div>
@@ -242,29 +242,42 @@
 
 <script>
 import { get_item } from "../service/item.js";
-import icon_url from "../assets/js/item/icon_url.js";
 import second_format from "../assets/js/item/second_format.js";
 import attribute_percent from "../assets/js/item/attribute_percent.js";
 import bind from "../assets/js/item/bind.js";
 import color from "../assets/js/item/color.js";
+import { iconLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
     name: "Item",
-    props: ["item", "item_id","jx3ClientType"],
+    props: ["item", "item_id", "jx3ClientType"],
     data() {
         return {
             source: null,
         };
     },
+    computed : {
+        client_id : function (){
+            return  this.jx3ClientType || 1
+        },
+        client : function (){
+            return this.client_id == 1 ? 'std' : 'origin'
+        },
+        cache_key : function (){
+            return `item-${this.client}-${this.item_id}`  
+        },
+    },
     methods: {
-        icon_url,
+        iconLink : function (id){
+            return iconLink(id,this.client)
+        },
         second_format,
         attribute_percent,
         bind,
         color,
-        formatDescHtml : function (str){
-            return str.replace(/font=\d+\s>/g,'')
-        }
+        formatDescHtml: function (str) {
+            return str.replace(/font=\d+\s>/g, "");
+        },
     },
     watch: {
         item: {
@@ -275,35 +288,35 @@ export default {
         },
         item_id: {
             immediate: true,
-            handler() {
-                if (this.item_id) {
+            handler(val) {
+                if (val) {
                     // 提取本地数据
-                    let cacheName = `item-${this.jx3ClientType}-${this.item_id}`;
-                    let cache = sessionStorage.getItem(cacheName);
-                    let createdCacheName = `${cacheName}-created`;
-                    let createdCache = sessionStorage.getItem(createdCacheName);
-                    // 查看是否存在缓存
-                    if (
-                        (cache === false || cache) &&
-                        Math.round(new Date() / 1000) - createdCache <= 3600
-                    ) {
-                        this.source = cache === false ? null : JSON.parse(cache);
-                        return;
-                    }
+                    let _cache = sessionStorage.getItem(this.cache_key);
 
-                    // 没有缓存则发起请求获取
-                    get_item(this.item_id, this.jx3ClientType).then((res) => {
-                        let data = res.data;
-                        if (data.code === 200) {
-                            let item = data.data.item;
-                            this.source = JSON.stringify(item) !== "{}" ? item : null;
-                            // 记录本地数据
-                            sessionStorage.setItem(cacheName, this.source ? JSON.stringify(this.source) : false);
-                            sessionStorage.setItem(createdCacheName, Math.round(new Date() / 1000));
+                    // 本地读取缓存
+                    if(_cache){
+                        try{
+                            this.source = JSON.parse(_cache)
+                        }catch(e){
+                            console.log(e,'[Item]无法解析本地缓存')
                         }
-                    });
-                } else if (typeof this.item_id !== "undefined") {
-                    this.source = null;
+
+                    // 服务端拉取
+                    }else{
+                        get_item(this.item_id, this.client_id).then((res) => {
+                            let data = res.data;
+                            if (data.code === 200) {
+                                let item = data.data.item;
+                                let isValidItem = JSON.stringify(item) !== "{}"
+                                if(isValidItem){
+                                    this.source = item
+                                    sessionStorage.setItem(this.cache_key,JSON.stringify(this.source));
+                                }else{
+                                    this.source = null
+                                }
+                            }
+                        });
+                    }
                 }
             },
         },

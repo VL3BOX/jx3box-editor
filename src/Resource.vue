@@ -488,7 +488,7 @@ export default {
             this.isPC = window.innerWidth > 720;
         },
         iconURL: function (id) {
-            return iconLink(id);
+            return iconLink(id,this.client);
         },
         getLink: function (type, client, id, level) {
             let domain = client == "origin" ? __OriginRoot : __Root;

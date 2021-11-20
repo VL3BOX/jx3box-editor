@@ -1,7 +1,7 @@
 <template>
     <div class="w-buff" v-if="data">
         <div class="w-buff-wrapper">
-            <img class="w-buff-icon" :src="data.IconID | iconLink" :alt="data.Name" />
+            <img class="w-buff-icon" :src="iconLink(data.IconID)" :alt="data.Name" />
             <div class="w-buff-content">
                 <span class="w-buff-name">{{data.Name}}</span>
                 <span class="w-buff-desc">{{data.Desc}}</span>
@@ -57,8 +57,10 @@ export default {
             },
         },
     },
-    filters: {
-        iconLink,
+    methods: {
+        iconLink: function (id) {
+            return iconLink(id, this.client);
+        },
     },
 };
 </script>
