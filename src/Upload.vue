@@ -28,6 +28,7 @@
                 :file-list="fileList"
                 :on-change="change"
                 ref="uploadbox"
+                :accept="accept"
             >
                 <!-- :accept="accept" -->
                 <i slot="default" class="el-icon-plus"></i>
@@ -86,7 +87,7 @@ const imgtypes = ["jpg", "png", "gif", "bmp", "webp"];
 
 export default {
     name: "Upload",
-    props: ["text",'onlyImage','desc'],
+    props: ["text",'onlyImage','desc','accept'],
     data: function () {
         return {
             API: API,
