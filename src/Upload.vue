@@ -86,13 +86,12 @@ const imgtypes = ["jpg", "png", "gif", "bmp", "webp"];
 
 export default {
     name: "Upload",
-    props: ["text"],
+    props: ["text",'onlyImage','desc'],
     data: function () {
         return {
             API: API,
             dialogVisible: false,
-            tip:
-                "一次最多同时上传10个文件（不超过5M），格式限常见的图片、文档、数据表及压缩包",
+            tip: this.desc || "一次最多同时上传10个文件（不超过5M），格式限常见的图片、文档、数据表及压缩包",
             btn_txt: this.text || "上传附件",
 
             fileList: [],
@@ -129,6 +128,12 @@ export default {
                 //     return;
                 // }
 
+                // 分析文件类型
+                let ext = file.name.split(".").pop();
+                let is_img = imgtypes.includes(ext);
+
+                if(this.onlyImage && !is_img) return
+
                 // 构建数据
                 let fdata = new FormData();
                 fdata.append("file", file.raw);
@@ -148,10 +153,6 @@ export default {
 
                         // 修改path
                         file.url = res.data.data && res.data.data[0];
-
-                        // 分析文件类型
-                        let ext = file.name.split(".").pop();
-                        let is_img = imgtypes.includes(ext);
 
                         // 额外赋值
                         file.is_img = is_img;
