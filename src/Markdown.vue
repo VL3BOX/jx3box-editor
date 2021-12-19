@@ -2,7 +2,7 @@
     <div class="c-markdown">
         <input class="c-markdown-store-item" id="c-markdown-store-images" type="file" @change="uploadImages" ref="markdownImages" multiple :accept="allow_image_types" />
         <input class="c-markdown-store-item" id="c-markdown-store-files" type="file" @change="uploadFiles" ref="markdownFiles" multiple />
-        <mavon-editor class="c-markdown-box" ref="md" v-model="data" :editable="true" :navigation="false">
+        <mavon-editor class="c-markdown-box" ref="md" v-model="data" :editable="editable" :navigation="false" @change="updateData">
             <template slot="left-toolbar-after">
                 <span class="c-markdown-toolbar-image c-markdown-toolbar-item" title="上传图片" @click="selectImages"><i class="el-icon-picture-outline-round"></i></span>
                 <span class="c-markdown-toolbar-file c-markdown-toolbar-item" title="上传附件" @click="selectFiles"><i class="el-icon-paperclip"></i></span>
@@ -52,24 +52,13 @@ export default {
         },
     },
     computed: {
-        // 将fileList类数组转为标准数组
-        // images_list: function() {
-        //     let images = Array.from(this.images);
-        //     let _images = [];
-        //     for (let item of images) {
-        //         if (this.allow_image_types.includes(item.type)) {
-        //             _images.push(item);
-        //         }
-        //     }
-        //     return _images;
-        // },
         files_list: function() {
             let files = Array.from(this.files);
             return files;
         },
-        $md : function (){
-            return this.$refs.md
-        }
+        $md: function() {
+            return this.$refs.md;
+        },
     },
     methods: {
         // 点击上传按钮
@@ -108,12 +97,12 @@ export default {
                             this.resolved_files.push({
                                 url: url,
                                 filename: list[i]["name"],
-                                type : list[i]['type'],
-                                ext : list[i]["name"].split('.').pop()
+                                type: list[i]["type"],
+                                ext: list[i]["name"].split(".").pop(),
                             });
                         }
                     });
-                    this.insertFiles()
+                    this.insertFiles();
                 })
                 .finally(() => {
                     // 上传完成后清空input
@@ -123,17 +112,17 @@ export default {
                 });
         },
         // 插入正文
-        insertFiles : function (){
-            for(let item of this.resolved_files){
+        insertFiles: function() {
+            for (let item of this.resolved_files) {
                 // 插入图片
-                if(this.image_ext.includes(item.ext)){
+                if (this.image_ext.includes(item.ext)) {
                     this.$md.insertText(this.$md.getTextareaDom(), {
                         prefix: `![${item.filename}](${item.url})`,
                         subfix: "",
                         str: "",
                     });
-                // 插入文字链接
-                }else{
+                    // 插入文字链接
+                } else {
                     this.$md.insertText(this.$md.getTextareaDom(), {
                         prefix: `[${item.filename}](${item.url})`,
                         subfix: "",
@@ -141,8 +130,14 @@ export default {
                     });
                 }
             }
-        }
-
+        },
+        // 更新触发
+        updateData: function(data, render) {
+            this.$emit("updateData", {
+                data,
+                render,
+            });
+        },
     },
     filters: {},
     created: function() {},
