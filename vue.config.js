@@ -18,6 +18,12 @@ module.exports = {
             template : 'public/tinymce.html',
             filename:'tinymce/index.html',
         },
+        markdown : {
+            title : 'Markdown编辑器',
+            entry:'demo/M.js',
+            template : 'public/article.html',
+            filename:'markdown/index.html',
+        },
     },
 
 
@@ -48,16 +54,22 @@ module.exports = {
         '/',
     
     //❤️ Porxy ~
-    // devServer: {
-    //     proxy: {
-    //         "/api": {
-    //             "target": process.env["DEV_SERVER"] == "true" ? "http://localhost:51818" : "https://next.jx3box.com",
-    //             "onProxyReq": function (request) {
-    //                 request.setHeader("origin", "");
-    //             }
-    //         }
-    //     }
-    // },
+    devServer: {
+        proxy: {
+            "/api/cms": {
+                "target": process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://cms.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api": {
+                "target": process.env["DEV_SERVER"] == "true" ? "http://localhost:51818" : "https://next.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            }
+        }
+    },
 
     chainWebpack: config => {
 
