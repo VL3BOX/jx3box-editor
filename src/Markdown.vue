@@ -4,7 +4,7 @@
         <slot name="prepend"></slot>
 
         <div class="c-editor-header">
-            <Upload v-if="attachmentEnable" @insert="insertAttachments" :enable="false" />
+            <Upload v-if="attachmentEnable" @insert="insertAttachments" :enable="true" />
             <Resource v-if="resourceEnable" @insert="insertResource" :enable="false" />
         </div>
 
@@ -169,8 +169,24 @@ export default {
         },
         // 插入附件
         insertAttachments: function(data) {
-            // TODO:
-            // tinyMCE.editors["tinymce"].insertContent(data.html);
+            let list = data?.list || []
+            for(let item of list){
+                // 插入图片
+                if (item.is_img) {
+                    this.$md.insertText(this.$md.getTextareaDom(), {
+                        prefix: `![${item.name}](${item.url})`,
+                        subfix: "",
+                        str: "",
+                    });
+                // 插入文字链接
+                } else {
+                    this.$md.insertText(this.$md.getTextareaDom(), {
+                        prefix: `[${item.name}](${item.url})`,
+                        subfix: "",
+                        str: "",
+                    });
+                }
+            }
         },
         insertResource: function(data) {
             // TODO:
