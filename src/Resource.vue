@@ -1,9 +1,7 @@
 <template>
     <div class="c-resource">
         <!-- 上传触发按钮 -->
-        <el-button class="u-switch" type="primary" @click="dialogVisible = true"  :disabled="!enable">
-            <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />剑三资源
-        </el-button>
+        <el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />剑三资源 </el-button>
 
         <!-- 弹出界面 -->
         <el-dialog class="c-large-dialog" title="剑三数据库" :visible.sync="dialogVisible">
@@ -13,21 +11,10 @@
                         <el-radio-button label="std">正式服</el-radio-button>
                         <el-radio-button label="origin">怀旧服</el-radio-button>
                     </el-radio-group>
-                    <el-input
-                        class="u-input"
-                        placeholder="请输入 ID 或 名称"
-                        v-model="query"
-                        @change="search"
-                        @keyup.enter.native="search"
-                    >
+                    <el-input class="u-input" placeholder="请输入 ID 或 名称" v-model="query" @change="search" @keyup.enter.native="search">
                         <template slot="prepend">ID ／名称</template>
                         <template slot="append" v-if="isPC">
-                            <el-switch
-                                v-model="strict"
-                                active-text="精确匹配"
-                                @change="search"
-                                title="仅对Buff/Skill有效"
-                            ></el-switch>
+                            <el-switch v-model="strict" active-text="精确匹配" @change="search" title="仅对Buff/Skill有效"></el-switch>
                         </template>
                     </el-input>
                 </div>
@@ -40,8 +27,7 @@
                             <em class="u-count">{{ stat.buff }}</em>
                         </span>
                         <div v-if="buff.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到
-                            <b>{{ buff.length }}</b> 条记录
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ buff.length }}</b> 条记录
                             <div class="u-mode">
                                 插入模式：
                                 <el-radio-group v-model="buff_mode" size="mini" @change="changeMode">
@@ -51,25 +37,12 @@
                             </div>
                         </div>
                         <ul class="m-resource-list">
-                            <li
-                                v-for="(o, i) in buff"
-                                class="u-item"
-                                :key="i"
-                                :class="{ on: !!o.isSelected }"
-                                @click="selectBuff(o, i)"
-                                ref="buff"
-                            >
+                            <li v-for="(o, i) in buff" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectBuff(o, i)" ref="buff">
                                 <span class="u-id">
                                     ID:{{ o.BuffID }}
-                                    <span
-                                        class="u-detach"
-                                    >{{o.DetachType | showDetachType}}</span>
+                                    <span class="u-detach">{{ o.DetachType | showDetachType }}</span>
                                 </span>
-                                <img
-                                    class="u-pic"
-                                    :title="'IconID:' + o.IconID"
-                                    :src="iconURL(o.IconID)"
-                                />
+                                <img class="u-pic" :title="'IconID:' + o.IconID" :src="iconURL(o.IconID)" />
                                 <span class="u-primary">
                                     <span class="u-name">
                                         {{ o.Name }}
@@ -79,12 +52,7 @@
                                 </span>
                             </li>
                         </ul>
-                        <el-alert
-                            v-if="!buff.length && done"
-                            title="没有找到相关条目"
-                            type="info"
-                            show-icon
-                        ></el-alert>
+                        <el-alert v-if="!buff.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="技能" name="skill">
                         <span slot="label">
@@ -93,8 +61,7 @@
                             <em class="u-count">{{ stat.skill }}</em>
                         </span>
                         <div v-if="skill.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到
-                            <b>{{ skill.length }}</b> 条记录
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ skill.length }}</b> 条记录
                             <div class="u-mode">
                                 插入模式：
                                 <el-radio-group v-model="skill_mode" size="mini" @change="changeMode">
@@ -104,39 +71,21 @@
                             </div>
                         </div>
                         <ul class="m-resource-list">
-                            <li
-                                v-for="(o, i) in skill"
-                                class="u-item"
-                                :key="i"
-                                :class="{ on: !!o.isSelected }"
-                                @click="selectSkill(o, i)"
-                                ref="skill"
-                            >
+                            <li v-for="(o, i) in skill" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectSkill(o, i)" ref="skill">
                                 <span class="u-id">ID:{{ o.SkillID }}</span>
-                                <img
-                                    class="u-pic"
-                                    :title="'IconID:' + o.IconID"
-                                    :src="iconURL(o.IconID)"
-                                />
+                                <img class="u-pic" :title="'IconID:' + o.IconID" :src="iconURL(o.IconID)" />
                                 <span class="u-primary">
                                     <span class="u-name">
                                         {{ o.Name }}
                                         <em v-if="o.SkillName">({{ o.SkillName }})</em>
                                     </span>
                                     <span class="u-content">
-                                        {{
-                                        o.Desc | filterRaw
-                                        }}
+                                        {{ o.Desc | filterRaw }}
                                     </span>
                                 </span>
                             </li>
                         </ul>
-                        <el-alert
-                            v-if="!skill.length && done"
-                            title="没有找到相关条目"
-                            type="info"
-                            show-icon
-                        ></el-alert>
+                        <el-alert v-if="!skill.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="物品" name="item">
                         <span slot="label">
@@ -145,39 +94,20 @@
                             <em class="u-count">{{ stat.item }}</em>
                         </span>
                         <p v-if="item.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到
-                            <b>{{ item.length }}</b> 条记录
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ item.length }}</b> 条记录
                         </p>
                         <ul class="m-resource-list" v-if="item.length">
-                            <li
-                                v-for="(o, i) in item"
-                                :key="i"
-                                class="u-item"
-                                :class="{ on: o.isSelected }"
-                                @click="selectItem(o, i)"
-                                ref="item"
-                            >
+                            <li v-for="(o, i) in item" :key="i" class="u-item" :class="{ on: o.isSelected }" @click="selectItem(o, i)" ref="item">
                                 <span class="u-id">ID:{{ o.id }}</span>
-                                <img
-                                    class="u-pic"
-                                    :title="'IconID:' + o.IconID"
-                                    :src="iconURL(o.IconID)"
-                                />
+                                <img class="u-pic" :title="'IconID:' + o.IconID" :src="iconURL(o.IconID)" />
                                 <span class="u-name">{{ o.Name }}</span>
                                 <span class="u-content" v-html="o.DescHtml"></span>
                                 <span class="u-remark">
-                                    {{
-                                    o.Requirement
-                                    }}
+                                    {{ o.Requirement }}
                                 </span>
                             </li>
                         </ul>
-                        <el-alert
-                            v-if="!item.length && done"
-                            title="没有找到相关条目"
-                            type="info"
-                            show-icon
-                        ></el-alert>
+                        <el-alert v-if="!item.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="图标" name="icon">
                         <span slot="label">
@@ -186,18 +116,10 @@
                             <em class="u-count">{{ stat.icon }}</em>
                         </span>
                         <p v-if="icon.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到
-                            <b>{{ icon.length }}</b> 条记录
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ icon.length }}</b> 条记录
                         </p>
                         <ul class="m-resource-iconlist">
-                            <li
-                                v-for="(o, i) in icon"
-                                class="u-item"
-                                :key="i"
-                                :class="{ on: !!o.isSelected }"
-                                @click="selectIcon(o)"
-                                ref="icon"
-                            >
+                            <li v-for="(o, i) in icon" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectIcon(o)" ref="icon">
                                 <!-- <el-tooltip
                                     effect="dark"
                                     :content="o.Name || query"
@@ -207,24 +129,13 @@
                                 <!-- </el-tooltip> -->
                             </li>
                         </ul>
-                        <el-alert
-                            v-if="!icon.length && done"
-                            title="没有找到相关条目"
-                            type="info"
-                            show-icon
-                        ></el-alert>
+                        <el-alert v-if="!icon.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                 </el-tabs>
 
                 <template v-if="multipage">
                     <!-- 下一页 -->
-                    <el-button
-                        class="m-archive-more"
-                        :class="{ show: hasNextPage }"
-                        type="primary"
-                        icon="el-icon-arrow-down"
-                        @click="appendPage"
-                    >加载更多</el-button>
+                    <el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" icon="el-icon-arrow-down" @click="appendPage">加载更多</el-button>
                     <!-- 分页 -->
                     <el-pagination
                         class="m-archive-pages"
@@ -245,9 +156,7 @@
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="insert">
-                    {{
-                    buttonTXT
-                    }}
+                    {{ buttonTXT }}
                 </el-button>
             </span>
         </el-dialog>
@@ -257,26 +166,22 @@
 <script>
 import axios from "axios";
 import { loadResource, loadStat, getIcons } from "../service/database";
-import {
-    __ossRoot,
-    __iconPath,
-    __Root,
-    __OriginRoot,
-} from "@jx3box/jx3box-common/data/jx3box.json";
+import { __ossRoot, __iconPath, __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "../assets/data/detach_type.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Resource",
     props: {
-        enable : {
+        enable: {
             type: Boolean,
-            default : true,
-        }
+            default: true,
+        },
     },
-    data: function () {
+    data: function() {
         return {
             dialogVisible: false,
+            actived: false,
 
             type: "buff",
             query: "",
@@ -314,35 +219,35 @@ export default {
         };
     },
     computed: {
-        buttonTXT: function () {
+        buttonTXT: function() {
             return this.selectedCount ? "插 入" : "确 定";
         },
-        isBlank: function () {
+        isBlank: function() {
             return !this.query && !this[this.type]["length"];
         },
-        selectedCount: function () {
+        selectedCount: function() {
             return !!this.html;
         },
-        isNumber: function () {
+        isNumber: function() {
             return !isNaN(this.query);
         },
-        hasNextPage: function () {
+        hasNextPage: function() {
             return this.total > 1 && this.page < this.pages;
         },
-        multipage: function () {
+        multipage: function() {
             return this.type !== "icon" && this.done && this.pages > 1;
         },
-        iconDir: function () {
+        iconDir: function() {
             return this.client == "origin" ? "origin_icon" : "icon";
         },
     },
     watch: {
-        html: function (newval) {
+        html: function(newval) {
             this.$emit("update", newval);
         },
     },
     methods: {
-        getData: function (page = 1, append = false) {
+        getData: function(page = 1, append = false) {
             if (!this.query) return;
 
             this.loading = true;
@@ -401,115 +306,105 @@ export default {
                     });
             }
         },
-        search: function () {
+        search: function() {
             this.getData();
         },
-        appendPage: function () {
+        appendPage: function() {
             this.getData(++this.page, true);
         },
-        changePage: function (i) {
+        changePage: function(i) {
             this.getData(i);
         },
-        changeType: function () {
+        changeType: function() {
             this.page = 1;
             this.getData();
         },
-        insert: function () {
+        insert: function() {
             this.dialogVisible = false;
             this.$emit("insert", this.html);
         },
-        transformData: function (data) {
+        transformData: function(data) {
             data.forEach((item) => {
                 item.isSelected = false;
             });
             return data;
         },
-        changeMode : function (){
+        changeMode: function() {
             this.resetItems();
         },
-        selectBuff: function (o, i) {
+        selectBuff: function(o, i) {
             this.resetItems();
             o.isSelected = true;
             if (this.buff_mode == "simple") {
                 // <img src="${this.iconURL(
                 //     o.IconID
                 // )}">
-                this.html = `<a data-type="buff" class="e-jx3-buff w-jx3-element ${
-                    o.CanCancel == 1 ? "isBuff" : "isDebuff"
-                }" href="${this.getLink(
+                this.html = `<a data-type="buff" class="e-jx3-buff w-jx3-element ${o.CanCancel == 1 ? "isBuff" : "isDebuff"}" href="${this.getLink(
                     "buff",
                     this.client,
                     o.BuffID,
                     o.Level
-                )}" data-client="${this.client}" data-id="${
-                    o.BuffID
-                }" data-level="${o.Level}">[${o.Name}]</a>`;
+                )}" data-client="${this.client}" data-id="${o.BuffID}" data-level="${o.Level}">[${o.Name}]</a>`;
             } else {
-                this.html = `<pre data-type="buff" data-id="${
-                    o.BuffID
-                }" class="e-jx3-resource">${
-                    this.$refs[this.type][i]["innerHTML"]
-                }</pre>`;
+                this.html = `<pre data-type="buff" data-id="${o.BuffID}" class="e-jx3-resource">${this.$refs[this.type][i]["innerHTML"]}</pre>`;
             }
         },
-        selectSkill: function (o, i) {
+        selectSkill: function(o, i) {
             this.resetItems();
             o.isSelected = true;
             if (this.skill_mode == "simple") {
-                this.html = `<a data-type="skill" class="e-jx3-skill w-jx3-element" href="${this.getLink(
-                    "skill",
-                    this.client,
-                    o.SkillID,
-                    o.Level
-                )}" data-client="${this.client}" data-id="${
+                this.html = `<a data-type="skill" class="e-jx3-skill w-jx3-element" href="${this.getLink("skill", this.client, o.SkillID, o.Level)}" data-client="${this.client}" data-id="${
                     o.SkillID
                 }" data-level="${o.Level}">[${o.Name}]</a>`;
             } else {
-                this.html = `<pre data-type="skill" data-id="${
-                    o.SkillID
-                }" class="e-jx3-resource">${
-                    this.$refs[this.type][i]["innerHTML"]
-                }</pre>`;
+                this.html = `<pre data-type="skill" data-id="${o.SkillID}" class="e-jx3-resource">${this.$refs[this.type][i]["innerHTML"]}</pre>`;
             }
         },
-        selectItem: function (o, i) {
+        selectItem: function(o, i) {
             this.resetItems();
             o.isSelected = true;
             this.html = `<a data-type="item" class="e-jx3-item e-jx3-item-q${o.Quality} w-jx3-element" data-mode="" data-id="${o.id}" data-quality="${o.Quality}" data-client="${this.client}" target="_blank" href="${o.Link}">[${o.Name}]</a>`;
         },
-        selectIcon: function (o) {
+        selectIcon: function(o) {
             this.resetItems();
             o.isSelected = true;
             this.html = `<img class="e-jx3-icon" src="${__iconPath}${this.iconDir}/${o.iconID}.png" alt="${o.iconID}"/>`;
         },
-        resetItems: function () {
+        resetItems: function() {
             let data = this[this.type];
             data.forEach((item) => {
                 item.isSelected = false;
             });
-            this.html = ''
+            this.html = "";
         },
-        checkUA: function () {
+        checkUA: function() {
             this.isPC = window.innerWidth > 720;
         },
-        iconURL: function (id) {
-            return iconLink(id,this.client);
+        iconURL: function(id) {
+            return iconLink(id, this.client);
         },
-        getLink: function (type, client, id, level) {
+        getLink: function(type, client, id, level) {
             let domain = client == "origin" ? __OriginRoot : __Root;
-            return (
-                domain +
-                "app/database/?type=" +
-                type +
-                `&query=${id}&level=${level}`
-            );
+            return domain + "app/database/?type=" + type + `&query=${id}&level=${level}`;
+        },
+
+        // 杂项
+        // ==============================
+        openDialog: function() {
+            this.dialogVisible = true;
+            if (!this.actived) {
+                loadStat().then((data) => {
+                    this.stat = data;
+                    this.actived = true;
+                });
+            }
         },
     },
     filters: {
-        filterRaw: function (str) {
+        filterRaw: function(str) {
             return str && str.replace(/\\n/g, "\n");
         },
-        showDetachType: function (val) {
+        showDetachType: function(val) {
             if (val && detach_types[val]) {
                 return detach_types[val];
             } else {
@@ -517,11 +412,8 @@ export default {
             }
         },
     },
-    created: function () {
+    created: function() {
         this.checkUA();
-        loadStat().then((data) => {
-            this.stat = data;
-        });
     },
     components: {},
 };
