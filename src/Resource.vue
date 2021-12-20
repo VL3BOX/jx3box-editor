@@ -1,7 +1,7 @@
 <template>
     <div class="c-resource">
         <!-- 上传触发按钮 -->
-        <el-button class="u-switch" type="primary" @click="dialogVisible = true">
+        <el-button class="u-switch" type="primary" @click="dialogVisible = true"  :disabled="!enable">
             <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />剑三资源
         </el-button>
 
@@ -268,7 +268,12 @@ import User from "@jx3box/jx3box-common/js/user";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Resource",
-    props: [],
+    props: {
+        enable : {
+            type: Boolean,
+            default : true,
+        }
+    },
     data: function () {
         return {
             dialogVisible: false,

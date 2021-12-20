@@ -1,11 +1,16 @@
 <template>
     <div class="c-editor-tinymce">
+
+        <slot name="prepend"></slot>
+
         <div class="c-editor-header">
             <Upload v-if="attachmentEnable" @insert="insertAttachments" />
             <Resource v-if="resourceEnable" @insert="insertResource" />
-            <slot></slot>
         </div>
         <Emotion class="c-editor-emotion" @selected="emotionSelected"></Emotion>
+
+        <slot></slot>
+
         <editor
             id="tinymce"
             v-model="data"
@@ -22,6 +27,8 @@
                 >[编辑器使用指南]</a
             >
         </el-alert>
+
+        <slot name="append"></slot>
     </div>
 </template>
 
@@ -157,6 +164,7 @@ export default {
                 //     },
                 // ],
             },
+            mode : 'tinymce'
         };
     },
     model: {
@@ -188,7 +196,7 @@ export default {
             const pathKey = key.slice(1);
             const IMAGE = `<img class="t-emotion" src="${__ossRoot}image/emotion/${pathKey}.gif" alt="${key}" />`
             tinyMCE.editors["tinymce"].insertContent(IMAGE)
-        }
+        },
     },
     mounted: function() {},
     components: {

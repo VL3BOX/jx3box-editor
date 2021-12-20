@@ -1,35 +1,18 @@
 <template>
     <div class="c-upload">
         <!-- 上传触发按钮 -->
-        <el-button type="primary" @click="dialogVisible = true" icon="el-icon-upload">{{btn_txt}}</el-button>
+        <el-button type="primary" @click="dialogVisible = true" icon="el-icon-upload" :disabled="!enable">{{ btn_txt }}</el-button>
 
         <!-- 弹出界面 -->
         <el-dialog class="c-large-dialog" title="上传" :visible.sync="dialogVisible">
             <!-- 清空按钮 -->
-            <el-button
-                class="u-upload-clear"
-                plain
-                icon="el-icon-delete"
-                size="mini"
-                @click="clear"
-            >清空</el-button>
+            <el-button class="u-upload-clear" plain icon="el-icon-delete" size="mini" @click="clear">清空</el-button>
 
             <!-- 限制提示 -->
             <el-alert class="u-upload-tip" :title="tip" type="info" show-icon :closable="false"></el-alert>
 
             <!-- 文件区 -->
-            <el-upload
-                :action="API"
-                list-type="picture-card"
-                :auto-upload="false"
-                :limit="10"
-                multiple
-                with-credentials
-                :file-list="fileList"
-                :on-change="change"
-                ref="uploadbox"
-                :accept="accept"
-            >
+            <el-upload :action="API" list-type="picture-card" :auto-upload="false" :limit="10" multiple with-credentials :file-list="fileList" :on-change="change" ref="uploadbox" :accept="accept">
                 <!-- :accept="accept" -->
                 <i slot="default" class="el-icon-plus"></i>
 
@@ -45,12 +28,7 @@
                     }"
                 >
                     <!-- 图片类型 -->
-                    <img
-                        v-if="file.is_img"
-                        class="el-upload-list__item-thumbnail u-imgbox"
-                        :src="file.url"
-                        alt
-                    />
+                    <img v-if="file.is_img" class="el-upload-list__item-thumbnail u-imgbox" :src="file.url" alt />
                     <!-- 其他类型 -->
                     <div v-else class="u-filebox">
                         <img class="u-fileplaceholder" svg-inline src="../assets/img/file.svg" />
@@ -67,9 +45,7 @@
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="insert">
-                    {{
-                    buttonTXT
-                    }}
+                    {{ buttonTXT }}
                 </el-button>
             </span>
         </el-dialog>
@@ -87,8 +63,25 @@ const imgtypes = ["jpg", "png", "gif", "bmp", "webp"];
 
 export default {
     name: "Upload",
-    props: ["text",'onlyImage','desc','accept'],
-    data: function () {
+    props: {
+        text: {
+            type: String,
+        },
+        onlyImage: {
+            type: Boolean,
+        },
+        desc: {
+            type: String,
+        },
+        accept: {
+            type: String,
+        },
+        enable : {
+            type: Boolean,
+            default : true,
+        }
+    },
+    data: function() {
         return {
             API: API,
             dialogVisible: false,
@@ -106,21 +99,21 @@ export default {
     watch: {
         fileList: {
             deep: true,
-            handler: function (newval) {
+            handler: function(newval) {
                 this.$emit("update", newval);
             },
         },
-        insertList: function (newval) {
+        insertList: function(newval) {
             this.$emit("htmlUpdate", newval);
         },
     },
     computed: {
-        buttonTXT: function () {
+        buttonTXT: function() {
             return this.selectedCount ? "插 入" : "确 定";
         },
     },
     methods: {
-        change: function (file, fileList) {
+        change: function(file, fileList) {
             if (file.status != "success") {
                 // 判断大小
                 // if (file.size > this.sizeLimit) {
@@ -133,7 +126,7 @@ export default {
                 let ext = file.name.split(".").pop();
                 let is_img = imgtypes.includes(ext);
 
-                if(this.onlyImage && !is_img) return
+                if (this.onlyImage && !is_img) return;
 
                 // 构建数据
                 let fdata = new FormData();
@@ -166,36 +159,30 @@ export default {
                     })
                     .catch((err) => {
                         if (err.response.data.code) {
-                            this.$message.error(
-                                `[${err.response.data.code}] ${err.response.data.message}`
-                            );
+                            this.$message.error(`[${err.response.data.code}] ${err.response.data.message}`);
                         } else {
                             this.$message.error("请求异常");
                         }
                     });
             }
         },
-        select: function (file) {
+        select: function(file) {
             if (file.status == "success") {
                 this.$set(file, "selected", !file.selected);
                 file.selected ? this.selectedCount++ : this.selectedCount--;
             }
         },
-        buildHTML: function () {
+        buildHTML: function() {
             let list = [];
             this.fileList.forEach((file) => {
                 if (file.selected) {
-                    file.is_img
-                        ? list.push(`<img src="${file.url}" />`)
-                        : list.push(
-                              `<a target="_blank" href="${file.url}">${file.name}</a>`
-                          );
+                    file.is_img ? list.push(`<img src="${file.url}" />`) : list.push(`<a target="_blank" href="${file.url}">${file.name}</a>`);
                 }
             });
             this.insertList = list.join(" \n");
             return this.insertList;
         },
-        insert: function () {
+        insert: function() {
             // 关闭窗口
             this.dialogVisible = false;
 
@@ -211,17 +198,17 @@ export default {
             //移除所有选择状态
             this.resetSelectStatus();
         },
-        resetSelectStatus: function () {
+        resetSelectStatus: function() {
             this.fileList.forEach((file, i) => {
                 this.$set(this.fileList[i], "selected", false);
             });
             this.selectedCount = 0;
         },
-        clear: function () {
+        clear: function() {
             this.$refs.uploadbox.clearFiles();
             this.fileList = [];
         },
-        removeFile: function (fileList, uid) {
+        removeFile: function(fileList, uid) {
             fileList.forEach((file, i) => {
                 if (file.uid == uid) {
                     fileList.splice(i, 1);
@@ -229,7 +216,7 @@ export default {
             });
         },
     },
-    mounted: function () {},
+    mounted: function() {},
     components: {},
 };
 </script>

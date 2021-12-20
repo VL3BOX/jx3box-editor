@@ -1,17 +1,31 @@
 <template>
-    <div class="c-markdown">
-        <input class="c-markdown-store-item" id="c-markdown-store-images" type="file" @change="uploadImages" ref="markdownImages" multiple :accept="allow_image_types" />
-        <input class="c-markdown-store-item" id="c-markdown-store-files" type="file" @change="uploadFiles" ref="markdownFiles" multiple />
-        <mavon-editor class="c-markdown-box" ref="md" v-model="data" :editable="editable" :navigation="false" @change="updateData">
+    <div class="c-editor-markdown">
+
+        <slot name="prepend"></slot>
+
+        <div class="c-editor-header">
+            <Upload v-if="attachmentEnable" @insert="insertAttachments" :enable="false" />
+            <Resource v-if="resourceEnable" @insert="insertResource" :enable="false" />
+        </div>
+
+        <slot></slot>
+
+        <mavon-editor class="c-markdown" ref="md" v-model="data" :editable="editable" :navigation="false" @change="updateData">
             <template slot="left-toolbar-after">
                 <span class="c-markdown-toolbar-image c-markdown-toolbar-item" title="上传图片" @click="selectImages"><i class="el-icon-picture-outline-round"></i></span>
                 <span class="c-markdown-toolbar-file c-markdown-toolbar-item" title="上传附件" @click="selectFiles"><i class="el-icon-paperclip"></i></span>
             </template>
         </mavon-editor>
+        <input class="c-markdown-store-item" id="c-markdown-store-images" type="file" @change="uploadImages" ref="markdownImages" multiple :accept="allow_image_types" />
+        <input class="c-markdown-store-item" id="c-markdown-store-files" type="file" @change="uploadFiles" ref="markdownFiles" multiple />
+
+        <slot name="append"></slot>
     </div>
 </template>
 
 <script>
+import Upload from "./Upload";
+import Resource from "./Resource";
 import { uploadFile } from "../service/cms";
 export default {
     name: "Markdown",
@@ -23,8 +37,19 @@ export default {
             type: Boolean,
             default: true,
         },
+        attachmentEnable: {
+            type: Boolean,
+            default: true,
+        },
+        resourceEnable: {
+            type: Boolean,
+            default: true,
+        },
     },
-    components: {},
+    components: {
+        Upload,
+        Resource,
+    },
     data: function() {
         return {
             data: this.content,
@@ -137,6 +162,15 @@ export default {
                 data,
                 render,
             });
+        },
+        // 插入附件
+        insertAttachments: function(data) {
+            // TODO:
+            // tinyMCE.editors["tinymce"].insertContent(data.html);
+        },
+        insertResource: function(data) {
+            // TODO:
+            // tinyMCE.editors["tinymce"].insertContent(data);
         },
     },
     filters: {},
