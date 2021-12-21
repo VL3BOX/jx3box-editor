@@ -1,6 +1,6 @@
 <template>
     <div class="c-article-markdown">
-        <mavon-editor class="c-markdown" ref="article" v-model="origin" :editable="false" :navigation="false" @change="updateOrigin" :subfield="false" :readOnly="true"></mavon-editor>
+        <mavon-editor class="c-markdown" ref="article" v-model="origin" @change="updateOrigin"></mavon-editor>
         <div class="w-jx3-element-pop" :style="jx3_element.style">
             <jx3-item :item_id="item.id" :jx3ClientType="item.client" v-show="jx3_element.type == 'item'" />
             <jx3-buff :client="buff.client" :id="buff.id" :level="buff.level" v-show="jx3_element.type == 'buff'" />

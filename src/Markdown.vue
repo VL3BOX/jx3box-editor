@@ -10,7 +10,7 @@
 
         <slot></slot>
 
-        <mavon-editor class="c-markdown" ref="md" v-model="data" :editable="editable" :navigation="false" @change="updateData" :subfield="false" :readOnly="readOnly">
+        <mavon-editor class="c-markdown" ref="md" v-model="data" @change="updateData" :subfield="false">
             <template slot="left-toolbar-after">
                 <span class="c-markdown-toolbar-image c-markdown-toolbar-item" title="上传图片" @click="selectImages"><i class="el-icon-picture-outline-round"></i></span>
                 <span class="c-markdown-toolbar-file c-markdown-toolbar-item" title="上传附件" @click="selectFiles"><i class="el-icon-paperclip"></i></span>
