@@ -24,6 +24,12 @@ module.exports = {
             template : 'public/article.html',
             filename:'markdown/index.html',
         },
+        article_markdown : {
+            title : 'Markdown文章内容渲染',
+            entry:'demo/MarkdownArticleDemo.js',
+            template : 'public/article.html',
+            filename:'index.html',
+        },
     },
 
 
