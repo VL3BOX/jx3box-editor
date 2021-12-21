@@ -1,6 +1,6 @@
 <template>
     <div class="c-article-markdown">
-        <mavon-editor class="c-markdown" ref="article" v-model="origin" :editable="false" :navigation="false" @change="updateOrigin" :subfield="false" :readOnly="true"></mavon-editor>
+        <mavon-editor class="c-markdown" key="markdown-article" ref="article" :xssOptions="xssOptions" v-model="origin" :editable="false" :navigation="false" @change="updateOrigin" :subfield="false" :readOnly="true"></mavon-editor>
         <div class="w-jx3-element-pop" :style="jx3_element.style">
             <jx3-item :item_id="item.id" :jx3ClientType="item.client" v-show="jx3_element.type == 'item'" />
             <jx3-buff :client="buff.client" :id="buff.id" :level="buff.level" v-show="jx3_element.type == 'buff'" />
@@ -27,6 +27,8 @@ import Item from "./Item";
 import Buff from "./Buff";
 import Skill from "./Skill";
 import renderJx3Element from "../assets/js/jx3_element";
+
+import {xssOptions} from '../assets/data/markdown_whitelist.json'
 
 export default {
     name: "ArticleMarkdown",
@@ -68,6 +70,8 @@ export default {
                 },
                 type: "",
             },
+
+            xssOptions
         };
     },
     computed: {
@@ -85,9 +89,11 @@ export default {
                 return "";
             }
         },
-        doDOM: function($root) {
+        doDOM: function() {
+            console.log(1)
             // 宏
             renderMacro();
+            console.log(3)
             // 奇穴
             renderTalent();
             renderTalent2();
@@ -113,17 +119,16 @@ export default {
         render: function() {
             let result = this.doReg(this.html);
             this.data = result;
-        },
-        run: function() {
-            this.render();
+
+            // TODO: 过滤未展示
+            this.$forceUpdate()
 
             // 等待html加载完毕后
             this.$nextTick(() => {
                 this.$emit("contentLoaded");
 
                 // 统一DOM处理
-                const $root = this.$refs.article;
-                this.doDOM($root);
+                this.doDOM();
                 this.$emit("contentRendered");
 
                 // 目录处理

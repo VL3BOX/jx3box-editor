@@ -31,7 +31,7 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@jx3box/jx3box-common": "^6.7.2",
+    "@jx3box/jx3box-common": "^6.7.8",
     "@jx3box/jx3box-data": "^1.8.3",
     "@jx3box/jx3box-emotion": "^1.0.10",
     "@jx3box/jx3box-macro": "^1.0.1",

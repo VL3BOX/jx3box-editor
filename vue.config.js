@@ -28,7 +28,7 @@ module.exports = {
             title : 'Markdown文章内容渲染',
             entry:'demo/MarkdownArticleDemo.js',
             template : 'public/article.html',
-            filename:'index.html',
+            filename:'article_markdown/index.html',
         },
     },
 

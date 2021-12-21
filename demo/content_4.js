@@ -12,8 +12,6 @@ export default `
 /cast 蟾啸</pre>
 
 ## 插入奇穴
-<p>旧版奇穴</p>
-<p><input class="e-jx3qixue-area" type="text" value="{&quot;version&quot;:&quot;v20200113&quot;,&quot;xf&quot;:&quot;焚影圣诀&quot;,&quot;sq&quot;:&quot;2,2,3,1,1,1,1,1,1,3,4,1&quot;}" /></p>
 <p>新版奇穴</p>
 <div class="e-jx3qixue-area">{"version":"v20200309","xf":"凌海诀","sq":"1,1,1,1,1,1,1,1,1,1,1,1"}</div>
 
@@ -25,13 +23,13 @@ export default `
 
 ## 插入视频
 <video controls="controls" width="300" height="150">
-<source src="https://static.jx3.xoyo.com/video/20090828/CG1_fengqidaoxiang.mp4" type="video/mp4"></video></p>
+<source src="https://static.jx3.xoyo.com/video/20090828/CG1_fengqidaoxiang.mp4" type="video/mp4"></video>
 
 ## 插入音频
 ..TODO
 
 ## 插入iframe
-<p>B站<iframe src="//player.bilibili.com/player.html?aid=6083521&amp;cid=10838288&amp;page=5" frameborder="no" scrolling="no" allowfullscreen="allowfullscreen">哈哈</iframe></p>
+..TODO
 
 ## 旧版资源插入
 <p><img class="e-jx3-icon" title="IconID:2588" src="https://console.cnyixun.com/icon/2588.png" /></p>

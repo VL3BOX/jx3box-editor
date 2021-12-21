@@ -3,6 +3,7 @@ import $ from 'jquery'
 import "@jx3box/jx3box-macro/macro.css";
 
 function macro(selector=".e-jx3macro-area"){
+    console.log($(selector))
     try {
         $(selector).each(function(i, ele) {
             let $macro = $(this);
