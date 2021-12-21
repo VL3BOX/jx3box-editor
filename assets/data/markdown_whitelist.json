@@ -1,0 +1,14 @@
+{
+    "xssOptions": {
+        "whiteList": {
+            "pre": ["class", "style"],
+            "div": ["class", "style"],
+            "video": ["controls", "width", "height", "style", "src"],
+            "audio": ["controls", "src"],
+            "source": ["src", "type", "style"],
+            "iframe": ["src", "frameborder", "scrolling", "allowfullscreen"],
+            "details":[],
+            "summary":[]
+        }
+    }
+}

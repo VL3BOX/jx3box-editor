@@ -10,12 +10,14 @@
 
         <slot></slot>
 
-        <mavon-editor class="c-markdown" ref="md" v-model="data" @change="updateData" :subfield="false">
+        <markdown-editor class="c-markdown" ref="md" v-model="data" @change="updateData" :subfield="false">
             <template slot="left-toolbar-after">
                 <span class="c-markdown-toolbar-image c-markdown-toolbar-item" title="上传图片" @click="selectImages"><i class="el-icon-picture-outline-round"></i></span>
                 <span class="c-markdown-toolbar-file c-markdown-toolbar-item" title="上传附件" @click="selectFiles"><i class="el-icon-paperclip"></i></span>
+                <!-- <macro @insert="insertMacro" /> -->
+                <!-- <pz @insert="insertPz" /> -->
             </template>
-        </mavon-editor>
+        </markdown-editor>
         <input class="c-markdown-store-item" id="c-markdown-store-images" type="file" @change="uploadImages" ref="markdownImages" multiple :accept="allow_image_types" />
         <input class="c-markdown-store-item" id="c-markdown-store-files" type="file" @change="uploadFiles" ref="markdownFiles" multiple />
 
@@ -24,9 +26,19 @@
 </template>
 
 <script>
+import markdownEditor from '@jx3box/markdown/src/editor.vue'
+
+import {xssOptions} from '../assets/data/markdown_whitelist.json'
+import { uploadFile } from "../service/cms";
+
 import Upload from "./Upload";
 import Resource from "./Resource";
-import { uploadFile } from "../service/cms";
+
+// jx3
+import macro from '@/components/markdown/macro.vue'
+import pz from '@/components/markdown/pz.vue'
+
+
 export default {
     name: "Markdown",
     props: {
@@ -51,8 +63,12 @@ export default {
         }
     },
     components: {
+        markdownEditor,
         Upload,
         Resource,
+        
+        // macro,
+        // pz,
     },
     data: function() {
         return {
@@ -62,6 +78,8 @@ export default {
             image_ext: ["png", "jpg", "gif", "bmp", "webp"],
             files: [],
             resolved_files: [],
+
+            xssOptions
         };
     },
     model: {
@@ -192,6 +210,20 @@ export default {
             // TODO:
             // tinyMCE.editors["tinymce"].insertContent(data);
         },
+        insertMacro(data) {
+            this.$md.insertText(this.$md.getTextareaDom(), {
+                prefix: data,
+                subfix: "",
+                str: "",
+            });
+        },
+        insertPz(data) {
+            this.$md.insertText(this.$md.getTextareaDom(), {
+                prefix: data,
+                subfix: "",
+                str: "",
+            });
+        }
     },
     filters: {},
     created: function() {},

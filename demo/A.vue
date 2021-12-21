@@ -20,7 +20,7 @@
 <script>
 import ItemSimple from "../src/ItemSimple.vue";
 import Article from "../src/Article.vue";
-import demohtml from "./content_3";
+import demohtml from "./content_2";
 import { get_item } from "../service/item";
 import { getBuff, getSkill } from "../service/database";
 export default {

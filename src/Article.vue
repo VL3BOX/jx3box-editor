@@ -62,9 +62,6 @@
 import { Pagination, Button, Popover } from "element-ui";
 import "@jx3box/jx3box-common/css/element.css";
 
-// 语法高亮
-import Prism from "prismjs";
-
 // 相册
 // import gallery from "vue-gallery-slideshow";
 import Vue from "vue";
@@ -91,7 +88,7 @@ import renderMacro from "../assets/js/macro";
 import renderTalent from "../assets/js/qixue";
 import renderTalent2 from "../assets/js/talent2";
 import renderKatex from "../assets/js/katex";
-// import renderGallery from "../assets/js/gallery";
+import renderCode from "../assets/js/code";
 import renderImgPreview from "../assets/js/renderImgPreview";
 
 // 剑三
@@ -180,7 +177,7 @@ export default {
             // 折叠块
             renderFoldBlock($root);
             // 代码
-            $root && Prism.highlightAllUnder($root);
+            renderCode(`code[class=^'language-']`)
             // Tatex
             renderKatex();
 
