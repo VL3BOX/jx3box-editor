@@ -8,7 +8,11 @@
             "source": ["src", "type", "style"],
             "iframe": ["src", "frameborder", "scrolling", "allowfullscreen"],
             "details":[],
-            "summary":[]
+            "summary":[],
+            "p": [],
+            "img": ["src", "class", "alt", "title"],
+            "a": ["data-type", "class", "data-mode", "data-quality", "data-client", "data-id", "target", "href"],
+            "span": ["class"]
         }
     }
 }

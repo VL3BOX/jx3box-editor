@@ -13,20 +13,20 @@ export default `
 
 ## 插入奇穴
 <p>新版奇穴</p>
-<div class="e-jx3qixue-area">{"version":"v20200309","xf":"凌海诀","sq":"1,1,1,1,1,1,1,1,1,1,1,1"}</div>
+<pre class="e-jx3qixue-area">{"version":"v20200309","xf":"凌海诀","sq":"1,1,1,1,1,1,1,1,1,1,1,1"}</pre>
 
 ## 插入镇派
-..TODO
+<pre class="e-jx3talent2-area">{"version":"v20211214","xf":"冰心诀","sq":"0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000"}</pre>
 
 ## 插入配装
-..TODO
+<p><iframe src="https://www.jx3box.com/pz/iframe.html?id=101127&mode=horizontal" scrolling="no" width="1280" height="720" style="border:none;background:none;max-width:100%;overflow:hidden;"></iframe></p>
 
 ## 插入视频
-<video controls="controls" width="300" height="150">
+<div class="c-article-videox"><iframe src="//player.bilibili.com/player.html?aid=294566679&bvid=BV18F41187Dp&cid=453094457&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe></div>
 <source src="https://static.jx3.xoyo.com/video/20090828/CG1_fengqidaoxiang.mp4" type="video/mp4"></video>
 
 ## 插入音频
-..TODO
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1894305294&auto=1&height=66"></iframe>
 
 ## 插入iframe
 ..TODO
@@ -39,6 +39,10 @@ export default `
 刃宽两寸，两边锋利，刚硬沉静，挥动起来杀气逼人。
 当初唐太宗李世民赠与相知山庄的一双剑。据说出自汉朝工匠张蹇之手，后被太宗所得。据说惟有心意相通的有情人才能互相配合使二剑威力发挥到极致，不过又传说七秀坊的心法同样可以将此双剑的威力发挥出来。  </span></pre>
 <pre class="e-jx3-resource"><span class="u-id">ID:131</span> <img class="u-pic" title="IconID:1835" src="https://console.cnyixun.com/icon/1835.png" /> <span class="u-name">《猿公剑法・剑灵寰宇》穴位图残页</span> <span class="u-desc">调息时间减少2秒。</span></pre>
+
+<p><a class="e-jx3-item e-jx3-item-q5 w-jx3-element" href="/#/view/6_4396" target="_blank" rel="noopener" data-type="item" data-mode="" data-id="6_4396" data-quality="5" data-client="std">[幽月&middot;乱花]</a></p>
+<a class="e-jx3-buff w-jx3-element isBuff" href="https://www.jx3box.com/app/database/?type=buff&amp;query=8244&amp;level=1" data-type="buff" data-client="std" data-id="8244" data-level="1">[血怒]</a>
+<a class="e-jx3-skill w-jx3-element" href="https://www.jx3box.com/app/database/?type=skill&amp;query=13067&amp;level=0" data-type="skill" data-client="std" data-id="13067" data-level="0">[盾立]</a>
 
 ## 新版简版资源插入
 ..TODO

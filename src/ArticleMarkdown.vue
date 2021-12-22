@@ -1,6 +1,6 @@
 <template>
     <div class="c-article-markdown">
-        <markdown-render class="c-markdown" ref="article" v-model="origin" @change="updateOrigin" :xssOptions="xssOptions"></markdown-render>
+        <markdown-render class="c-markdown c-article" ref="article" v-model="origin" @change="updateOrigin" :xssOptions="xssOptions"></markdown-render>
         <div class="w-jx3-element-pop" :style="jx3_element.style">
             <jx3-item :item_id="item.id" :jx3ClientType="item.client" v-show="jx3_element.type == 'item'" />
             <jx3-buff :client="buff.client" :id="buff.id" :level="buff.level" v-show="jx3_element.type == 'buff'" />

@@ -1,14 +1,14 @@
 <template>
     <div class="c-editor-markdown-dialog c-editor-markdown-macro">
-        <span class="c-markdown-toolbar-file c-markdown-toolbar-item u-katex" @click="handleClick" title="插入Latex">
-            Σ
+        <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" title="插入奇穴方案">
+            <i class="el-icon-chicken"></i>
         </span>
 
-        <el-dialog :visible.sync="visible" title="插入数学公式" :modal-append-to-body="false">
-            <a class="u-help" href="/tool/16295" target="_blank">💙 查看帮助文档</a>
-            
+        <el-dialog :visible.sync="visible" title="插入奇穴方案" :modal-append-to-body="false">
 
-            <el-input class="u-input u-input-katex" type="textarea" :rows="5" v-model="katex"></el-input>
+            <p>💙 请填入<a target="_blank" href="/app/talent">奇穴模拟器</a>生成的编码</p>
+
+            <el-input class="u-input u-input-macro" type="textarea" :rows="5" v-model="talent"></el-input>
 
             <div slot="footer">
                 <el-button @click="cancel">取消</el-button>
@@ -20,11 +20,11 @@
 
 <script>
 export default {
-    name: 'markdown_katex',
+    name: 'markdown_talent',
     data() {
         return {
             visible: false,
-            katex: ''
+            talent: ''
         }
     },
     methods: {
@@ -33,14 +33,14 @@ export default {
         },
         cancel() {
             this.visible = false
-            this.katex = ''
+            this.talent = ''
         },
         insert() {
-            const content = `<pre class="e-latex-area w-latex">${this.katex}</pre>`
+            const content = `<pre class="e-jx3qixue-area">${this.talent}</pre>`
 
             this.$emit('insert', content)
 
-            this.katex = ''
+            this.talent = ''
 
             this.visible = false
         }
@@ -50,13 +50,4 @@ export default {
 
 <style lang="less">
 @import '../../../assets/css/markdown/common.less';
-
-.u-katex {
-    display: inline-flex;
-    justify-content: center;
-    align-content: center;
-    width: 26px;
-    height: 26px;
-}
-
 </style>

@@ -22,7 +22,7 @@ export default {
     watch: {},
     methods: {
         updateData : function (data){
-            console.log(data)
+            // console.log(data)
         }
     },
     filters: {},

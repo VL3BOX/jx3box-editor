@@ -1,12 +1,14 @@
 <template>
     <div class="c-editor-markdown-dialog m-macro-dialog">
-        <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" title="插入配装方案">装</span>
+        <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" title="插入视频">
+            <i class="el-icon-video-camera"></i>
+        </span>
 
-        <el-dialog :visible.sync="visible" title="配装方案" :modal-append-to-body="false">
+        <el-dialog :visible.sync="visible" title="插入视频" :modal-append-to-body="false">
 
-            <p>👘 请填入魔盒配装方案的<a target="_blank" href="/tool/32032">【嵌入版】</a>编码</p>
+            <a class="u-help" href="/tool/686/" target="_blank">💙 点击查看如何获取视频地址</a>
 
-            <el-input class="u-input" type="textarea" :rows="4" v-model="pzCode"></el-input>
+            <el-input class="u-input" type="textarea" :rows="4" v-model="videoUrl"></el-input>
 
             <div slot="footer">
                 <el-button @click="cancel">取消</el-button>
@@ -18,11 +20,11 @@
 
 <script>
 export default {
-    name: 'markdown_marco',
+    name: 'markdown_video',
     data() {
         return {
             visible: false,
-            pzCode: ''
+            videoUrl: ''
         }
     },
     methods: {
@@ -31,10 +33,10 @@ export default {
         },
         cancel() {
             this.visible = false
-            this.pzCode = ''
+            this.videoUrl = ''
         },
         insert() {
-            const content = `${this.pzCode}`
+            const content = `<div class="c-article-videox">${this.videoUrl}</div>`
 
             this.$emit('insert', content)
 

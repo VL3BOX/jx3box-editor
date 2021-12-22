@@ -16,6 +16,10 @@
     .v-note-wrapper{
         .h(780px);
     }
+
+    a:hover {
+        text-decoration: none;
+    }
 }
 
 .c-markdown-toolbar-item {
@@ -30,4 +34,18 @@
 }
 .c-markdown-store-item {
     .none;
+}
+
+.c-editor-markdown {
+    @import "module/video.less";
+
+    @import 'module/macro.less';
+    @import 'module/qixue.less';
+
+    @import 'module/jx3_element.less';
+    @import 'module/buff.less';
+    @import 'module/skill.less';
+    @import 'module/icon.less';
+    @import 'module/resource.less';
+    @import 'module/item.less';
 }
