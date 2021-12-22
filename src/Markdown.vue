@@ -35,8 +35,8 @@ import Upload from "./Upload";
 import Resource from "./Resource";
 
 // jx3
-import macro from '@/components/markdown/macro.vue'
-import pz from '@/components/markdown/pz.vue'
+// import macro from './components/markdown/macro.vue'
+// import pz from './components/markdown/pz.vue'
 
 
 export default {
