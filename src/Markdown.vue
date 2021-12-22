@@ -16,6 +16,7 @@
                 <span class="c-markdown-toolbar-file c-markdown-toolbar-item" title="上传附件" @click="selectFiles"><i class="el-icon-paperclip"></i></span>
                 <!-- <macro @insert="insertMacro" /> -->
                 <!-- <pz @insert="insertPz" /> -->
+                <katex @insert="insertKatex" />
             </template>
         </markdown-editor>
         <input class="c-markdown-store-item" id="c-markdown-store-images" type="file" @change="uploadImages" ref="markdownImages" multiple :accept="allow_image_types" />
@@ -37,6 +38,7 @@ import Resource from "./Resource";
 // jx3
 // import macro from './components/markdown/macro.vue'
 // import pz from './components/markdown/pz.vue'
+import katex from './components/markdown/katex.vue'
 
 
 export default {
@@ -69,6 +71,7 @@ export default {
         
         // macro,
         // pz,
+        katex,
     },
     data: function() {
         return {
@@ -218,6 +221,13 @@ export default {
             });
         },
         insertPz(data) {
+            this.$md.insertText(this.$md.getTextareaDom(), {
+                prefix: data,
+                subfix: "",
+                str: "",
+            });
+        },
+        insertKatex(data) {
             this.$md.insertText(this.$md.getTextareaDom(), {
                 prefix: data,
                 subfix: "",

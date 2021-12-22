@@ -38,6 +38,8 @@ export default {
 
             this.$emit('insert', content)
 
+            this.pz = ''
+
             this.visible = false
         }
     }

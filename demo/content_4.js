@@ -186,6 +186,7 @@ int main()
 :laughing::blush::smiley::) [更多](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
 
 ## $\KaTeX$公式
+<pre class="e-latex-area w-latex">\sum_{i=1}^n a_i=0</pre>
 \`\`\`
 $x_i + y_i = z_i$ 和 $\sum_{i=1}^n a_i=0$
 $$\sum_{i=1}^n a_i=0$$

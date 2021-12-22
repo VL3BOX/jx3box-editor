@@ -35,6 +35,8 @@ export default {
 
             this.$emit('insert', content)
 
+            this.macro = ''
+
             this.visible = false
         }
     }
