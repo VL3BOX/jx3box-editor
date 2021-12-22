@@ -10,7 +10,7 @@ const count = {
 const MAX_DEPTH = 3;
 const PREFIX_CLS = "lv"; //class前缀
 
-function directory(from, to) {
+function directory(from, to = '#directory') {
     // 装载容器设置
     const $box = $(to);
     if (!to && $box.length) return;
