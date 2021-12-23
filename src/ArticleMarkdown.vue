@@ -1,6 +1,6 @@
 <template>
     <div class="c-article-markdown">
-        <markdown-render class="c-markdown c-article" ref="article" v-model="origin" @change="updateOrigin" :xssOptions="xssOptions"></markdown-render>
+        <markdown-render id="c-article" class="c-markdown" ref="article" v-model="origin" @change="updateOrigin" :preRender="doReg" :xssOptions="xssOptions"></markdown-render>
         <div class="w-jx3-element-pop" :style="jx3_element.style">
             <jx3-item :item_id="item.id" :jx3ClientType="item.client" v-show="jx3_element.type == 'item'" />
             <jx3-buff :client="buff.client" :id="buff.id" :level="buff.level" v-show="jx3_element.type == 'buff'" />
@@ -44,10 +44,8 @@ export default {
         return {
             // 原始md
             origin : '',
-            // 原始渲染md后的html
+            // 原始渲染md后的html(传入文本回调处理函数)
             html: "",
-            // 文本处理后的html
-            data: "",
 
             // 物品
             item: {
@@ -107,14 +105,7 @@ export default {
             renderJx3Element(this);
         },
         doDir: function() {
-            // 显示局部
-            let target = "";
-            if (this.hasPages && !this.all) {
-                target = "#c-article-part" + this.page;
-                // 全部
-            } else {
-                target = "#c-article";
-            }
+            let target = "#c-article";
             let dir = renderDirectory(target, this.directorybox);
             if (dir) this.$emit("directoryRendered");
         },
@@ -123,12 +114,6 @@ export default {
             this.render()
         },
         render: function() {
-            let result = this.doReg(this.html);
-            this.data = result;
-
-            // TODO: 过滤未展示
-            this.$forceUpdate()
-
             // 等待html加载完毕后
             this.$nextTick(() => {
                 this.$emit("contentLoaded");

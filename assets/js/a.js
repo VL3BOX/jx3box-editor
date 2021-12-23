@@ -18,9 +18,16 @@ function formatLink(str){
             href = resolveImagePath(href)
         }
 
+
         let skip = ''
         if(!whiteHost.test(to.hostname)){
             skip = 'target="_blank"'
+        }
+
+        // markdown中的锚点跳转
+        let isHashAnchor = href.startsWith('#')
+        if(isHashAnchor){
+            skip = 'target="_self"'
         }
 
         let suffix = item[3]
