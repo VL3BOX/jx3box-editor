@@ -109,6 +109,35 @@
                         </ul>
                         <el-alert v-if="!item.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
+                    <el-tab-pane label="Npc" name="npc">
+                        <span slot="label">
+                            <img class="u-icon" svg-inline src="../assets/img/npc/skull.svg" />
+                            <b>Npc</b>
+                            <em class="u-count">{{ stat.npc }}</em>
+                        </span>
+                        <p v-if="npc.length && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ npc.length }}</b> 条记录
+                        </p>
+                        <ul class="m-resource-list" v-if="npc.length">
+                            <li v-for="(o, i) in npc" :key="i" class="u-item" :class="{ on: o.isSelected }" @click="selectNpc(o, i)" ref="item">
+                                <span class="u-id">ID:{{ o.ID }}</span>
+                                <img class="u-pic" :title="'IconID:' + o.IconID" :src="iconURL(o.IconID)" />
+                                <span class="u-name">
+                                    {{ o.Name }}
+                                    <em v-if="o.Level">(等级：{{ o.Level }})</em>
+                                </span>
+                                <span class="u-content">
+                                    <span class="u-map">地图：{{ o.MapName }}</span>
+                                    <span class="u-life">血量：{{ o.MaxLife }}</span>
+                                    <span class="u-mana">内力：{{ o.MaxMana }}</span>
+                                </span>
+                                <span class="u-remark">
+                                    {{ o.Requirement }}
+                                </span>
+                            </li>
+                        </ul>
+                        <el-alert v-if="!npc.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
+                    </el-tab-pane>
                     <el-tab-pane label="图标" name="icon">
                         <span slot="label">
                             <img class="u-icon" svg-inline src="../assets/img/icons.svg" />
@@ -192,6 +221,7 @@ export default {
             buff: [],
             item: [],
             icon: [],
+            npc: [],
 
             stat: {
                 skill: 0,
@@ -369,6 +399,11 @@ export default {
             this.resetItems();
             o.isSelected = true;
             this.html = `<img class="e-jx3-icon" src="${__iconPath}${this.iconDir}/${o.iconID}.png" alt="${o.iconID}"/>`;
+        },
+        selectNpc: function (o, i){
+            this.resetItems()
+            o.isSelected = true
+            this.html = `<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="${o.ID}"  data-client="${this.client}" target="_blank" href="${this.getLink("npc", this.client, o.ID, '')}">[${o.Name}]</a>`
         },
         resetItems: function() {
             let data = this[this.type];

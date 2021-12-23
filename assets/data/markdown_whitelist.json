@@ -6,7 +6,7 @@
             "video": ["controls", "width", "height", "style", "src"],
             "audio": ["controls", "src"],
             "source": ["src", "type", "style"],
-            "iframe": ["src", "frameborder", "scrolling", "allowfullscreen"],
+            "iframe": ["src", "frameborder", "scrolling", "allowfullscreen", "style", "width", "height"],
             "details":[],
             "summary":[],
             "p": [],

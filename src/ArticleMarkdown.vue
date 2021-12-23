@@ -1,10 +1,11 @@
 <template>
     <div class="c-article-markdown">
-        <markdown-render id="c-article" class="c-markdown" ref="article" v-model="origin" @change="updateOrigin" :preRender="doReg" :xssOptions="xssOptions"></markdown-render>
+        <markdown-render id="c-article" class="c-markdown c-article" ref="article" v-model="origin" @change="updateOrigin" :preRender="doReg" :xssOptions="xssOptions"></markdown-render>
         <div class="w-jx3-element-pop" :style="jx3_element.style">
             <jx3-item :item_id="item.id" :jx3ClientType="item.client" v-show="jx3_element.type == 'item'" />
             <jx3-buff :client="buff.client" :id="buff.id" :level="buff.level" v-show="jx3_element.type == 'buff'" />
             <jx3-skill :client="skill.client" :id="skill.id" :level="skill.level" v-show="jx3_element.type == 'skill'" />
+            <jx3-npc :client="npc.client" :id="npc.id" v-show="jx3_element.type === 'npc'"></jx3-npc>
         </div>
     </div>
 </template>
@@ -30,6 +31,7 @@ import renderCode from "../assets/js/code";
 import Item from "./Item";
 import Buff from "./Buff";
 import Skill from "./Skill";
+import Npc from "./Npc";
 import renderJx3Element from "../assets/js/jx3_element";
 
 import {xssOptions} from '../assets/data/markdown_whitelist.json'
@@ -63,6 +65,11 @@ export default {
                 client: "std",
                 id: "",
                 level: "",
+            },
+            // NPC
+            npc: {
+                client: 'std',
+                id: ""
             },
             jx3_element: {
                 style: {
@@ -141,6 +148,7 @@ export default {
         "jx3-item": Item,
         "jx3-buff": Buff,
         "jx3-skill": Skill,
+        "jx3-npc": Npc,
         markdownRender,
     },
 };

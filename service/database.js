@@ -94,4 +94,15 @@ function getSkill(client = "std", id, level) {
     });
 }
 
-export { loadResource, loadStat, getIcons, getBuff, getSkill };
+function getNpc(client = 'std', id) {
+    return $node().get('/npc/id/' + id, {
+        params: {
+            client,
+            strict: 0,
+            per: 10,
+            page: 1
+        }
+    })
+}
+
+export { loadResource, loadStat, getIcons, getBuff, getSkill, getNpc };

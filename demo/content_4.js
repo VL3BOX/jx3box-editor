@@ -44,6 +44,8 @@ export default `
 <a class="e-jx3-buff w-jx3-element isBuff" href="https://www.jx3box.com/app/database/?type=buff&amp;query=8244&amp;level=1" data-type="buff" data-client="std" data-id="8244" data-level="1">[血怒]</a>
 <a class="e-jx3-skill w-jx3-element" href="https://www.jx3box.com/app/database/?type=skill&amp;query=13067&amp;level=0" data-type="skill" data-client="std" data-id="13067" data-level="0">[盾立]</a>
 
+<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="14619"  data-client="std" target="_blank" href="https://www.jx3box.com/app/database/?type=npc&query=14619&level=">[乌蒙贵]</a>
+
 ## 新版简版资源插入
 ..TODO
 
