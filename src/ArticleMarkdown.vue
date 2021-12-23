@@ -107,7 +107,7 @@ export default {
         doDir: function() {
             let target = "#c-article";
             let dir = renderDirectory(target, this.directorybox);
-            if (dir) this.$emit("directoryRendered");
+            this.$emit("directoryRendered",dir);
         },
         updateOrigin : function (md,html){
             this.html = html
