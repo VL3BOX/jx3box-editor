@@ -202,7 +202,7 @@ export default {
                 target = "#c-article";
             }
             let dir = renderDirectory(target, this.directorybox);
-            if (dir) this.$emit("directoryRendered");
+            this.$emit("directoryRendered",dir);
         },
         changePage: function (i) {
             this.page = i;
