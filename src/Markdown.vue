@@ -64,10 +64,6 @@ export default {
             type: Boolean,
             default: true,
         },
-        readOnly : {
-            type : Boolean,
-            default : false,
-        }
     },
     components: {
         markdownEditor,
@@ -195,6 +191,7 @@ export default {
                 data,
                 render,
             });
+            this.data = data
         },
         // 插入附件
         insertAttachments: function(data) {
