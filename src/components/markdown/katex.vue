@@ -48,7 +48,6 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../../assets/css/markdown/dialog.less";
 .c-markdown-toolbar-item.u-katex {
     display: inline-flex;
     justify-content: center;

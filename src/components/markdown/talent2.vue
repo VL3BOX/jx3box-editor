@@ -46,7 +46,3 @@ export default {
     },
 };
 </script>
-
-<style lang="less">
-@import "../../../assets/css/markdown/dialog.less";
-</style>
