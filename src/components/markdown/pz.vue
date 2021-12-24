@@ -1,5 +1,5 @@
 <template>
-    <div class="c-editor-markdown-dialog m-macro-dialog">
+    <div class="c-editor-markdown-dialog ">
         <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" title="插入配装方案">装</span>
 
         <el-dialog :visible.sync="visible" title="配装方案" :modal-append-to-body="false">
@@ -47,5 +47,5 @@ export default {
 </script>
 
 <style lang="less">
-@import '../../../assets/css/markdown/common.less';
+@import '../../../assets/css/markdown/dialog.less';
 </style>

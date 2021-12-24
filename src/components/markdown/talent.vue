@@ -1,11 +1,10 @@
 <template>
-    <div class="c-editor-markdown-dialog c-editor-markdown-macro">
+    <div class="c-editor-markdown-dialog">
         <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" title="插入奇穴方案">
-            <i class="el-icon-chicken"></i>
+            奇
         </span>
 
         <el-dialog :visible.sync="visible" title="插入奇穴方案" :modal-append-to-body="false">
-
             <p>💙 请填入<a target="_blank" href="/app/talent">奇穴模拟器</a>生成的编码</p>
 
             <el-input class="u-input u-input-macro" type="textarea" :rows="5" v-model="talent"></el-input>
@@ -20,34 +19,34 @@
 
 <script>
 export default {
-    name: 'markdown_talent',
+    name: "markdown_talent",
     data() {
         return {
             visible: false,
-            talent: ''
-        }
+            talent: "",
+        };
     },
     methods: {
         handleClick() {
-            this.visible = true
+            this.visible = true;
         },
         cancel() {
-            this.visible = false
-            this.talent = ''
+            this.visible = false;
+            this.talent = "";
         },
         insert() {
-            const content = `<pre class="e-jx3qixue-area">${this.talent}</pre>`
+            const content = `<pre class="e-jx3qixue-area">${this.talent}</pre>`;
 
-            this.$emit('insert', content)
+            this.$emit("insert", content);
 
-            this.talent = ''
+            this.talent = "";
 
-            this.visible = false
-        }
-    }
-}
+            this.visible = false;
+        },
+    },
+};
 </script>
 
 <style lang="less">
-@import '../../../assets/css/markdown/common.less';
+@import "../../../assets/css/markdown/dialog.less";
 </style>

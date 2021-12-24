@@ -12,14 +12,14 @@
 
         <markdown-editor class="c-markdown c-article" ref="md" v-model="data" @change="updateData" :subfield="false" :xssOptions="xssOptions">
             <template slot="left-toolbar-after">
+                <markdown-katex @insert="insertKatex" />
                 <span class="c-markdown-toolbar-image c-markdown-toolbar-item" title="上传图片" @click="selectImages"><i class="el-icon-picture-outline-round"></i></span>
                 <span class="c-markdown-toolbar-file c-markdown-toolbar-item" title="上传附件" @click="selectFiles"><i class="el-icon-paperclip"></i></span>
-                <macro @insert="insertMacro" />
-                <pz @insert="insertPz" />
-                <katex @insert="insertKatex" />
-                <talent @insert="insertTalent" />
-                <talent2 @insert="insertTalent2" />
                 <markdown-video @insert="insertVideo" />
+                <markdown-macro @insert="insertMacro" />
+                <markdown-pz @insert="insertPz" />
+                <markdown-talent @insert="insertTalent" />
+                <markdown-talent2 @insert="insertTalent2" />
             </template>
         </markdown-editor>
         <input class="c-markdown-store-item" id="c-markdown-store-images" type="file" @change="uploadImages" ref="markdownImages" multiple :accept="allow_image_types" />
@@ -39,13 +39,12 @@ import Upload from "./Upload";
 import Resource from "./Resource";
 
 // jx3
-import macro from './components/markdown/macro.vue'
-import pz from './components/markdown/pz.vue'
-import katex from './components/markdown/katex.vue'
-import talent from './components/markdown/talent.vue'
-import talent2 from './components/markdown/talent2.vue'
-import markdownVideo from './components/markdown/markdownVideo.vue'
-
+import markdownMacro from './components/markdown/macro.vue'
+import markdownPz from './components/markdown/pz.vue'
+import markdownKatex from './components/markdown/katex.vue'
+import markdownTalent from './components/markdown/talent.vue'
+import markdownTalent2 from './components/markdown/talent2.vue'
+import markdownVideo from './components/markdown/video.vue'
 
 export default {
     name: "Markdown",
@@ -75,11 +74,11 @@ export default {
         Upload,
         Resource,
         
-        macro,
-        pz,
-        katex,
-        talent,
-        talent2,
+        markdownMacro,
+        markdownPz,
+        markdownKatex,
+        markdownTalent,
+        markdownTalent2,
         markdownVideo,
     },
     data: function() {

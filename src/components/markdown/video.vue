@@ -1,11 +1,10 @@
 <template>
-    <div class="c-editor-markdown-dialog m-macro-dialog">
-        <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" title="插入视频">
+    <div class="c-editor-markdown-dialog">
+        <span class="c-markdown-toolbar-video c-markdown-toolbar-item" @click="handleClick" title="插入视频">
             <i class="el-icon-video-camera"></i>
         </span>
 
         <el-dialog :visible.sync="visible" title="插入视频" :modal-append-to-body="false">
-
             <a class="u-help" href="/tool/686/" target="_blank">💙 点击查看如何获取视频地址</a>
 
             <el-input class="u-input" type="textarea" :rows="4" v-model="videoUrl"></el-input>
@@ -20,34 +19,34 @@
 
 <script>
 export default {
-    name: 'markdown_video',
+    name: "markdown_video",
     data() {
         return {
             visible: false,
-            videoUrl: ''
-        }
+            videoUrl: "",
+        };
     },
     methods: {
         handleClick() {
-            this.visible = true
+            this.visible = true;
         },
         cancel() {
-            this.visible = false
-            this.videoUrl = ''
+            this.visible = false;
+            this.videoUrl = "";
         },
         insert() {
-            const content = `<div class="c-article-videox">${this.videoUrl}</div>`
+            const content = `<div class="c-article-videox">${this.videoUrl}</div>`;
 
-            this.$emit('insert', content)
+            this.$emit("insert", content);
 
-            this.pz = ''
+            this.videoUrl = "";
 
-            this.visible = false
-        }
-    }
-}
+            this.visible = false;
+        },
+    },
+};
 </script>
 
 <style lang="less">
-@import '../../../assets/css/markdown/common.less';
+@import "../../../assets/css/markdown/dialog.less";
 </style>

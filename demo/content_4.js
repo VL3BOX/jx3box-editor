@@ -1,4 +1,6 @@
 export default `
+## 插入数学公式
+<pre class="e-latex-area w-latex">y = \sqrt {x_1^2 + x_2^2 + x_3^2 + x_4^2}</pre>
 
 ## 插入宏
 <pre class="e-jx3macro-area w-jx3macro">/cast [nobuff:虫兽] 灵蛇引
@@ -40,15 +42,14 @@ export default `
 当初唐太宗李世民赠与相知山庄的一双剑。据说出自汉朝工匠张蹇之手，后被太宗所得。据说惟有心意相通的有情人才能互相配合使二剑威力发挥到极致，不过又传说七秀坊的心法同样可以将此双剑的威力发挥出来。  </span></pre>
 <pre class="e-jx3-resource"><span class="u-id">ID:131</span> <img class="u-pic" title="IconID:1835" src="https://console.cnyixun.com/icon/1835.png" /> <span class="u-name">《猿公剑法・剑灵寰宇》穴位图残页</span> <span class="u-desc">调息时间减少2秒。</span></pre>
 
+## 新版简版资源插入
 <p><a class="e-jx3-item e-jx3-item-q5 w-jx3-element" href="/#/view/6_4396" target="_blank" rel="noopener" data-type="item" data-mode="" data-id="6_4396" data-quality="5" data-client="std">[幽月&middot;乱花]</a></p>
 <a class="e-jx3-buff w-jx3-element isBuff" href="https://www.jx3box.com/app/database/?type=buff&amp;query=8244&amp;level=1" data-type="buff" data-client="std" data-id="8244" data-level="1">[血怒]</a>
 <a class="e-jx3-skill w-jx3-element" href="https://www.jx3box.com/app/database/?type=skill&amp;query=13067&amp;level=0" data-type="skill" data-client="std" data-id="13067" data-level="0">[盾立]</a>
 
 <a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="14619"  data-client="std" target="_blank" href="https://www.jx3box.com/app/database/?type=npc&query=14619&level=">[乌蒙贵]</a>
 
-## 新版简版资源插入
-..TODO
-
+===================
 
 @[toc](目录)
 
