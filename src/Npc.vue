@@ -1,7 +1,7 @@
 <template>
     <div class="w-npc" v-if="data">
         <div class="w-npc-wrapper">
-            <div class="w-npc-content u-item">
+            <div class="w-npc-content">
                 <div class="u-npc">
                     <div class="u-title">
                         <span class="u-name">{{ data.Name }}</span>
@@ -266,5 +266,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "../assets/css/module/buff.less";
+@import "../assets/css/module/npc.less";
 </style>
