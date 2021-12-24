@@ -1,46 +1,7 @@
-.c-editor-header {
-    .mb(10px);
-    .clearfix;
-
-    .c-upload,
-    .c-resource {
-        .fl;
-    }
-    .c-upload {
-        .mr(5px);
-    }
-}
-
-.c-markdown{
-    .h(780px);
-    .v-note-wrapper{
-        .h(780px);
-    }
-
-    a:hover {
-        text-decoration: none;
-    }
-}
-
-.c-markdown-toolbar-item {
-    .mr(5px);
-    .pointer;
-    padding: 2px 5px 3px 5px;
-
-    &:hover {
-        background: #e9e9eb;
-        .r(4px);
-    }
-}
-.c-markdown-store-item {
-    .none;
-}
-
 .c-editor-markdown {
+    @import "markdown/_.less";
+    
     @import "module/video.less";
-
-    @import 'module/macro.less';
-    @import 'module/qixue.less';
 
     @import 'module/jx3_element.less';
     @import 'module/buff.less';
@@ -49,3 +10,6 @@
     @import 'module/resource.less';
     @import 'module/item.less';
 }
+
+@import 'markdown/macro.less';
+@import 'markdown/talent.less';

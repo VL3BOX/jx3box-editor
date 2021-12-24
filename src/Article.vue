@@ -1,5 +1,5 @@
 <template>
-    <div class="c-article-box">
+    <div class="c-article-tinymce c-article-box">
         <!-- <div id="c-article-origin" class="c-article-origin" ref="origin"><slot></slot></div> -->
         <div id="c-article" class="c-article" ref="article" v-if="pageable">
             <div

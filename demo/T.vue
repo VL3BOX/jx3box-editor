@@ -6,7 +6,7 @@
 
 <script>
 import Tinymce from "../src/Tinymce.vue";
-import demohtml from "./content";
+import demohtml from "./content_1";
 export default {
     name: "T",
     props: [],
