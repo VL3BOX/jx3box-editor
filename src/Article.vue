@@ -90,6 +90,7 @@ import renderTalent2 from "../assets/js/talent2";
 import renderKatex from "../assets/js/katex";
 import renderCode from "../assets/js/code";
 import renderImgPreview from "../assets/js/renderImgPreview";
+import renderPzIframe from '../assets/js/pz_iframe'
 
 // 剑三
 import Item from "./Item";
@@ -191,6 +192,8 @@ export default {
             renderTalent2();
             // 物品
             renderJx3Element(this);
+            // 配装
+            renderPzIframe();
         },
         doDir: function () {
             // 显示局部
