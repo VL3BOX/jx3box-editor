@@ -22,7 +22,7 @@
             >进入特殊区域（代码块，折叠块等等）脱离或使用工具栏触发后，请使用键盘方向
             → ↓
             键进行脱离，回车只是正常在区块内换行。去掉样式点击第二行第一个&lt;清除格式&gt;即可复位。<a
-                href="https://www.jx3box.com/tool/16227"
+                href="/tool/16227"
                 target="_blank"
                 >[编辑器使用指南]</a
             >
@@ -62,7 +62,7 @@ export default {
                 // TODO:
                 content_css: `https://oss.jx3box.com/static/tinymce/skins/content/default/content.min.css`,
                 // content_css: `http://localhost:5000/skins/content/default/content.min.css`,
-                body_class: "c-article c-article-editor",
+                body_class: "c-article c-article-editor c-article-tinymce",
                 height: this.height || 800,
                 autosave_ask_before_unload: false,
 
