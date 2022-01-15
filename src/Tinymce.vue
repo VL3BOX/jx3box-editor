@@ -150,8 +150,8 @@ export default {
                 images_upload_credentials: true,
 
                 // Hook
-                setup: this.setup,
-                init_instance_callback: this.ready,
+                // setup: this.setup,
+                // init_instance_callback: this.ready,
 
                 // Template
                 // templates: [
