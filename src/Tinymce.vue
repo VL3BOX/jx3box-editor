@@ -39,6 +39,7 @@ import Resource from "./Resource";
 import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 import { __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
+import hljs_languages from "../assets/js/item/hljs_languages.js"
 const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
 const API = API_Root + "api/cms/upload/tinymce";
 
@@ -142,6 +143,8 @@ export default {
                     "000000",
                     "黑色",
                 ],
+
+                codesample_languages: hljs_languages,
 
                 // Image
                 image_advtab: true,
