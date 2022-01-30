@@ -13,7 +13,7 @@
                 <span v-text="`精炼等级：0 / ${source.MaxStrengthLevel}`"></span>
             </div>
             <!-- 物品名称 -->
-            <h4 class="u-title" :style="{ color: color(source.Quality) }" v-text="source.Name"></h4>
+            <div class="u-title" :style="{ color: color(source.Quality) }" v-text="source.Name"></div>
             <!-- 绑定状态 -->
             <div v-if="source.BindType > 1" class="u-bind" v-text="bind(source.BindType)"></div>
             <!-- 唯一 -->
@@ -324,6 +324,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "../assets/css/module/item.less";
 </style>
