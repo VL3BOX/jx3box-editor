@@ -53,6 +53,7 @@
                 :level="skill.level"
                 v-show="jx3_element.type == 'skill'"
             />
+            <jx3-npc :client="npc.client" :id="npc.id" v-show="jx3_element.type === 'npc'" />
         </div>
         <!-- <gallery :images="images" :index="gallery_index" @close="index = null"></gallery> -->
     </div>
@@ -96,6 +97,7 @@ import renderPzIframe from '../assets/js/pz_iframe'
 import Item from "./Item";
 import Buff from "./Buff";
 import Skill from "./Skill";
+import Npc from "./Npc";
 import renderJx3Element from "../assets/js/jx3_element";
 
 export default {
@@ -137,6 +139,12 @@ export default {
                 id: "",
                 level: "",
             },
+            // NPC
+            npc : {
+                client : 'std',
+                id : '',
+            },
+            // COMMON
             jx3_element: {
                 style: {
                     top: 0,
@@ -265,6 +273,7 @@ export default {
         "jx3-item": Item,
         "jx3-buff": Buff,
         "jx3-skill": Skill,
+        "jx3-npc": Npc,
         // "gallery":gallery,
         // VueViewer
     },
