@@ -198,7 +198,7 @@ import { loadResource, loadStat, getIcons } from "../service/database";
 import { __ossRoot, __iconPath, __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "../assets/data/detach_type.json";
 import User from "@jx3box/jx3box-common/js/user";
-import { iconLink } from "@jx3box/jx3box-common/js/utils";
+import { iconLink,getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Resource",
     props: {
@@ -369,7 +369,7 @@ export default {
                 // <img src="${this.iconURL(
                 //     o.IconID
                 // )}">
-                this.html = `<a data-type="buff" class="e-jx3-buff w-jx3-element ${o.CanCancel == 1 ? "isBuff" : "isDebuff"}" href="${this.getLink(
+                this.html = `<a data-type="buff" class="e-jx3-buff w-jx3-element ${o.CanCancel == 1 ? "isBuff" : "isDebuff"}" href="${this.getDbLink(
                     "buff",
                     this.client,
                     o.BuffID,
@@ -383,7 +383,7 @@ export default {
             this.resetItems();
             o.isSelected = true;
             if (this.skill_mode == "simple") {
-                this.html = `<a data-type="skill" class="e-jx3-skill w-jx3-element" href="${this.getLink("skill", this.client, o.SkillID, o.Level)}" data-client="${this.client}" data-id="${
+                this.html = `<a data-type="skill" class="e-jx3-skill w-jx3-element" href="${this.getDbLink("skill", this.client, o.SkillID, o.Level)}" data-client="${this.client}" data-id="${
                     o.SkillID
                 }" data-level="${o.Level}">[${o.Name}]</a>`;
             } else {
@@ -393,7 +393,7 @@ export default {
         selectItem: function(o, i) {
             this.resetItems();
             o.isSelected = true;
-            this.html = `<a data-type="item" class="e-jx3-item e-jx3-item-q${o.Quality} w-jx3-element" data-mode="" data-id="${o.id}" data-quality="${o.Quality}" data-client="${this.client}" target="_blank" href="${o.Link}">[${o.Name}]</a>`;
+            this.html = `<a data-type="item" class="e-jx3-item e-jx3-item-q${o.Quality} w-jx3-element" data-mode="" data-id="${o.id}" data-quality="${o.Quality}" data-client="${this.client}" target="_blank" href="${this.getLink('item', o.id)}">[${o.Name}]</a>`;
         },
         selectIcon: function(o) {
             this.resetItems();
@@ -403,7 +403,7 @@ export default {
         selectNpc: function (o, i){
             this.resetItems()
             o.isSelected = true
-            this.html = `<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="${o.ID}"  data-client="${this.client}" target="_blank" href="${this.getLink("npc", this.client, o.ID, '')}">[${o.Name}]</a>`
+            this.html = `<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="${o.ID}"  data-client="${this.client}" target="_blank" href="${this.getDbLink("npc", this.client, o.ID, '')}">[${o.Name}]</a>`
         },
         resetItems: function() {
             let data = this[this.type];
@@ -418,9 +418,13 @@ export default {
         iconURL: function(id) {
             return iconLink(id, this.client);
         },
-        getLink: function(type, client, id, level) {
+        getDbLink: function(type, client, id, level) {
             let domain = client == "origin" ? __OriginRoot : __Root;
             return domain + "app/database/?type=" + type + `&query=${id}&level=${level}`;
+        },
+        getLink : function (type,id){
+            let domain = this.client == "origin" ? __OriginRoot : __Root;
+            return domain + getLink(type,id).slice(1)
         },
 
         // 杂项
