@@ -1,7 +1,7 @@
 <template>
     <div class="c-resource">
         <!-- 上传触发按钮 -->
-        <el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />剑三资源 </el-button>
+        <el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />插入资源 </el-button>
 
         <!-- 弹出界面 -->
         <el-dialog class="c-large-dialog" title="剑三数据库" :visible.sync="dialogVisible">
@@ -97,15 +97,19 @@
                             <i class="el-icon-s-data"></i> 共找到 <b>{{ item.length }}</b> 条记录
                         </p>
                         <ul class="m-resource-list" v-if="item.length">
-                            <li v-for="(o, i) in item" :key="i" class="u-item" :class="{ on: o.isSelected }" @click="selectItem(o, i)" ref="item">
-                                <span class="u-id">ID:{{ o.id }}</span>
-                                <img class="u-pic" :title="'IconID:' + o.IconID" :src="iconURL(o.IconID)" />
-                                <span class="u-name">{{ o.Name }}</span>
-                                <span class="u-content" v-html="o.DescHtml"></span>
-                                <span class="u-remark">
-                                    {{ o.Requirement }}
-                                </span>
-                            </li>
+                            <el-popover popper-class="m-item-pop" :visible-arrow="false" trigger="hover" placement="left" v-for="(o, i) in item" :key="i">
+                                <li slot="reference" class="u-item" :class="{ on: o.isSelected }" @click="selectItem(o, i)" ref="item">
+                                    <span class="u-id">ID:{{ o.id }}</span>
+                                    <img class="u-pic" :title="'IconID:' + o.IconID" :src="iconURL(o.IconID)" />
+                                    <span class="u-name">{{ o.Name }}</span>
+                                    <span class="u-content" v-html="o.DescHtml"></span>
+                                    <span class="u-remark">
+                                        {{ o.Requirement }}
+                                    </span>
+                                </li>
+
+                                <jx3-item :item_id="o.id"></jx3-item>
+                            </el-popover>
                         </ul>
                         <el-alert v-if="!item.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
@@ -193,12 +197,11 @@
 </template>
 
 <script>
-import axios from "axios";
 import { loadResource, loadStat, getIcons } from "../service/database";
 import { __ossRoot, __iconPath, __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "../assets/data/detach_type.json";
-import User from "@jx3box/jx3box-common/js/user";
 import { iconLink,getLink } from "@jx3box/jx3box-common/js/utils";
+import Item from './Item.vue';
 export default {
     name: "Resource",
     props: {
@@ -454,10 +457,18 @@ export default {
     created: function() {
         this.checkUA();
     },
-    components: {},
+    components: {
+        'jx3-item': Item
+    },
 };
 </script>
 
 <style lang="less">
 @import "../assets/css/resource.less";
+
+.m-item-pop {
+    padding: 0 !important;
+    background: none !important;
+    border: none;
+}
 </style>
