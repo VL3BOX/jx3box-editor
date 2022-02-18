@@ -250,26 +250,34 @@ import { iconLink } from "@jx3box/jx3box-common/js/utils";
 
 export default {
     name: "Item",
-    props: ["item", "item_id", "jx3ClientType"],
+    props: ["item", "item_id", "jx3ClientType","client"],
     data() {
         return {
             source: null,
         };
     },
     computed : {
-        client_id : function (){
-            return  this.jx3ClientType || 1
+        // 兼容旧版传值
+        env_client_id : function (){
+            return location.href.includes('origin') ? 2 : 1  
         },
-        client : function (){
-            return this.client_id == 1 ? 'std' : 'origin'
+        client_id : function (){
+            return  this.jx3ClientType || this.env_client_id
+        },
+        client_by_id : function (){
+            return  this.client_id == 1 ? 'std' : 'origin'
+        },
+        // 新版传值
+        final_client : function (){
+            return this.client || this.client_by_id
         },
         cache_key : function (){
-            return `item-${this.client}-${this.item_id}`  
+            return `item-${this.final_client}-${this.item_id}`  
         },
     },
     methods: {
         iconLink : function (id){
-            return iconLink(id,this.client)
+            return iconLink(id,this.final_client)
         },
         second_format,
         attribute_percent,
@@ -303,7 +311,7 @@ export default {
 
                     // 服务端拉取
                     }else{
-                        get_item(this.item_id, this.client_id).then((res) => {
+                        get_item(this.item_id, this.final_client).then((res) => {
                             let data = res.data;
                             if (data.code === 200) {
                                 let item = data.data.item;

@@ -1,14 +1,15 @@
 import { $helper } from "@jx3box/jx3box-common/js/https";
 
 // 获取物品
-function get_item(item_id, client_id) {
+function get_item(item_id, client) {
     if (!item_id) return;
-
     let options = {
-        url: `api/item/${item_id}`,
+        url: `/api/item/${item_id}`,
+        params : {
+            client
+        }
     };
-
-    return $helper({ mute: true,client_id : client_id })(options);
+    return $helper({ mute: true })(options);
 }
 
 // 获取清单
