@@ -22,7 +22,7 @@
             <div
                 v-if="parseInt(source.MaxExistTime) > 0"
                 class="u-max-exist-time"
-                v-text="'存在时间：' + second_format(source.MaxExistTime)"
+                v-text="'限时时间：' + showDuration(source.MaxExistTime)"
             ></div>
             <!-- 最大拥有数 -->
             <div
@@ -242,11 +242,16 @@
 
 <script>
 import { get_item } from "../service/item.js";
-import second_format from "../assets/js/item/second_format.js";
+
 import attribute_percent from "../assets/js/item/attribute_percent.js";
 import bind from "../assets/js/item/bind.js";
 import color from "../assets/js/item/color.js";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
+
+import second_format from "../assets/js/item/second_format.js";
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration'
+dayjs.extend(duration);
 
 export default {
     name: "Item",
@@ -280,6 +285,10 @@ export default {
             return iconLink(id,this.final_client)
         },
         second_format,
+        showDuration : function (val){
+            val = Number(val)
+            return val && dayjs.duration(val).asDays().toFixed(0) + '天';
+        },
         attribute_percent,
         bind,
         color,
