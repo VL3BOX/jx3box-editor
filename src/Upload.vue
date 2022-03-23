@@ -53,174 +53,187 @@
 </template>
 
 <script>
-import axios from "axios";
-import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
-const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
-const API = API_Root + "api/cms/upload";
+    import axios from "axios";
+    import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+    const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
+    const API = API_Root + "api/cms/upload";
 
-import allow_types from "@jx3box/jx3box-common/data/conf";
-const imgtypes = ["jpg", "png", "gif", "bmp", "webp"];
+    import allow_types from "@jx3box/jx3box-common/data/conf";
+    const imgtypes = ["jpg", "png", "gif", "bmp", "webp"];
 
-export default {
-    name: "Upload",
-    props: {
-        text: {
-            type: String,
-        },
-        onlyImage: {
-            type: Boolean,
-        },
-        desc: {
-            type: String,
-        },
-        accept: {
-            type: String,
-        },
-        enable : {
-            type: Boolean,
-            default : true,
-        }
-    },
-    data: function() {
-        return {
-            API: API,
-            dialogVisible: false,
-            tip: this.desc || "一次最多同时上传10个文件（不超过5M），格式限常见的图片、文档、数据表及压缩包",
-            btn_txt: this.text || "上传附件",
-
-            fileList: [],
-            selectedCount: 0,
-            insertList: "",
-
-            // accept: allow_types.accept,
-            // sizeLimit: allow_types.sizeLimit,
-        };
-    },
-    watch: {
-        fileList: {
-            deep: true,
-            handler: function(newval) {
-                this.$emit("update", newval);
+    export default {
+        name: "Upload",
+        props: {
+            text: {
+                type: String,
+            },
+            onlyImage: {
+                type: Boolean,
+            },
+            desc: {
+                type: String,
+            },
+            accept: {
+                type: String,
+            },
+            enable: {
+                type: Boolean,
+                default: true,
             },
         },
-        insertList: function(newval) {
-            this.$emit("htmlUpdate", newval);
+        data: function() {
+            return {
+                API: API,
+                dialogVisible: false,
+                tip: this.desc || "一次最多同时上传10个文件（不超过5M），格式限常见的图片、文档、数据表及压缩包",
+                btn_txt: this.text || "上传附件",
+
+                fileList: [],
+                selectedCount: 0,
+                insertList: "",
+
+                // accept: allow_types.accept,
+                // sizeLimit: allow_types.sizeLimit,
+            };
         },
-    },
-    computed: {
-        buttonTXT: function() {
-            return this.selectedCount ? "插 入" : "确 定";
+        watch: {
+            fileList: {
+                deep: true,
+                handler: function(newval) {
+                    this.$emit("update", newval);
+                },
+            },
+            insertList: function(newval) {
+                this.$emit("htmlUpdate", newval);
+            },
         },
-    },
-    methods: {
-        change: function(file, fileList) {
-            if (file.status != "success") {
-                // 判断大小
-                // if (file.size > this.sizeLimit) {
-                //     this.$message.error("文件超出大小限制");
-                //     this.removeFile(fileList, file.uid);
-                //     return;
-                // }
+        computed: {
+            buttonTXT: function() {
+                return this.selectedCount ? "插 入" : "确 定";
+            },
+        },
+        methods: {
+            change: function(file, fileList) {
+                if (file.status != "success") {
+                    // 判断大小
+                    // if (file.size > this.sizeLimit) {
+                    //     this.$message.error("文件超出大小限制");
+                    //     this.removeFile(fileList, file.uid);
+                    //     return;
+                    // }
 
-                // 分析文件类型
-                let ext = file.name.split(".").pop();
-                let is_img = imgtypes.includes(ext);
+                    // 分析文件类型
+                    let ext = file.name.split(".").pop();
+                    let is_img = imgtypes.includes(ext);
 
-                if (this.onlyImage && !is_img) return;
+                    if (this.onlyImage && !is_img) return;
 
-                // 构建数据
-                let fdata = new FormData();
-                fdata.append("file", file.raw);
+                    // 构建数据
+                    let fdata = new FormData();
+                    fdata.append("file", file.raw);
 
-                // 异步上传
-                axios
-                    .post(API, fdata, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                        withCredentials: true,
-                    })
-                    .then((res) => {
-                        // 提醒
-                        this.$message({
-                            message: "上传成功",
-                            type: "success",
+                    // 异步上传
+                    axios
+                        .post(API, fdata, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                                auth: {
+                                    username: (localStorage && localStorage.getItem("token")) || "",
+                                    password: "cms common request",
+                                },
+                            },
+                            withCredentials: true,
+                        })
+                        .then((res) => {
+                            if (res.data.code) {
+                                this.$message({
+                                    message: res.data.msg,
+                                    type: "error",
+                                });
+                                return;
+                            }
+                            // 提醒
+                            this.$message({
+                                message: "上传成功",
+                                type: "success",
+                            });
+
+                            // 修改path
+                            file.url = res.data.data && res.data.data[0];
+
+                            // 额外赋值
+                            file.is_img = is_img;
+                            file.selected = true;
+
+                            // 修改状态加入仓库
+                            file.status = "success";
+                            this.fileList.push(file);
+                            this.selectedCount++;
+                        })
+                        .catch((err) => {
+                            if (err.response.data.code) {
+                                this.$message.error(`[${err.response.data.code}] ${err.response.data.message}`);
+                            } else {
+                                this.$message.error("请求异常");
+                            }
                         });
-
-                        // 修改path
-                        file.url = res.data.data && res.data.data[0];
-
-                        // 额外赋值
-                        file.is_img = is_img;
-                        file.selected = true;
-
-                        // 修改状态加入仓库
-                        file.status = "success";
-                        this.fileList.push(file);
-                        this.selectedCount++;
-                    })
-                    .catch((err) => {
-                        if (err.response.data.code) {
-                            this.$message.error(`[${err.response.data.code}] ${err.response.data.message}`);
-                        } else {
-                            this.$message.error("请求异常");
-                        }
-                    });
-            }
-        },
-        select: function(file) {
-            if (file.status == "success") {
-                this.$set(file, "selected", !file.selected);
-                file.selected ? this.selectedCount++ : this.selectedCount--;
-            }
-        },
-        buildHTML: function() {
-            let list = [];
-            this.fileList.forEach((file) => {
-                if (file.selected) {
-                    file.is_img ? list.push(`<img src="${file.url}" />`) : list.push(`<a target="_blank" href="${file.url}">${file.name}</a>`);
                 }
-            });
-            this.insertList = list.join(" \n");
-            return this.insertList;
-        },
-        insert: function() {
-            // 关闭窗口
-            this.dialogVisible = false;
-
-            //为空不执行插入
-            if (!this.selectedCount) return;
-
-            // 传递值
-            this.$emit("insert", {
-                list: this.fileList,
-                html: this.buildHTML(),
-            });
-
-            //移除所有选择状态
-            this.resetSelectStatus();
-        },
-        resetSelectStatus: function() {
-            this.fileList.forEach((file, i) => {
-                this.$set(this.fileList[i], "selected", false);
-            });
-            this.selectedCount = 0;
-        },
-        clear: function() {
-            this.$refs.uploadbox.clearFiles();
-            this.fileList = [];
-        },
-        removeFile: function(fileList, uid) {
-            fileList.forEach((file, i) => {
-                if (file.uid == uid) {
-                    fileList.splice(i, 1);
+            },
+            select: function(file) {
+                if (file.status == "success") {
+                    this.$set(file, "selected", !file.selected);
+                    file.selected ? this.selectedCount++ : this.selectedCount--;
                 }
-            });
+            },
+            buildHTML: function() {
+                let list = [];
+                this.fileList.forEach((file) => {
+                    if (file.selected) {
+                        file.is_img ? list.push(`<img src="${file.url}" />`) : list.push(`<a target="_blank" href="${file.url}">${file.name}</a>`);
+                    }
+                });
+                this.insertList = list.join(" \n");
+                return this.insertList;
+            },
+            insert: function() {
+                // 关闭窗口
+                this.dialogVisible = false;
+
+                //为空不执行插入
+                if (!this.selectedCount) return;
+
+                // 传递值
+                this.$emit("insert", {
+                    list: this.fileList,
+                    html: this.buildHTML(),
+                });
+
+                //移除所有选择状态
+                this.resetSelectStatus();
+            },
+            resetSelectStatus: function() {
+                this.fileList.forEach((file, i) => {
+                    this.$set(this.fileList[i], "selected", false);
+                });
+                this.selectedCount = 0;
+            },
+            clear: function() {
+                this.$refs.uploadbox.clearFiles();
+                this.fileList = [];
+            },
+            removeFile: function(fileList, uid) {
+                fileList.forEach((file, i) => {
+                    if (file.uid == uid) {
+                        fileList.splice(i, 1);
+                    }
+                });
+            },
         },
-    },
-    mounted: function() {},
-    components: {},
-};
+        mounted: function() {},
+        components: {},
+    };
 </script>
 
 <style lang="less">
-@import "../assets/css/upload.less";
+    @import "../assets/css/upload.less";
 </style>
