@@ -137,12 +137,12 @@
                         .post(API, fdata, {
                             headers: {
                                 "Content-Type": "multipart/form-data",
-                                auth: {
+                            },
+                            withCredentials: true,
+                            auth: {
                                     username: (localStorage && localStorage.getItem("token")) || "",
                                     password: "cms common request",
                                 },
-                            },
-                            withCredentials: true,
                         })
                         .then((res) => {
                             if (res.data.code) {
