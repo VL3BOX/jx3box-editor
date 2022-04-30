@@ -340,6 +340,7 @@ export default {
             }
         },
         search: function() {
+            this.page = 1;
             this.getData();
         },
         appendPage: function() {
