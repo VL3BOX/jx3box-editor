@@ -6,20 +6,22 @@ function renderItem(vm, selector = ".w-jx3-element") {
     const pop_class = '.w-jx3-element-pop'
 
     // 触发时
-    $(selector).on("mouseenter", function(e) {
+    $(selector).on("mouseenter", function (e) {
         clearTimeout(outer);
 
         // 获取元素数据
         let type = $(e.target).attr("data-type");
-        if(type=='item'){
+        if (type == 'item') {
             vm.item.id = $(e.target).attr("data-id");
             vm.item.client = $(e.target).attr("data-client") == 'origin' ? 2 : 1;
-        }else{
+        } else if (type === 'author') {
+            vm.author.id = $(e.target).attr("data-id");
+        } else {
             vm[type].client = $(e.target).attr("data-client");
             vm[type].id = $(e.target).attr("data-id");
             vm[type].level = $(e.target).attr("data-level");
         }
-       
+
         // 显示浮层
         $(pop_class).fadeIn();
         vm.jx3_element.type = type
@@ -39,18 +41,18 @@ function renderItem(vm, selector = ".w-jx3-element") {
     });
 
     // 移除时
-    $(selector).on("mouseleave", function(e) {
+    $(selector).on("mouseleave", function (e) {
         outer = setTimeout(() => {
             $(pop_class).fadeOut();
         }, 380);
     });
 
     // POP内停留
-    $(pop_class).on("mouseenter", function(e) {
+    $(pop_class).on("mouseenter", function (e) {
         clearTimeout(outer);
         $(pop_class).fadeIn();
     });
-    $(pop_class).on("mouseleave", function(e) {
+    $(pop_class).on("mouseleave", function (e) {
         clearTimeout(inner);
         inner = setTimeout(() => {
             $(pop_class).fadeOut();

@@ -21,13 +21,13 @@
 
                 <el-tabs class="m-database-tabs" v-model="type" type="card" @tab-click="changeType">
                     <el-tab-pane label="Buff" name="buff">
-                        <span slot="label">
+                        <span slot="label" class="u-tab-label">
                             <img class="u-icon" svg-inline src="../assets/img/buff.svg" />
                             <b>Buff</b>
                             <em class="u-count">{{ stat.buff }}</em>
                         </span>
-                        <div v-if="buff.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到 <b>{{ buff.length }}</b> 条记录
+                        <div v-if="total && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
                             <div class="u-mode">
                                 插入模式：
                                 <el-radio-group v-model="buff_mode" size="mini" @change="changeMode">
@@ -55,13 +55,13 @@
                         <el-alert v-if="!buff.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="技能" name="skill">
-                        <span slot="label">
+                        <span slot="label" class="u-tab-label">
                             <img class="u-icon" svg-inline src="../assets/img/skill.svg" />
                             <b>技能</b>
                             <em class="u-count">{{ stat.skill }}</em>
                         </span>
-                        <div v-if="skill.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到 <b>{{ skill.length }}</b> 条记录
+                        <div v-if="total && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
                             <div class="u-mode">
                                 插入模式：
                                 <el-radio-group v-model="skill_mode" size="mini" @change="changeMode">
@@ -88,13 +88,13 @@
                         <el-alert v-if="!skill.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="物品" name="item">
-                        <span slot="label">
+                        <span slot="label" class="u-tab-label">
                             <img class="u-icon" svg-inline src="../assets/img/item.svg" />
                             <b>物品</b>
                             <em class="u-count">{{ stat.item }}</em>
                         </span>
-                        <p v-if="item.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到 <b>{{ item.length }}</b> 条记录
+                        <p v-if="total && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
                         </p>
                         <ul class="m-resource-list" v-if="item.length">
                             <el-popover popper-class="m-item-pop" :visible-arrow="false" trigger="hover" placement="left" v-for="(o, i) in item" :key="i">
@@ -114,13 +114,13 @@
                         <el-alert v-if="!item.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="Npc" name="npc">
-                        <span slot="label">
+                        <span slot="label" class="u-tab-label">
                             <img class="u-icon" svg-inline src="../assets/img/npc/skull.svg" />
                             <b>Npc</b>
                             <em class="u-count">{{ stat.npc }}</em>
                         </span>
-                        <p v-if="npc.length && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到 <b>{{ npc.length }}</b> 条记录
+                        <p v-if="total && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
                         </p>
                         <ul class="m-resource-list" v-if="npc.length">
                             <li v-for="(o, i) in npc" :key="i" class="u-item" :class="{ on: o.isSelected }" @click="selectNpc(o, i)" ref="item">
@@ -143,7 +143,7 @@
                         <el-alert v-if="!npc.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                     <el-tab-pane label="图标" name="icon">
-                        <span slot="label">
+                        <span slot="label" class="u-tab-label">
                             <img class="u-icon" svg-inline src="../assets/img/icons.svg" />
                             <b>图标</b>
                             <em class="u-count">{{ stat.icon }}</em>
@@ -163,6 +163,48 @@
                             </li>
                         </ul>
                         <el-alert v-if="!icon.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
+                    </el-tab-pane>
+                    <el-tab-pane label="魔盒用户" name="authors">
+                        <span slot="label" class="u-tab-label">
+                            <i class="el-icon-s-custom"></i>
+                            <b>魔盒用户</b>
+                        </span>
+                        <p v-if="total && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
+                        </p>
+                        <ul class="m-resource-list">
+                            <li v-for="(o, i) in authors" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectAuthor(o, i)" ref="author">
+                                <span class="u-id">ID:{{ o.ID }}</span>
+                                <img class="u-pic" :title="'AuthorID:' + o.display_name" :src="userAvatar(o.user_avatar)" />
+                                <span class="u-primary">
+                                    <span class="u-name">
+                                        {{ o.display_name }}
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                        <el-alert v-if="!authors.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
+                    </el-tab-pane>
+                    <el-tab-pane label="表情" name="emotions">
+                        <span slot="label" class="u-tab-label">
+                            <i class="el-icon-sugar"></i>
+                            <b>表情</b>
+                        </span>
+                        <p v-if="total && done" class="m-resource-count">
+                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
+                        </p>
+                        <ul class="m-resource-iconlist">
+                            <li v-for="(o, i) in emotions" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectEmotion(o)" ref="emotion">
+                                <!-- <el-tooltip
+                                    effect="dark"
+                                    :content="o.Name || query"
+                                    placement="top"
+                                >-->
+                                <img class="e-jx3-emotion" :src="userAvatar(o.url)" :alt="query" />
+                                <!-- </el-tooltip> -->
+                            </li>
+                        </ul>
+                        <el-alert v-if="!emotions.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
                 </el-tabs>
 
@@ -198,9 +240,10 @@
 
 <script>
 import { loadResource, loadStat, getIcons } from "../service/database";
+import { loadAuthors, loadEmotions } from "../service/cms";
 import { __ossRoot, __iconPath, __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "../assets/data/detach_type.json";
-import { iconLink,getLink } from "@jx3box/jx3box-common/js/utils";
+import { iconLink, getLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import Item from './Item.vue';
 export default {
     name: "Resource",
@@ -225,6 +268,8 @@ export default {
             item: [],
             icon: [],
             npc: [],
+            authors: [],
+            emotions: [],
 
             stat: {
                 skill: 0,
@@ -284,6 +329,7 @@ export default {
             if (!this.query) return;
 
             this.loading = true;
+            this.per = 10;
             this.done = false;
             let query = this.query;
             let params = {
@@ -316,8 +362,45 @@ export default {
                     this.loading = false;
                 }
 
-                // 非图标
+            } else if (this.type === 'authors') {
+                params = {
+                    ...params,
+                    name: query,
+                }
+                loadAuthors(params)
+                    .then((res) => {
+                        if (!append)  this.authors = [];
+                        let list = this.transformData(res.data.data.list)
+                        this.authors = this.authors.concat(list);
+                        this.pages = res.data.data.pages;
+                        this.total = res.data.data.total;
+                    })
+                    .finally(() => {
+                        this.done = true;
+                        this.loading = false;
+                    });
+           
+            } else if (this.type === 'emotions') {
+                this.per = 30;
+                params = {
+                    per: this.per,
+                    page: page,
+                    search: query,
+                }
+                loadEmotions(params)
+                    .then((res) => {
+                        if (!append)  this.emotions = [];
+                        let list = this.transformData(res.data.data.list)
+                        this.emotions = this.emotions.concat(list);
+                        this.pages = res.data.data.pages;
+                        this.total = res.data.data.total;
+                    })
+                    .finally(() => {
+                        this.done = true;
+                        this.loading = false;
+                    });
             } else {
+                // 非图标
                 loadResource(this.type, query, params)
                     .then((data) => {
                         if (!append) this[this.type] = [];
@@ -327,7 +410,7 @@ export default {
                             this.pages = data.last_page;
                             this.total = data.total;
                         } else {
-                            list = this.transformData(data.list);
+                            list = this.transformData(data.list || []);
                             this.pages = data.pages;
                             this.total = data.total;
                         }
@@ -407,7 +490,17 @@ export default {
         selectNpc: function (o, i){
             this.resetItems()
             o.isSelected = true
-            this.html = `<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="${o.ID}"  data-client="${this.client}" target="_blank" href="${this.getDbLink("npc", this.client, o.ID, '')}">[${o.Name}]</a>`
+            this.html = `<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="${o.ID}"  data-client="${this.client}" target="_blank" href="${this.getDbLink("npc", this.client, o.ID, '')}">${o.Name}]</a>`
+        },
+        selectAuthor: function (o, i){
+            this.resetItems();
+            o.isSelected = true;
+            this.html = `<a data-type="author" class="e-jx3-author w-jx3-element" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">【${o.display_name}】</a>`
+        },
+        selectEmotion: function (o){
+            this.resetItems();
+            o.isSelected = true;
+            this.html = `<img class="e-jx3-emotion" style="width:80px;" src="${o.url}" alt="${o.id}"/>`
         },
         resetItems: function() {
             let data = this[this.type];
@@ -429,6 +522,9 @@ export default {
         getLink : function (type,id){
             let domain = this.client == "origin" ? __OriginRoot : __Root;
             return domain + getLink(type,id).slice(1)
+        },
+        userAvatar: function(url) {
+            return showAvatar(url);
         },
 
         // 杂项

@@ -54,6 +54,7 @@
                 v-show="jx3_element.type == 'skill'"
             />
             <jx3-npc :client="npc.client" :id="npc.id" v-show="jx3_element.type === 'npc'" />
+            <jx3-author :uid="author.id" v-show="jx3_element.type === 'author'" />
         </div>
         <!-- <gallery :images="images" :index="gallery_index" @close="index = null"></gallery> -->
     </div>
@@ -98,6 +99,7 @@ import Item from "./Item";
 import Buff from "./Buff";
 import Skill from "./Skill";
 import Npc from "./Npc";
+import Author from "./Author";
 import renderJx3Element from "../assets/js/jx3_element";
 
 export default {
@@ -143,6 +145,9 @@ export default {
             npc : {
                 client : 'std',
                 id : '',
+            },
+            author: {
+                id: '',
             },
             // COMMON
             jx3_element: {
@@ -274,6 +279,7 @@ export default {
         "jx3-buff": Buff,
         "jx3-skill": Skill,
         "jx3-npc": Npc,
+        "jx3-author": Author,
         // "gallery":gallery,
         // VueViewer
     },
