@@ -386,7 +386,7 @@ export default {
                         this.done = true;
                         this.loading = false;
                     });
-           
+
             } else if (this.type === 'emotions') {
                 this.per = 30;
                 params = {
@@ -450,10 +450,11 @@ export default {
             try {
                 let author = sessionStorage.getItem("atAuthor");
                 if (author) {
-                    author = JSON.parse(author);
                     author = author.split(',') || [];
-                    author.push(this.selectedAuthor.id);
+                    author.push(this.selectedAuthor.ID);
                     sessionStorage.setItem("atAuthor", JSON.stringify(author.join(',')));
+                } else {
+                    sessionStorage.setItem("atAuthor", JSON.stringify(this.selectedAuthor.ID));
                 }
             } catch (error) {
                 console.log(error)
@@ -465,7 +466,7 @@ export default {
                     this.setAuthors();
                     this.$emit("insert", this.html);
                     this.dialogVisible = false;
-                    this.selectAuthor = {};
+                    this.selectedAuthor = {};
                 } else {
                     this.$message.error("您的等级不足或无权限，无法插入用户资源");
                     return;
@@ -529,7 +530,7 @@ export default {
         },
         selectAuthor: function (o){
             this.resetItems();
-            this.selectAuthor = o;
+            this.selectedAuthor = o;
             o.isSelected = true;
             this.html = `<a data-type="author" class="e-jx3-author w-jx3-element" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">【${o.display_name}】</a>`
         },
@@ -564,10 +565,7 @@ export default {
         },
         loadUserInfo: function (){
             if (!this.uid) return;
-            return getUserInfo(this.uid)
-                .then((data) => {
-                    this.userInfo = data;
-                })
+            getUserInfo(this.uid)
         },
 
         // 杂项
