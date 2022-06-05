@@ -185,7 +185,7 @@
                         </ul>
                         <el-alert v-if="!authors.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
-                    <el-tab-pane label="表情" name="emotions">
+                    <!-- <el-tab-pane label="表情" name="emotions">
                         <span slot="label" class="u-tab-label">
                             <i class="el-icon-sugar"></i>
                             <b>表情</b>
@@ -195,17 +195,11 @@
                         </p>
                         <ul class="m-resource-iconlist">
                             <li v-for="(o, i) in emotions" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectEmotion(o)" ref="emotion">
-                                <!-- <el-tooltip
-                                    effect="dark"
-                                    :content="o.Name || query"
-                                    placement="top"
-                                >-->
                                 <img class="e-jx3-emotion" :src="userAvatar(o.url)" :alt="query" />
-                                <!-- </el-tooltip> -->
                             </li>
                         </ul>
                         <el-alert v-if="!emotions.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
-                    </el-tab-pane>
+                    </el-tab-pane> -->
                 </el-tabs>
 
                 <template v-if="multipage">
@@ -241,9 +235,11 @@
 <script>
 import { loadResource, loadStat, getIcons } from "../service/database";
 import { loadAuthors, loadEmotions } from "../service/cms";
+import { getUserInfo } from "../service/author";
 import { __ossRoot, __iconPath, __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "../assets/data/detach_type.json";
 import { iconLink, getLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
+import User from "@jx3box/jx3box-common/js/user";
 import Item from './Item.vue';
 export default {
     name: "Resource",
@@ -257,6 +253,7 @@ export default {
         return {
             dialogVisible: false,
             actived: false,
+            userInfo: {},
 
             type: "buff",
             query: "",
@@ -269,6 +266,7 @@ export default {
             icon: [],
             npc: [],
             authors: [],
+            selectedAuthor: {},
             emotions: [],
 
             stat: {
@@ -317,6 +315,15 @@ export default {
         },
         iconDir: function() {
             return this.client == "origin" ? "origin_icon" : "icon";
+        },
+        userStatus: function (){
+            return User.getInfo().status
+        },
+        uid: function (){
+            return User.getInfo().uid
+        },
+        canInsertAuthor: function() {
+            return User.getLevel(this.userInfo && this.userInfo.experience) >= 2;
         },
     },
     watch: {
@@ -435,10 +442,38 @@ export default {
         changeType: function() {
             this.page = 1;
             this.getData();
+            if (this.type === 'authors') {
+                this.loadUserInfo();
+            }
+        },
+        setAuthors: function() {
+            try {
+                let author = sessionStorage.getItem("atAuthor");
+                if (author) {
+                    author = JSON.parse(author);
+                    author = author.split(',') || [];
+                    author.push(this.selectedAuthor.id);
+                    sessionStorage.setItem("atAuthor", JSON.stringify(author.join(',')));
+                }
+            } catch (error) {
+                console.log(error)
+            }
         },
         insert: function() {
-            this.dialogVisible = false;
-            this.$emit("insert", this.html);
+            if (this.type === 'authors') {
+                if (this.userStatus == 0 && this.canInsertAuthor) {
+                    this.setAuthors();
+                    this.$emit("insert", this.html);
+                    this.dialogVisible = false;
+                    this.selectAuthor = {};
+                } else {
+                    this.$message.error("您的等级不足或无权限，无法插入用户资源");
+                    return;
+                }
+            } else {
+                this.$emit("insert", this.html);
+                this.dialogVisible = false;
+            }
         },
         transformData: function(data) {
             data.forEach((item) => {
@@ -492,8 +527,9 @@ export default {
             o.isSelected = true
             this.html = `<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="${o.ID}"  data-client="${this.client}" target="_blank" href="${this.getDbLink("npc", this.client, o.ID, '')}">${o.Name}]</a>`
         },
-        selectAuthor: function (o, i){
+        selectAuthor: function (o){
             this.resetItems();
+            this.selectAuthor = o;
             o.isSelected = true;
             this.html = `<a data-type="author" class="e-jx3-author w-jx3-element" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">【${o.display_name}】</a>`
         },
@@ -525,6 +561,13 @@ export default {
         },
         userAvatar: function(url) {
             return showAvatar(url);
+        },
+        loadUserInfo: function (){
+            if (!this.uid) return;
+            return getUserInfo(this.uid)
+                .then((data) => {
+                    this.userInfo = data;
+                })
         },
 
         // 杂项
