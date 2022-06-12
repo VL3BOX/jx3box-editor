@@ -565,7 +565,9 @@ export default {
         },
         loadUserInfo: function (){
             if (!this.uid) return;
-            getUserInfo(this.uid)
+            getUserInfo(this.uid).then(res => {
+                this.userInfo = res
+            })
         },
 
         // 杂项
