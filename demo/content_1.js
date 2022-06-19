@@ -1,6 +1,6 @@
 export default 
 `
-<p><a class="e-jx3-author w-jx3-element" href="/author/8" target="_blank" rel="noopener" data-type="author" data-mode="" data-id="8">【浮烟】</a></p>
+<p><a class="e-jx3-author w-jx3-element" href="/author/8" target="_blank" rel="noopener" data-type="author" data-mode="" data-id="8">@浮烟</a></p>
 <pre class="e-pz-iframe">https://www.jx3box.com/pz/iframe.html?id=25402&amp;mode=horizontal</pre>
 <a href="https://oss.jx3box.com/2020/01/%E5%87%8C%E9%9B%AA%E9%98%81%E8%AE%A1%E7%AE%97%E5%99%A83.2%EF%BC%88%E6%9B%B4%E6%96%B0%E5%A4%A7%E9%99%84%E9%AD%94%EF%BC%89.xlsx">凌雪阁计算器</a>
 <h1>一级标题·字体111111111111111111111111111</h1>
