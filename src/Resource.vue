@@ -1,7 +1,7 @@
 <template>
     <div class="c-resource">
         <!-- 上传触发按钮 -->
-        <el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />插入资源 </el-button>
+        <el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />剑三资源 </el-button>
 
         <!-- 弹出界面 -->
         <el-dialog class="c-large-dialog" title="剑三数据库" :visible.sync="dialogVisible">
@@ -166,7 +166,7 @@
                     </el-tab-pane>
                     <el-tab-pane label="魔盒用户" name="authors">
                         <span slot="label" class="u-tab-label">
-                            <i class="el-icon-s-custom"></i>
+                            <i class="el-icon-s-custom" style="margin-right:5px;"></i>
                             <b>魔盒用户</b>
                         </span>
                         <p v-if="total && done" class="m-resource-count">
@@ -180,6 +180,9 @@
                                     <span class="u-name">
                                         {{ o.display_name }}
                                     </span>
+                                    <div class="u-remark">
+                                        {{o.user_bio}}
+                                    </div>
                                 </span>
                             </li>
                         </ul>
@@ -468,7 +471,7 @@ export default {
                     this.dialogVisible = false;
                     this.selectedAuthor = {};
                 } else {
-                    this.$message.error("您的等级不足或无权限，无法插入用户资源");
+                    this.$alert('您的等级不足或无权限（Lv2以上可用）', '消息');
                     return;
                 }
             } else {
@@ -532,7 +535,7 @@ export default {
             this.resetItems();
             this.selectedAuthor = o;
             o.isSelected = true;
-            this.html = `<a data-type="author" class="e-jx3-author w-jx3-element" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">【${o.display_name}】</a>`
+            this.html = `<a data-type="author" class="e-jx3-author w-jx3-element" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">@${o.display_name}</a>`
         },
         selectEmotion: function (o){
             this.resetItems();
@@ -561,7 +564,7 @@ export default {
             return domain + getLink(type,id).slice(1)
         },
         userAvatar: function(url) {
-            return showAvatar(url);
+            return showAvatar(url,'m');
         },
         loadUserInfo: function (){
             if (!this.uid) return;

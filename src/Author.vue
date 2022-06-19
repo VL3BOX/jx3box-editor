@@ -6,7 +6,7 @@
                 <div class="u-info">
                     <a class="u-name" :href="authorLink(uid)" target="_blank">
                         <span>{{ data.display_name.slice(0, 8) }}</span>
-                        <a class="u-superauthor" href="/dashboard/#/cooperation" target="_blank">
+                        <a class="u-superauthor" href="/dashboard/cooperation" target="_blank">
                             <img :src="super_author_icon" alt="superauthor" />
                         </a>
                     </a>
@@ -97,7 +97,6 @@ export default {
         },
         loadMedals: function() {
             return getUserMedals(this.uid).then((data) => {
-                console.log(data)
                 this.medals = data;
             });
         },
@@ -131,15 +130,20 @@ export default {
 @import "../assets/css/module/author.less";
 .w-author {
     .w-author-wrapper {
+        .u-author{
+            padding:5px 0 15px 0;
+        }
         .u-avatar {
             .fl;
             .mr(15px);
-            .size(48px);
         }
         img {
             border: none;
+            margin:0;
+            padding:0;
         }
         a {
+            .lh(28px);
             text-decoration: none;
             &:hover {
                 text-decoration: none;
