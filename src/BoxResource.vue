@@ -1,5 +1,5 @@
 <template>
-    <div class="c-resource">
+    <div class="c-resource c-resource__jx3box">
         <!-- 上传触发按钮 -->
         <el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline :src="boxIcon" />魔盒资源 </el-button>
 
@@ -7,8 +7,8 @@
         <el-dialog class="c-large-dialog" title="魔盒资源库" :visible.sync="dialogVisible">
             <div class="c-resource-content" v-loading="loading">
                 <div class="m-database-search">
-                    <el-input class="u-input" placeholder="请输入 ID 或 名称" v-model="query" @change="search" @keyup.enter.native="search">
-                        <template slot="prepend">ID ／名称</template>
+                    <el-input class="u-input" :placeholder="placeholderText" v-model="query" @change="search" @keyup.enter.native="search">
+                        <template slot="prepend">关键词</template>
                     </el-input>
                 </div>
 
@@ -130,10 +130,18 @@ export default {
             per: 10,
             page: 1,
             total: 1,
-            pages: 1
+            pages: 1,
+
+            placeholderTexts : {
+                'authors' : '请输入 ID 或 名称'
+            }
+
         };
     },
     computed: {
+        placeholderText : function (){
+            return this.placeholderTexts[this.type]
+        },
         buttonTXT: function() {
             return this.selectedCount ? "插 入" : "确 定";
         },
