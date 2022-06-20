@@ -5,7 +5,8 @@
 
         <div class="c-editor-header">
             <Upload v-if="attachmentEnable" @insert="insertAttachments" :enable="true" />
-            <Resource v-if="resourceEnable" @insert="insertResource" :enable="true" />
+            <Resource style="margin-right: 5px;" v-if="resourceEnable" @insert="insertResource" :enable="true" />
+            <BoxResource v-if="resourceEnable" @insert="insertResource" :enable="true" />
         </div>
 
         <slot></slot>
@@ -37,6 +38,7 @@ import { uploadFile } from "../service/cms";
 
 import Upload from "./Upload";
 import Resource from "./Resource";
+import BoxResource from "./BoxResource";
 
 // jx3
 import markdownMacro from './components/markdown/macro.vue'
@@ -69,7 +71,8 @@ export default {
         markdownEditor,
         Upload,
         Resource,
-        
+        BoxResource,
+
         markdownMacro,
         markdownPz,
         markdownKatex,
@@ -215,7 +218,6 @@ export default {
             }
         },
         insertResource: function(data) {
-            console.log(data)
             this.$md.insertText(this.$md.getTextareaDom(), {
                 prefix: data,
                 subfix: "",

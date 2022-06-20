@@ -6,6 +6,7 @@
         <div class="c-editor-header">
             <Upload v-if="attachmentEnable" @insert="insertAttachments" />
             <Resource v-if="resourceEnable" @insert="insertResource" />
+            <BoxResource v-if="resourceEnable" @insert="insertResource" />
         </div>
         <Emotion class="c-editor-emotion" @selected="emotionSelected"></Emotion>
 
@@ -36,6 +37,7 @@
 import Editor from "@tinymce/tinymce-vue";
 import Upload from "./Upload";
 import Resource from "./Resource";
+import BoxResource from "./BoxResource";
 import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
 import { __ossRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
@@ -76,10 +78,10 @@ export default {
                     "link autolink",
                     "hr lists advlist table codeinline codesample checklist foldtext latex",
                     "image emoticons media videox macro qixue talent2",
-                    "code fullscreen wordcount powerpaste pagebreak printpage pz", // template anchor jx3icon autosave 
+                    "code fullscreen wordcount powerpaste pagebreak printpage pz", // template anchor jx3icon autosave
                 ],
                 toolbar: [
-                    "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | fullscreen code", //restoredraft 
+                    "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | fullscreen code", //restoredraft
                     "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample latex | emoticons image media videox | macro pz qixue talent2 pagebreak printpage", // template anchor jx3icon
                 ],
                 mobile: {
@@ -208,7 +210,8 @@ export default {
         Editor,
         Upload,
         Resource,
-        Emotion
+        Emotion,
+        BoxResource
     },
 };
 </script>

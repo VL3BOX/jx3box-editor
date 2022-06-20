@@ -164,45 +164,6 @@
                         </ul>
                         <el-alert v-if="!icon.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
-                    <el-tab-pane label="魔盒用户" name="authors">
-                        <span slot="label" class="u-tab-label">
-                            <i class="el-icon-s-custom" style="margin-right:5px;"></i>
-                            <b>魔盒用户</b>
-                        </span>
-                        <p v-if="total && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
-                        </p>
-                        <ul class="m-resource-list">
-                            <li v-for="(o, i) in authors" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectAuthor(o, i)" ref="author">
-                                <span class="u-id">ID:{{ o.ID }}</span>
-                                <img class="u-pic" :title="'AuthorID:' + o.display_name" :src="userAvatar(o.user_avatar)" />
-                                <span class="u-primary">
-                                    <span class="u-name">
-                                        {{ o.display_name }}
-                                    </span>
-                                    <div class="u-remark">
-                                        {{o.user_bio}}
-                                    </div>
-                                </span>
-                            </li>
-                        </ul>
-                        <el-alert v-if="!authors.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
-                    </el-tab-pane>
-                    <!-- <el-tab-pane label="表情" name="emotions">
-                        <span slot="label" class="u-tab-label">
-                            <i class="el-icon-sugar"></i>
-                            <b>表情</b>
-                        </span>
-                        <p v-if="total && done" class="m-resource-count">
-                            <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
-                        </p>
-                        <ul class="m-resource-iconlist">
-                            <li v-for="(o, i) in emotions" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectEmotion(o)" ref="emotion">
-                                <img class="e-jx3-emotion" :src="userAvatar(o.url)" :alt="query" />
-                            </li>
-                        </ul>
-                        <el-alert v-if="!emotions.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
-                    </el-tab-pane> -->
                 </el-tabs>
 
                 <template v-if="multipage">
@@ -372,24 +333,6 @@ export default {
                     this.loading = false;
                 }
 
-            } else if (this.type === 'authors') {
-                params = {
-                    ...params,
-                    name: query,
-                }
-                loadAuthors(params)
-                    .then((res) => {
-                        if (!append)  this.authors = [];
-                        let list = this.transformData(res.data.data.list)
-                        this.authors = this.authors.concat(list);
-                        this.pages = res.data.data.pages;
-                        this.total = res.data.data.total;
-                    })
-                    .finally(() => {
-                        this.done = true;
-                        this.loading = false;
-                    });
-
             } else if (this.type === 'emotions') {
                 this.per = 30;
                 params = {
@@ -445,39 +388,10 @@ export default {
         changeType: function() {
             this.page = 1;
             this.getData();
-            if (this.type === 'authors') {
-                this.loadUserInfo();
-            }
-        },
-        setAuthors: function() {
-            try {
-                let author = sessionStorage.getItem("atAuthor");
-                if (author) {
-                    author = author.split(',') || [];
-                    author.push(this.selectedAuthor.ID);
-                    sessionStorage.setItem("atAuthor", JSON.stringify(author.join(',')));
-                } else {
-                    sessionStorage.setItem("atAuthor", JSON.stringify(this.selectedAuthor.ID));
-                }
-            } catch (error) {
-                console.log(error)
-            }
         },
         insert: function() {
-            if (this.type === 'authors') {
-                if (this.userStatus == 0 && this.canInsertAuthor) {
-                    this.setAuthors();
-                    this.$emit("insert", this.html);
-                    this.dialogVisible = false;
-                    this.selectedAuthor = {};
-                } else {
-                    this.$alert('您的等级不足或无权限（Lv2以上可用）', '消息');
-                    return;
-                }
-            } else {
-                this.$emit("insert", this.html);
-                this.dialogVisible = false;
-            }
+            this.$emit("insert", this.html);
+            this.dialogVisible = false;
         },
         transformData: function(data) {
             data.forEach((item) => {
@@ -531,12 +445,6 @@ export default {
             o.isSelected = true
             this.html = `<a data-type="npc" class="e-jx3-npc w-jx3-element" data-mode="" data-id="${o.ID}"  data-client="${this.client}" target="_blank" href="${this.getDbLink("npc", this.client, o.ID, '')}">${o.Name}]</a>`
         },
-        selectAuthor: function (o){
-            this.resetItems();
-            this.selectedAuthor = o;
-            o.isSelected = true;
-            this.html = `<a data-type="author" class="e-jx3-author w-jx3-element" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">@${o.display_name}</a>`
-        },
         selectEmotion: function (o){
             this.resetItems();
             o.isSelected = true;
@@ -565,12 +473,6 @@ export default {
         },
         userAvatar: function(url) {
             return showAvatar(url,'m');
-        },
-        loadUserInfo: function (){
-            if (!this.uid) return;
-            getUserInfo(this.uid).then(res => {
-                this.userInfo = res
-            })
         },
 
         // 杂项
