@@ -17,6 +17,7 @@
                         <span slot="label" class="u-tab-label">
                             <i class="el-icon-s-custom" style="margin-right:5px;"></i>
                             <b>魔盒用户</b>
+                            <i class="u-lv-box">Lv2+</i>
                         </span>
                         <p v-if="total && done" class="m-resource-count">
                             <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
