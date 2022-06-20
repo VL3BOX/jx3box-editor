@@ -198,8 +198,7 @@
 
 <script>
 import { loadResource, loadStat, getIcons } from "../service/database";
-import { loadAuthors, loadEmotions } from "../service/cms";
-import { getUserInfo } from "../service/author";
+import { loadEmotions } from "../service/cms";
 import { __ossRoot, __iconPath, __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "../assets/data/detach_type.json";
 import { iconLink, getLink, showAvatar } from "@jx3box/jx3box-common/js/utils";

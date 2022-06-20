@@ -7,15 +7,8 @@
         <el-dialog class="c-large-dialog" title="魔盒资源库" :visible.sync="dialogVisible">
             <div class="c-resource-content" v-loading="loading">
                 <div class="m-database-search">
-                    <!--<el-radio-group class="u-client" v-model="client" @change="search">
-                        <el-radio-button label="std">重制</el-radio-button>
-                        <el-radio-button label="origin">缘起</el-radio-button>
-                    </el-radio-group>-->
                     <el-input class="u-input" placeholder="请输入 ID 或 名称" v-model="query" @change="search" @keyup.enter.native="search">
                         <template slot="prepend">ID ／名称</template>
-                        <!--<template slot="append" v-if="isPC">
-                            <el-switch v-model="strict" active-text="精确匹配" @change="search" title="仅对Buff/Skill有效"></el-switch>
-                        </template>-->
                     </el-input>
                 </div>
 
@@ -133,7 +126,6 @@ export default {
             isSuper: false,
 
             html: "",
-            isPC: true,
 
             per: 10,
             page: 1,
@@ -197,29 +189,7 @@ export default {
             };
 
             // 图标
-            if (this.type == "icon") {
-                if (isNaN(query)) {
-                    getIcons(query, params)
-                        .then((data) => {
-                            this.icon = data;
-                        })
-                        .finally(() => {
-                            this.done = true;
-                            this.loading = false;
-                        });
-                } else {
-                    let arr = [
-                        {
-                            iconID: ~~this.query,
-                            isSelected: false,
-                        },
-                    ];
-                    this.icon = arr;
-                    this.done = true;
-                    this.loading = false;
-                }
-
-            } else if (this.type === 'authors') {
+            if (this.type === 'authors') {
                 params = {
                     ...params,
                     name: query,
@@ -251,27 +221,6 @@ export default {
                         this.emotions = this.emotions.concat(list);
                         this.pages = res.data.data.pages;
                         this.total = res.data.data.total;
-                    })
-                    .finally(() => {
-                        this.done = true;
-                        this.loading = false;
-                    });
-            } else {
-                // 非图标
-                loadResource(this.type, query, params)
-                    .then((data) => {
-                        if (!append) this[this.type] = [];
-                        let list;
-                        if (this.type == "item") {
-                            list = this.transformData(data.data);
-                            this.pages = data.last_page;
-                            this.total = data.total;
-                        } else {
-                            list = this.transformData(data.list || []);
-                            this.pages = data.pages;
-                            this.total = data.total;
-                        }
-                        this[this.type] = this[this.type].concat(list);
                     })
                     .finally(() => {
                         this.done = true;
@@ -331,16 +280,6 @@ export default {
             });
             return data;
         },
-        selectItem: function(o, i) {
-            this.resetItems();
-            o.isSelected = true;
-            this.html = `<a data-type="item" class="e-jx3-item e-jx3-item-q${o.Quality} w-jx3-element" data-mode="" data-id="${o.id}" data-quality="${o.Quality}" data-client="${this.client}" target="_blank" href="${this.getLink('item', o.id)}">[${o.Name}]</a>`;
-        },
-        selectIcon: function(o) {
-            this.resetItems();
-            o.isSelected = true;
-            this.html = `<img class="e-jx3-icon" src="${__iconPath}${this.iconDir}/${o.iconID}.png" alt="${o.iconID}"/>`;
-        },
         selectAuthor: function (o){
             this.resetItems();
             this.selectedAuthor = o;
@@ -358,12 +297,6 @@ export default {
                 item.isSelected = false;
             });
             this.html = "";
-        },
-        checkUA: function() {
-            this.isPC = window.innerWidth > 720;
-        },
-        iconURL: function(id) {
-            return iconLink(id, this.client);
         },
         getLink : function (type,id){
             let domain = this.client == "origin" ? __OriginRoot : __Root;
@@ -391,20 +324,7 @@ export default {
             }
         },
     },
-    filters: {
-        filterRaw: function(str) {
-            return str && str.replace(/\\n/g, "\n");
-        },
-        showDetachType: function(val) {
-            if (val && detach_types[val]) {
-                return detach_types[val];
-            } else {
-                return "";
-            }
-        },
-    },
     created: function() {
-        this.checkUA();
         this.loadUserInfo();
     },
 };
