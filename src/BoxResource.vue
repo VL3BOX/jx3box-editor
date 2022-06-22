@@ -86,12 +86,11 @@
 </template>
 
 <script>
-import { loadResource, loadStat, getIcons } from "../service/database";
+import { loadStat, } from "../service/database";
 import { loadAuthors, loadEmotions } from "../service/cms";
 import { getUserInfo } from "../service/author";
 import { __iconPath, __Root, __OriginRoot, __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import detach_types from "../assets/data/detach_type.json";
-import { iconLink, getLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
+import { getLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "Resource",
@@ -271,10 +270,14 @@ export default {
         insert: function() {
             if (this.type === 'authors') {
                 if (this.userStatus == 0 && this.canInsertAuthor) {
-                    this.setAuthors();
-                    this.$emit("insert", this.html);
-                    this.dialogVisible = false;
-                    this.selectedAuthor = {};
+                    if (this.selectedAuthor.ID) {
+                        this.setAuthors();
+                        this.$emit("insert", this.html);
+                        this.dialogVisible = false;
+                        this.selectedAuthor = {};
+                    } else {
+                        this.$message.warning("请选择一个用户");
+                    }
                 } else {
                     this.$alert('您的等级不足或无权限（Lv2以上可用）', '消息');
                 }
