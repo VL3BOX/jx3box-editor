@@ -6,15 +6,24 @@
                 <div class="u-info">
                     <a class="u-name" :href="authorLink(uid)" target="_blank">
                         <span>{{ data.display_name.slice(0, 8) }}</span>
-                        <a class="u-superauthor" href="/dashboard/cooperation" target="_blank">
-                            <img :src="super_author_icon" alt="superauthor" />
-                        </a>
+                        <el-tooltip class="item" effect="dark" content="签约作者" placement="top" v-if="isSuperAuthor">
+                            <a class="u-superauthor" href="/dashboard/cooperation" target="_blank">
+                                <img :src="super_author_icon" alt="superauthor" />
+                            </a>
+                        </el-tooltip>
                     </a>
-                    <div class="u-extend">
-                        <span class="u-level" :class="'lv-' + level" :style={backgroundColor:showLevelColor(level)}>Lv.{{ level }}</span>
-                        <a class="u-vip" href="/vip/premium?from=sidebar_author" target="_blank">
-                            <i class="i-icon-vip on">{{ vipType }}</i>
-                        </a>
+                    <div class="u-extend" v-if="isVip">
+                        <el-tooltip class="item" effect="dark" placement="top">
+                            <div slot="content">
+                                <span class="u-tips">经验值：{{ data.experience }}</span>
+                            </div>
+                            <span class="u-level" :class="'lv-' + level" :style={backgroundColor:showLevelColor(level)}>Lv.{{ level }}</span>
+                        </el-tooltip>
+                        <el-tooltip class="item" effect="dark" :content="vipTypeTitle" placement="top" v-if="isVip">
+                            <a class="u-vip" href="/vip/premium?from=sidebar_author" target="_blank">
+                                <i class="i-icon-vip on">{{ vipType }}</i>
+                            </a>
+                        </el-tooltip>
                     </div>
                 </div>
             </div>
@@ -58,6 +67,12 @@ export default {
         super_author_icon: function() {
             return __imgPath + "image/user/" + "superauthor.svg";
         },
+        isVip: function (){
+            return this.data?.is_pro || this.data?.is_pre
+        },
+        vipTypeTitle: function() {
+            return this.data?.is_pro ? "专业版会员" : "高级版会员";
+        },
         vipType: function() {
             return this.data?.is_pro ? "PRO" : "PRE";
         },
@@ -66,6 +81,9 @@ export default {
         },
         hasTrophy: function() {
             return this.medals.length;
+        },
+        isSuperAuthor: function() {
+            return !!this.data?.sign;
         },
     },
     watch: {
