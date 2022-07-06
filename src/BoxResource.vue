@@ -296,7 +296,7 @@ export default {
             this.resetItems();
             this.selectedAuthor = o;
             o.isSelected = true;
-            this.html = `<a data-type="author" class="e-jx3-author" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">@${o.display_name}</a>`
+            this.html = `<a data-type="author" class="e-jx3-author w-jx3-element" data-mode="" data-id="${o.ID}" target="_blank" href="/author/${o.ID}">@${o.display_name}</a>`
         },
         selectEmotion: function (o){
             this.resetItems();
