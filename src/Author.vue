@@ -12,7 +12,7 @@
                             </a>
                         </el-tooltip>
                     </a>
-                    <div class="u-extend" v-if="isVip">
+                    <div class="u-extend">
                         <el-tooltip class="item" effect="dark" placement="top">
                             <div slot="content">
                                 <span class="u-tips">经验值：{{ data.experience }}</span>
