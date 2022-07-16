@@ -44,12 +44,12 @@
 
 <script>
 import { authorLink, getLink, getThumbnail } from "@jx3box/jx3box-common/js/utils";
-import { getUserInfo, getUserMedals, getUserPublicTeams } from "../service/author";
+import { getUserInfo, getUserMedals, getUserPublicTeams } from "../../service/author";
 import { __server, __imgPath,__userLevelColor } from "@jx3box/jx3box-common/data/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { __userLevel } from "@jx3box/jx3box-common/data/jx3box.json";
-import Avatar from "./components/Avatar.vue"
-import medal from "./components/medal.vue"
+import Avatar from "./Avatar.vue"
+import medal from "./medal.vue"
 export default {
     name: "Author",
     components: {
@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/module/author.less";
+@import "../../assets/css/module/author.less";
 .w-author {
     .w-author-wrapper {
         .u-author{

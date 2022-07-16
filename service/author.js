@@ -21,9 +21,14 @@ async function getUserPublicTeams(uid) {
     return res.data.data;
 }
 
+// 获取指定表情
+function getEmotion(id) {
+    return $cms().get(`/api/cms/post/emotion/${id}`);
+}
 
 export {
     getUserMedals,
     getUserInfo,
     getUserPublicTeams,
+    getEmotion
 }

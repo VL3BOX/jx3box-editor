@@ -55,6 +55,7 @@
             />
             <jx3-npc :client="npc.client" :id="npc.id" v-show="jx3_element.type === 'npc'" />
             <jx3-author :uid="author.id" v-show="jx3_element.type === 'author'" />
+            <jx3-emotion-author :id="emotion.id" v-show="jx3_element.type === 'emotion'" />
         </div>
         <!-- <gallery :images="images" :index="gallery_index" @close="index = null"></gallery> -->
     </div>
@@ -99,7 +100,8 @@ import Item from "./Item";
 import Buff from "./Buff";
 import Skill from "./Skill";
 import Npc from "./Npc";
-import Author from "./Author";
+import Author from "./components/Author";
+import EmotionAuthor from './components/EmotionAuthor.vue'
 import renderJx3Element from "../assets/js/jx3_element";
 
 export default {
@@ -148,6 +150,9 @@ export default {
             },
             author: {
                 id: '',
+            },
+            emotion: {
+                id: ''
             },
             // COMMON
             jx3_element: {
@@ -280,6 +285,7 @@ export default {
         "jx3-skill": Skill,
         "jx3-npc": Npc,
         "jx3-author": Author,
+        'jx3-emotion-author': EmotionAuthor,
         // "gallery":gallery,
         // VueViewer
     },

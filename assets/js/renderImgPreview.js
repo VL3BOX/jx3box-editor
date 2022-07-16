@@ -6,6 +6,7 @@ function renderImgPreview(vm, selector='.c-article img'){
         vm.images.push($(ele).attr('src'))
         // 绑定事件挂钩索引位置
         $(ele).on('click', (e) => {
+            if (e.target.classList.contains('e-jx3-emotion-img')) return
             vm.$hevueImgPreview({
                 multiple: true,
                 nowImgIndex: i,

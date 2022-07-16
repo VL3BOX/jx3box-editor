@@ -16,6 +16,8 @@ function renderItem(vm, selector = ".w-jx3-element") {
             vm.item.client = $(e.target).attr("data-client") == 'origin' ? 2 : 1;
         } else if (type === 'author') {
             vm.author.id = $(e.target).attr("data-id");
+        } else if (type === 'emotion') {
+            vm.emotion.id = $(e.target).attr("data-id");
         } else {
             vm[type].client = $(e.target).attr("data-client");
             vm[type].id = $(e.target).attr("data-id");
