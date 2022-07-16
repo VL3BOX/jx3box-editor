@@ -40,7 +40,7 @@
                     </el-tab-pane>
                     <el-tab-pane label="表情" name="emotions">
                         <span slot="label" class="u-tab-label">
-                            <i class="el-icon-sugar"></i>
+                            <i class="el-icon-sugar"></i> 
                             <b>表情</b>
                         </span>
                         <p v-if="total && done" class="m-resource-count">

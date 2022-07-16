@@ -101,7 +101,7 @@ import Buff from "./Buff";
 import Skill from "./Skill";
 import Npc from "./Npc";
 import Author from "./components/Author";
-import EmotionAuthor from './components/EmotionAuthor.vue'
+import PostAuthor from './components/PostAuthor.vue'
 import renderJx3Element from "../assets/js/jx3_element";
 
 export default {
@@ -285,7 +285,7 @@ export default {
         "jx3-skill": Skill,
         "jx3-npc": Npc,
         "jx3-author": Author,
-        'jx3-emotion-author': EmotionAuthor,
+        'jx3-emotion-author': PostAuthor,
         // "gallery":gallery,
         // VueViewer
     },
