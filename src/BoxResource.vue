@@ -38,7 +38,7 @@
                         </ul>
                         <el-alert v-if="!authors.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
-                    <!-- <el-tab-pane label="表情" name="emotions">
+                    <el-tab-pane label="表情" name="emotions">
                         <span slot="label" class="u-tab-label">
                             <i class="el-icon-sugar"></i>
                             <b>表情</b>
@@ -47,12 +47,12 @@
                             <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
                         </p>
                         <ul class="m-resource-iconlist">
-                            <li v-for="(o, i) in emotions" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectEmotion(o)" ref="emotion">
-                                <img class="e-jx3-emotion" :src="userAvatar(o.url)" :alt="query" />
+                            <li v-for="o in emotions" class="u-item" :key="o.id" :class="{ on: !!o.isSelected }" @click="selectEmotion(o)" ref="emotion">
+                                <img class="e-jx3-emotion" :src="resolveImagePath(o.url)" :alt="query" />
                             </li>
                         </ul>
                         <el-alert v-if="!emotions.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
-                    </el-tab-pane> -->
+                    </el-tab-pane>
                 </el-tabs>
 
                 <template v-if="multipage">
@@ -90,10 +90,10 @@ import { loadStat, } from "../service/database";
 import { loadAuthors, loadEmotions } from "../service/cms";
 import { getUserInfo } from "../service/author";
 import { __iconPath, __Root, __OriginRoot, __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
+import { getLink, showAvatar, resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
-    name: "Resource",
+    name: "BoxResource",
     props: {
         enable: {
             type: Boolean,
@@ -183,8 +183,6 @@ export default {
     },
     methods: {
         getData: function(page = 1, append = false) {
-            if (!this.query) return;
-
             this.loading = true;
             this.per = 10;
             this.done = false;
@@ -198,6 +196,8 @@ export default {
 
             // 图标
             if (this.type === 'authors') {
+                if (!this.query) return;
+
                 params = {
                     ...params,
                     name: query,
@@ -301,7 +301,7 @@ export default {
         selectEmotion: function (o){
             this.resetItems();
             o.isSelected = true;
-            this.html = `<img class="e-jx3-emotion" style="width:80px;" src="${o.url}" alt="${o.id}"/>`
+            this.html = `<img class="e-jx3-emotion" style="width:80px;" src="${resolveImagePath(o.url)}" alt="${o.id}"/>`
         },
         resetItems: function() {
             let data = this[this.type];
@@ -335,6 +335,7 @@ export default {
                 });
             }
         },
+        resolveImagePath
     },
     created: function() {
         this.loadUserInfo();
