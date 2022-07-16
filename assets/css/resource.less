@@ -1,5 +1,5 @@
 .c-resource {
-    margin-right:5px;
+    margin-right: 5px;
     .u-switch {
         .u-icon {
             .size(14px);
@@ -18,8 +18,9 @@
         .lh(28px);
 
         .pr;
-        .u-mode{
-            .pa;.rt(0);
+        .u-mode {
+            .pa;
+            .rt(0);
         }
     }
 
@@ -70,7 +71,7 @@
             .rt(10px);
             .x(right);
         }
-        .u-detach{
+        .u-detach {
             .mt(4px);
             .db;
         }
@@ -97,8 +98,9 @@
             .mb(5px);
             .db;
 
-            .u-map, .u-life {
-                .mr(20px)
+            .u-map,
+            .u-life {
+                .mr(20px);
             }
         }
         .u-remark {
@@ -150,7 +152,8 @@
         }
     }
 
-    .m-resource-iconlist {
+    .m-resource-iconlist,
+    .m-resource-emotion {
         list-style: none;
         padding: 0;
         margin: 0;
@@ -174,21 +177,24 @@
             border: 2px solid transparent;
             &.on {
                 border: 2px solid #49c10f;
-                float: left;
-                margin-right: 10px;
-                margin-bottom: 10px;
                 border-radius: 6px;
             }
+        }
+    }
 
-            .e-jx3-emotion {
-                .size(80px, 80px);
-                .mr(10px);
-                padding: 0 !important;
-                vertical-align: middle;
-                .e-jx3-emotion-img{border:none !important}
-                &:hover{
-                    box-shadow:none !important;
-                }
+    .m-resource-emotion {
+        .u-item {
+            .mr(20px);
+            .mb(20px);
+        }
+        .e-jx3-emotion {
+            .size(80px, 80px);
+            vertical-align: middle;
+            .e-jx3-emotion-img {
+                border: none !important;
+            }
+            &:hover {
+                box-shadow: none !important;
             }
         }
     }
@@ -222,23 +228,23 @@
         position: sticky;
         z-index: 100;
         top: 0;
-        padding:10px 20px 10px 20px;
-        background-color:#fff;
+        padding: 10px 20px 10px 20px;
+        background-color: #fff;
         .pr;
 
-        .u-client{
+        .u-client {
             // .pa;.lt(20px,10px);
-            margin-right:15px;
+            margin-right: 15px;
         }
-        .u-input{
-            flex:1;
+        .u-input {
+            flex: 1;
         }
         display: flex;
     }
 
     .m-database-tabs {
         // .mt(10px);
-        padding:10px 20px 20px 20px;
+        padding: 10px 20px 20px 20px;
         user-select: none;
         .u-icon {
             .size(20px);
@@ -308,7 +314,7 @@
     // 加载更多
     .m-archive-more {
         .none;
-        margin:0 20px 10px 20px;
+        margin: 0 20px 10px 20px;
         box-sizing: border-box;
         width: calc(100% - 40px);
     }
@@ -319,7 +325,7 @@
     // 分页
     .m-archive-pages {
         overflow-x: auto;
-        margin:0 20px;
+        margin: 0 20px;
         .x;
     }
 }

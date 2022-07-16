@@ -46,7 +46,7 @@
                         <p v-if="total && done" class="m-resource-count">
                             <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
                         </p>
-                        <ul class="m-resource-iconlist">
+                        <ul class="m-resource-emotion">
                             <li v-for="o in emotions" class="u-item" :key="o.id" :class="{ on: !!o.isSelected }" @click="selectEmotion(o)" ref="emotion">
                                 <img class="e-jx3-emotion" :src="resolveImagePath(o.url)" :alt="query" />
                             </li>
@@ -301,7 +301,7 @@ export default {
         selectEmotion: function (o){
             this.resetItems();
             o.isSelected = true;
-            this.html = `<a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="${o.id}" target="_blank" href="/bbs/emotion/${o.id}"><img class="e-jx3-emotion-img" data-type="emotion" data-id="${o.id}" style="width:80px;" src="${resolveImagePath(o.url)}" alt="${o.id}"/></a>`
+            this.html = `<a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="${o.id}" target="_blank" href="/emotion/${o.id}"><img class="e-jx3-emotion-img" data-type="emotion" data-id="${o.id}" style="width:80px;" src="${resolveImagePath(o.url)}" alt="${o.id}"/></a>`
         },
         resetItems: function() {
             let data = this[this.type];
