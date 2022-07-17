@@ -16,7 +16,7 @@
                     <el-tab-pane label="魔盒用户" name="authors">
                         <span slot="label" class="u-tab-label">
                             <i class="el-icon-s-custom" style="margin-right:5px;"></i>
-                            <b>魔盒用户</b>
+                            <b>用户</b>
                             <i class="u-lv-box">Lv2+</i>
                         </span>
                         <p v-if="total && done" class="m-resource-count">
@@ -38,10 +38,10 @@
                         </ul>
                         <el-alert v-if="!authors.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
                     </el-tab-pane>
-                    <el-tab-pane label="表情" name="emotions">
+                    <el-tab-pane label="剑三趣图" name="emotions">
                         <span slot="label" class="u-tab-label">
                             <i class="el-icon-sugar" style="margin-right: 5px;"></i> 
-                            <b>表情</b>
+                            <b>趣图</b>
                         </span>
                         <p v-if="total && done" class="m-resource-count">
                             <i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
