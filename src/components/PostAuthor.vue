@@ -19,7 +19,7 @@
             <div class="u-meta">
                 <div class="u-meta-label">更新</div>
                 <div class="u-meta-value">
-                    {{ data.created_at }}
+                    {{ formatTime(data.created_at) }}
                 </div>
             </div>
             <div class="u-meta">
@@ -31,9 +31,10 @@
 </template>
 
 <script>
-import { authorLink, getLink, getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import { getEmotion } from "../../service/author";
 import { __server, __imgPath, __userLevelColor } from "@jx3box/jx3box-common/data/jx3box.json";
+import dayjs from "dayjs";
 import Avatar from "./Avatar.vue";
 export default {
     name: "PostAuthor",
@@ -65,6 +66,9 @@ export default {
                 this.loading = false;
             });
         },
+        formatTime(val) {
+            return val && dayjs(val).format("YYYY-MM-DD HH:mm:ss") || "";
+        }
     },
 };
 </script>

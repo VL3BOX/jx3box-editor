@@ -40,7 +40,7 @@
                     </el-tab-pane>
                     <el-tab-pane label="表情" name="emotions">
                         <span slot="label" class="u-tab-label">
-                            <i class="el-icon-sugar"></i> 
+                            <i class="el-icon-sugar" style="margin-right: 5px;"></i> 
                             <b>表情</b>
                         </span>
                         <p v-if="total && done" class="m-resource-count">
@@ -196,7 +196,10 @@ export default {
 
             // 图标
             if (this.type === 'authors') {
-                if (!this.query) return;
+                if (!this.query) {
+                    this.loading = false;
+                    return;
+                };
 
                 params = {
                     ...params,
@@ -216,7 +219,7 @@ export default {
                     });
 
             } else if (this.type === 'emotions') {
-                this.per = 30;
+                this.per = 24;
                 params = {
                     per: this.per,
                     page: page,
@@ -301,7 +304,7 @@ export default {
         selectEmotion: function (o){
             this.resetItems();
             o.isSelected = true;
-            this.html = `<a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="${o.id}" target="_blank" href="/emotion/${o.id}"><img class="e-jx3-emotion-img" data-type="emotion" data-id="${o.id}" style="width:80px;" src="${resolveImagePath(o.url)}" alt="${o.id}"/></a>`
+            this.html = `<a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="${o.id}" target="_blank" href="/emotion/${o.id}"><img class="e-jx3-emotion-img" data-type="emotion" data-id="${o.id}" style="width:80px;" src="${o.url}" alt="${o.id}"/></a>`
         },
         resetItems: function() {
             let data = this[this.type];
