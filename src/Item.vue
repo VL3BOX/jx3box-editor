@@ -175,11 +175,11 @@
                 <img :src="source.ImageUrl" @error.once="source.ImageUrl=null" />
             </div>
             <!-- 描述 -->
-            <p
+            <p 
                 v-if="source.DescHtml"
-                class="u-desc u-yellow"
-                v-html="formatDescHtml(source.DescHtml)"
-            ></p>
+                class="u-desc u-yellow">
+                <game-text :client="client" :text="source.DescHtml || source.Desc"></game-text>
+            </p>
             <!-- 五彩石属性 -->
             <p v-if="source.WuCaiHtml" class="u-desc" v-html="source.WuCaiHtml"></p>
             <!-- 品质等级 -->
@@ -243,6 +243,8 @@
 <script>
 import { get_item } from "../service/item.js";
 
+import GameText from "./GameText.vue";
+
 import attribute_percent from "../assets/js/item/attribute_percent.js";
 import bind from "../assets/js/item/bind.js";
 import color from "../assets/js/item/color.js";
@@ -255,11 +257,27 @@ dayjs.extend(duration);
 
 export default {
     name: "Item",
-    props: ["item", "item_id", "jx3ClientType","client"],
+    props: {
+        item: {
+            type: Object
+        },
+        item_id: {
+            type: String
+        },
+        client: {
+            type: String
+        },
+        jx3ClientType: {
+            type: Number
+        },
+    },
     data() {
         return {
             source: null,
         };
+    },
+    components: {
+        GameText
     },
     computed : {
         // 兼容旧版传值
