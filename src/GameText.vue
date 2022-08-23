@@ -2,7 +2,7 @@
  * @Author: X3ZvaWQ
  * @Date: 2022-08-20 20:23:57
  * @LastEditors: X3ZvaWQ
- * @LastEditTime: 2022-08-20 23:12:34
+ * @LastEditTime: 2022-08-23 19:37:41
  * @Description: 用于渲染游戏内Text标签的文本
 -->
 <template>
@@ -40,10 +40,10 @@ export default {
             let content = item.text;
             let style = ``;
             let link = null;
-            content = content.replace(/\n/g, "<br />").replace(/\\/g, "");
+            content = content.replace(/\\n/g, "<br />").replace(/\\/g, "");
             if ([item.r, item.g, item.b].every((v) => v != undefined && v > 0)) {
                 style = `color: rgb(${item.r}, ${item.g}, ${item.b});`;
-            } else if (item.font != undefined) {
+            } else if (item.font != undefined && item.font != 100) {
                 const fonts = require("../assets/data/game_font.json");
                 for (let color in fonts) {
                     if (fonts[color].includes(item.font)) {
