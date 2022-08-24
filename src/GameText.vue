@@ -2,7 +2,7 @@
  * @Author: X3ZvaWQ
  * @Date: 2022-08-20 20:23:57
  * @LastEditors: X3ZvaWQ
- * @LastEditTime: 2022-08-23 20:36:40
+ * @LastEditTime: 2022-08-24 22:32:56
  * @Description: 用于渲染游戏内Text标签的文本
 -->
 <template>
@@ -146,6 +146,7 @@ export default {
     },
     renderEnchantResource: function () {
       const matches = this.html.match(/<ENCHANT (\d+)>/gim);
+      if(!matches) return;
       for (let match of matches) {
         let enchant_id = match.match(/<ENCHANT (\d+)>/i)[1];
         getResource(`enchant.${enchant_id}`, this.client)
