@@ -102,7 +102,9 @@
                                     <span class="u-id">ID:{{ o.id }}</span>
                                     <img class="u-pic" :title="'IconID:' + o.IconID" :src="iconURL(o.IconID)" />
                                     <span class="u-name">{{ o.Name }}</span>
-                                    <span class="u-content" v-html="o.DescHtml"></span>
+                                    <span class="u-content">
+                                        <game-text :text="o.Desc"></game-text>
+                                    </span>
                                     <span class="u-remark">
                                         {{ o.Requirement }}
                                     </span>
@@ -202,6 +204,7 @@ import { loadEmotions } from "../service/cms";
 import { __ossRoot, __iconPath, __Root, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import detach_types from "../assets/data/detach_type.json";
 import { iconLink, getLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
+import GameText from "./GameText.vue";
 import User from "@jx3box/jx3box-common/js/user";
 import Item from './Item.vue';
 export default {
@@ -287,7 +290,7 @@ export default {
         },
         canInsertAuthor: function() {
             return User.getLevel(this.userInfo && this.userInfo.experience) >= 2;
-        },
+        }
     },
     watch: {
         html: function(newval) {
@@ -502,7 +505,8 @@ export default {
         this.checkUA();
     },
     components: {
-        'jx3-item': Item
+        'jx3-item': Item,
+        GameText
     },
 };
 </script>

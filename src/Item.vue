@@ -176,9 +176,9 @@
             </div>
             <!-- 描述 -->
             <p 
-                v-if="source.DescHtml"
+                v-if="source.Desc"
                 class="u-desc u-yellow">
-                <game-text :client="client" :text="source.DescHtml || source.Desc"></game-text>
+                <game-text :client="client" :text="source.Desc"></game-text>
             </p>
             <!-- 五彩石属性 -->
             <p v-if="source.WuCaiHtml" class="u-desc" v-html="source.WuCaiHtml"></p>
