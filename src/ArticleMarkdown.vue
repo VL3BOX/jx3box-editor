@@ -13,6 +13,10 @@
 <script>
 import markdownRender from '@jx3box/markdown/src/render.vue'
 
+import Vue from "vue";
+import hevueImgPreview from "hevue-img-preview";
+Vue.use(hevueImgPreview);
+
 // 基本文本
 import execLazyload from "../assets/js/img";
 import execFilterIframe from "../assets/js/iframe";
@@ -33,6 +37,7 @@ import Buff from "./Buff";
 import Skill from "./Skill";
 import Npc from "./Npc";
 import renderJx3Element from "../assets/js/jx3_element";
+import renderImgPreview from "../assets/js/renderImgPreview";
 
 import {xssOptions} from '../assets/data/markdown_whitelist.json'
 
@@ -79,6 +84,7 @@ export default {
                 },
                 type: "",
             },
+            images: [],
 
             xssOptions
         };
@@ -106,6 +112,8 @@ export default {
             renderTalent2();
             // Tatex
             renderKatex();
+            // 画廊
+            renderImgPreview(this);
             // 语法高亮
             renderCode(`code[class=^'lang-']`)
             // 物品
@@ -156,4 +164,8 @@ export default {
 
 <style lang="less">
 @import "../assets/css/article_markdown.less";
+
+.v-note-img-wrapper {
+    display: none;
+}
 </style>
