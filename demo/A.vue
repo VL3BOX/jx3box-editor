@@ -13,6 +13,7 @@
             @contentRendered="test1"
             @directoryRendered="test2"
         ></Article>
+        <Item :item_id="'5_45856'"></Item>
         <div id="directory"></div>
     </div>
 </template>
@@ -23,6 +24,8 @@ import Article from "../src/Article.vue";
 import demohtml from "./content_1";
 import { get_item } from "../service/item";
 import { getBuff, getSkill } from "../service/database";
+import Item from "../src/Item.vue";
+
 export default {
     name: "A",
     props: [],
@@ -107,6 +110,7 @@ export default {
     components: {
         Article,
         // ItemSimple,
+        Item
     },
 };
 </script>

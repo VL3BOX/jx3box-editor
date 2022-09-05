@@ -63,7 +63,7 @@
                         <div class="u-horse-desc" v-html="attribute.label"></div>
                     </span>
                     <span v-else class="u-value">
-                        <span v-text="attribute.label"></span>
+                        <game-text :text="attribute.label"></game-text>
                         <!-- <span
                             class="u-yellow"
                             v-text="
