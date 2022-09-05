@@ -76,7 +76,6 @@ export default {
         renderImageHtml: function (Text) {
             // <image>path="fromiconid" frame=1241 w=29 h=29 </image>
             let matches = Text.match(/<image>(.*?)<\/image>/gims);
-            console.log(Text, matches);
             if (!matches) return Text;
             for (let match of matches) {
                 let icon_id = match.match(/frame=(\d+)/i)?.[1];
