@@ -36,9 +36,13 @@ function loadResource(type, query, params) {
     }
 }
 
-function loadStat() {
+function loadStat({client = 'std'} = {}) {
     return axios
-        .get(__node)
+        .get(__node, {
+            params: {
+                client,
+            }
+        })
         .then((res) => {
             return res.data;
         })

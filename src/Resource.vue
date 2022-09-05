@@ -296,6 +296,12 @@ export default {
         html: function(newval) {
             this.$emit("update", newval);
         },
+        client: function() {
+            loadStat({client: this.client}).then((data) => {
+                this.stat = data;
+                this.actived = true;
+            });
+        },
     },
     methods: {
         getData: function(page = 1, append = false) {
@@ -482,7 +488,7 @@ export default {
         openDialog: function() {
             this.dialogVisible = true;
             if (!this.actived) {
-                loadStat().then((data) => {
+                loadStat({client: this.client}).then((data) => {
                     this.stat = data;
                     this.actived = true;
                 });
