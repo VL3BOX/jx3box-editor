@@ -10,7 +10,11 @@
 </template>
 
 <script>
-import { extractTextContent, getLink } from "@jx3box/jx3box-common/js/utils";
+import {
+    extractTextContent,
+    getLink,
+    iconLink,
+} from "@jx3box/jx3box-common/js/utils";
 import { getResource } from "../service/resource";
 import { escape } from "lodash";
 
@@ -20,6 +24,10 @@ export default {
         text: {
             type: String,
             default: "",
+        },
+        ignoreColor: {
+            type: Boolean,
+            default: false,
         },
         client: {
             type: String,
@@ -64,6 +72,9 @@ export default {
                     link = getLink("item", item_id);
                 }
             }
+            if (this.ignoreColor) {
+                style = "";
+            }
             if (link) {
                 return `<a style="${style} text-decoration: none;" target="_blank" href="${link}">${content}</a>`;
             } else {
@@ -81,7 +92,7 @@ export default {
                 let icon_id = match.match(/frame=(\d+)/i)?.[1];
                 let w = parseInt(match.match(/w=(\d+)/i)?.[1]) / 1.12;
                 let h = parseInt(match.match(/h=(\d+)/i)?.[1]) / 1.12;
-                let src = `https://icon.jx3box.com/icon/${icon_id}.png`;
+                let src = iconLink(icon_id, this.client);
                 let html = `<img src="${src}" style="width: ${w}px; height: ${h}px; margin-bottom: -5px" />`;
                 Text = Text.replace(match, html);
             }

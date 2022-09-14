@@ -165,8 +165,10 @@
                     <li
                         v-for="(attribute, key) in source.Set.attributes"
                         :key="key"
-                        v-text="`[${key}]${attribute}`"
-                    ></li>
+                    >
+                        <span>{{`[${key}]`}}</span>
+                        <game-text :client="client" :text="attribute" :ignore-color="true"></game-text>
+                    </li>
                 </ul>
                 <br />
             </div>
