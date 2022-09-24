@@ -85,7 +85,7 @@ export default {
         return {
             API: API,
             dialogVisible: false,
-            tip: this.desc || "一次最多同时上传10个文件（不超过5M），格式限常见的图片、文档、数据表及压缩包",
+            tip: this.desc || "一次最多同时上传10个文件（单个文件不超过20M），格式限常见的图片、文档、数据表及压缩包",
             btn_txt: this.text || "上传附件",
 
             fileList: [],
