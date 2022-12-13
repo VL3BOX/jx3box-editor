@@ -59,7 +59,7 @@ const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
 const API = API_Root + "api/cms/upload";
 
 import allow_types from "@jx3box/jx3box-common/data/conf";
-const imgtypes = ["jpg", "png", "gif", "bmp", "webp", "jpeg"];
+const imgtypes = ["jpg", "png", "gif", "bmp", "webp", "jpeg", "JPG", "PNG", "GIF", "BMP", "WEBP", "JPEG"];
 
 export default {
     name: "Upload",
