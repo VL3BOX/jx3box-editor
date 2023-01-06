@@ -13,8 +13,8 @@ const $ = axios.create({
     baseURL: 'http://localhost:7002/',
 }) */
 
-function getResource(id, client = 'std') {
-    return $.get(`/resource/${client}/${id}`);
+function getResource(type, ids, client = "std") {
+    return $.post(`/resource/${client}/${type}/`, { ids });
 }
 
 export { getResource };

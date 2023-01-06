@@ -13,7 +13,7 @@
             @contentRendered="test1"
             @directoryRendered="test2"
         ></Article>
-        <Item :item_id="'5_45856'"></Item>
+        <Item :item_id="'6_27425'"></Item>
         <div id="directory"></div>
     </div>
 </template>

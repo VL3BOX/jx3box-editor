@@ -15,7 +15,7 @@ import {
     getLink,
     iconLink,
 } from "@jx3box/jx3box-common/js/utils";
-import { getResource } from "../service/resource";
+import { getResource as getResourceFromNode } from "../service/resource";
 import { escape } from "lodash";
 
 export default {
@@ -117,100 +117,132 @@ export default {
         /**
          * 获取形如<BUFF 110 1 desc>, <ENCHANT 100>的资源字段并转换
          */
-        renderBuffResource: function () {
-            const matches = this.html.match(/<BUFF (\d+) (\d+) (.*?)>/gim);
+        renderBuffResource: async function () {
+            const matches = this.html?.match(/<BUFF (\d+) (\d+) (.*?)>/gim);
             if (!matches) return;
-            let need_replaces = {};
+            let resourceKeys = [];
+            let replaceMap = {};
             //先统计需要的资源，减少请求数量
             for (let match of matches) {
                 let [token, id, level, type] = match.match(
                     /<BUFF (\d+) (\d+) (.*?)>/i
                 );
-                let buff_token = `${id}_${level}`;
-                if (!need_replaces[buff_token]) {
-                    need_replaces[buff_token] = [];
-                }
-                need_replaces[buff_token].push({
-                    token,
-                    type,
-                });
+                resourceKeys.push(`${id}_${level}`);
+                if (level != 0) resourceKeys.push(`${id}_0`);
+                replaceMap[token] = [id, level, type];
             }
-            //对每一个需要的资源发起请求
-            for (let buff_token in need_replaces) {
-                let token_item = need_replaces[buff_token];
-                getResource(`buff.${buff_token}`, this.client)
-                    .then(res => {
-                        let data = res.data;
-                        for (let item of token_item) {
-                            item.type = item.type.toLowerCase();
-                            let type_map = {
-                                desc: "Desc",
-                                time: "Interval",
-                            };
-                            let attr = type_map[item.type] || item.type;
-                            let value = data[attr];
-                            if (
-                                typeof value == "number" &&
-                                item.type == "time"
-                            ) {
-                                let time = value / 16;
-                                if (time > 60) {
-                                    time = `${Math.floor(time / 60)}分钟`;
-                                } else {
-                                    time = `${time}秒`;
+            await this.getAllResources("buff", resourceKeys, this.client);
+            for (let replace in replaceMap) {
+                let [id, level, type] = replaceMap[replace];
+                // 持续时间
+                if (type === "time") {
+                    let interval;
+                    let buff = this.getResource("buff", id, level);
+                    if (buff["Interval"]) interval = buff["Interval"];
+                    else interval = this.getResource("buff", id, 0)["Interval"];
+                    if (!interval) {
+                        console.log(replace, escape(replace));
+                        this.html = this.html.replace(replace, escape(replace));
+                        continue;
+                    }
+                    let time = interval / 16;
+                    if (time > 60) {
+                        time = Math.floor(time / 60) + "分钟";
+                    } else {
+                        time = time + "秒";
+                    }
+                    this.html = this.html.replace(replace, escape(time));
+                    continue;
+                }
+                // buff描述
+                if (type === "desc") {
+                    let buff = this.getResource("buff", id, level);
+                    let desc = buff["Desc"];
+                    if (!desc) desc = this.getResource("buff", id, 0)["Desc"];
+                    if (!desc) {
+                        this.html = this.html.replace(replace, escape(replace));
+                        continue;
+                    }
+                    // buff的描述里面可能会混着一些buff的属性啥的
+                    let _matches = desc.match(/<BUFF ([0-9a-zA-Z]+)>/gi);
+                    if (_matches) {
+                        for (let _m of _matches) {
+                            let [_, _attr] = _m.match(/<BUFF ([0-9a-zA-Z]+)>/i);
+                            for (let i = 1; i < 15; i++) {
+                                if (buff[`BeginAttrib${i}`] == _attr) {
+                                    desc = desc.replace(
+                                        _m,
+                                        buff[`BeginValue${i}A`]
+                                    );
                                 }
-                                this.html = this.html.replace(item.token, time);
-                                return;
                             }
-                            if (!value) return;
-                            let _matches = value.match(
-                                /<BUFF ([0-9a-zA-Z]+)>/gi
-                            );
-                            if (!_matches)
-                                this.html = this.html.replace(match, value);
-                            for (let _match of _matches) {
-                                let [, _attr] = _match.match(
-                                    /<BUFF ([0-9a-zA-Z]+)>/i
-                                );
-                                for (let i = 1; i < 15; i++) {
-                                    if (data[`BeginAttrib${i}`] == _attr) {
-                                        value = value.replace(
-                                            _match,
-                                            data[`BeginValue${i}A`]
-                                        );
-                                    }
-                                }
-                            }
-                            this.html = this.html.replace(item.token, value);
                         }
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+                    }
+                    this.html = this.html.replace(replace, desc);
+                }
             }
         },
-        renderEnchantResource: function () {
+        renderEnchantResource: async function () {
             const matches = this.html.match(/<ENCHANT (\d+)>/gim);
             if (!matches) return;
+            let resourceKeys = [];
+            let replaceMap = {};
             for (let match of matches) {
                 let enchant_id = match.match(/<ENCHANT (\d+)>/i)[1];
-                getResource(`enchant.${enchant_id}`, this.client)
-                    .then(res => {
-                        let data = res.data;
-                        let time = data.Time;
-                        if (time) time = `，持续${parseInt(time) / 60}分钟。`;
-                        let result = `${data.AttriName}${time ? time : ""}`;
-                        this.html = this.html.replace(match, result);
-                    })
-                    .catch(err => {
-                        this.html = this.html.replace(match, escape(match));
-                        console.log(err);
-                    });
+                resourceKeys.push(enchant_id);
+                replaceMap[match] = enchant_id;
+            }
+            await this.getAllResources("enchant", resourceKeys, this.client);
+            for (let replace in replaceMap) {
+                try {
+                    let enchant_id = replaceMap[replace];
+                    let enchant = this.getResource("enchant", enchant_id);
+                    let time = enchant.Time;
+                    if (time) time = `，持续${parseInt(time) / 60}分钟。`;
+                    let result = `${enchant.AttriName}${time ? time : ""}`;
+                    this.html = this.html.replace(replace, result);
+                } catch (e) {
+                    console.log(e);
+                    this.html = this.html.replace(replace, escape(replace));
+                }
             }
         },
         renderResource: function () {
             this.renderBuffResource();
             this.renderEnchantResource();
+        },
+        getAllResources: async function (type, ids) {
+            let resources = await getResourceFromNode(type, ids, this.client);
+            let data = resources.data;
+            if (data.length === undefined) data = [data];
+            if (type == "buff") {
+                for (let item of data) {
+                    let buff_token = `${item.BuffID}_${item.Level}`;
+                    sessionStorage.setItem(
+                        `buff-${this.client}-${buff_token}`,
+                        JSON.stringify(item)
+                    );
+                }
+            } else if (type == "enchant") {
+                for (let item of data) {
+                    let enchant_token = `${item.ID}`;
+                    sessionStorage.setItem(
+                        `enchant-${this.client}-${enchant_token}`,
+                        JSON.stringify(item)
+                    );
+                }
+            }
+        },
+        getResource: function (type, id, level) {
+            let token = `${id}`;
+            if (type == "buff") {
+                token = `${id}_${level}`;
+            }
+            let resource = sessionStorage.getItem(
+                `${type}-${this.client}-${token}`
+            );
+            if (resource) return JSON.parse(resource);
+            return null;
         },
     },
     watch: {
