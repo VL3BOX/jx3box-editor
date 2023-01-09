@@ -17,5 +17,10 @@ function loadEmotions(params){
         params: params
     });
 }
-
-export { uploadFile, loadAuthors, loadEmotions };
+//获取装扮
+function getDecoration(params) {
+    return $cms().get(`/api/cms/user/decoration`,{
+        params
+    });
+}
+export { uploadFile, loadAuthors, loadEmotions,getDecoration };
