@@ -192,7 +192,7 @@ export default {
         background-position: top right;
         background-size: contain;
         .u-author{
-            padding:5px 0 15px 0;
+            padding:5px 0 15px 5px;
         }
         .u-avatar {
             .fl;
