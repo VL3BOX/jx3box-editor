@@ -67,8 +67,8 @@ export default {
             });
         },
         formatTime(val) {
-            return val && dayjs(val).format("YYYY-MM-DD HH:mm:ss") || "";
-        }
+            return (val && dayjs(val).format("YYYY-MM-DD HH:mm:ss")) || "";
+        },
     },
 };
 </script>
@@ -76,26 +76,27 @@ export default {
 <style scoped lang="less">
 @import "../../assets/css/module/author.less";
 .w-author {
-    
-    .u-meta{
+    .u-meta {
         display: flex;
         align-items: center;
         .fz(12px,24px);
         .h(24px);
         .mb(5px);
     }
-    .u-meta-label{
+    .u-meta-label {
         .mr(10px);
         background-color: @bg-gray;
-        padding:0 8px;
+        padding: 0 8px;
         .r(2px);
     }
-    .u-meta-value,.u-user{
-display: flex;
+    .u-meta-value,
+    .u-user {
+        display: flex;
         align-items: center;
     }
-    .u-user-avatar{
+    .u-user-avatar {
         .size(24px);
+        .mr(5px);
     }
 }
 </style>
