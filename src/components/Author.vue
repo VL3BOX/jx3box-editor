@@ -1,6 +1,6 @@
 <template>
     <div class="w-author" v-loading="loading">
-        <div class="w-author-wrapper el-popover" v-if="data" :style="decoration">
+        <div class="w-author-wrapper el-popover" v-if="data" :style="{ backgroundImage: bg }">
             <div class="u-author">
                 <Avatar class="u-avatar" :uid="uid" :url="data.user_avatar" :size="68" :frame="data.user_avatar_frame" />
                 <div class="u-info">
@@ -63,7 +63,7 @@ export default {
         medals: [],
         teams: [],
         loading: false,
-        decoration:''
+        bg:''
     }),
     computed: {
         super_author_icon: function() {
@@ -129,6 +129,7 @@ export default {
         getDecoration(){
             let decoration_atcard=sessionStorage.getItem('decoration_atcard'+this.uid)
             if(decoration_atcard == 'no'){
+                this.bg = ""
                 return;
             }
             //已有缓存，读取解析
@@ -139,8 +140,9 @@ export default {
             getDecoration({using:1,user_id:this.uid}).then(data=>{
                 let res=data.data.data
                 if(res.length==0){
-                //空 则为无主题，不再加载接口，界面设No
+                    //空 则为无主题，不再加载接口，界面设No
                     sessionStorage.setItem('decoration_atcard'+this.uid,'no')
+                    this.bg = ""
                     return;
                 }
                 let decoration=res.filter(val => {
@@ -150,15 +152,14 @@ export default {
                     sessionStorage.setItem('decoration_atcard'+this.uid,JSON.stringify(decoration[0]))
                     this.setDecoration(decoration[0])
                 }else{
-                //空 则为无主题，不再加载接口，界面设No
+                    //空 则为无主题，不再加载接口，界面设No
+                    this.bg = ""
                     sessionStorage.setItem('decoration_atcard'+this.uid,'no')
                 }
             })
         },
         setDecoration(decoration_sidebar){
-            this.decoration={
-                'background-image':'url('+this.showDecoration(decoration_sidebar.val,decoration_sidebar.type)+')'
-            }
+            this.bg = `url(${this.showDecoration(decoration_sidebar.val,decoration_sidebar.type)})`;
         },
         showMedalIcon: function(val) {
             return __imgPath + "image/medals/user/" + val + ".gif";
@@ -190,7 +191,7 @@ export default {
         // background-image: url(https://img.jx3box.com/decoration/images/1_CAT/atcard.png);
         background-repeat: no-repeat;
         background-position: top right;
-        background-size: contain;
+        background-size: 100% auto;
         .u-author{
             padding:5px 0 15px 5px;
         }
