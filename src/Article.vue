@@ -262,9 +262,6 @@ export default {
                 this.doDir();
             });
         },
-        inited: function (viewer) {
-            this.$viewer = viewer;
-        },
     },
     watch: {
         content: function () {

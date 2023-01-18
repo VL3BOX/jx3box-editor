@@ -199,9 +199,8 @@ export default {
         insertResource: function(data) {
             tinyMCE.editors["tinymce"].insertContent(data);
         },
-        emotionSelected: function(key) {
-            const pathKey = key.slice(1);
-            const IMAGE = `<img class="t-emotion" src="${__ossRoot}image/emotion/${pathKey}.gif" alt="${key}" />`
+        emotionSelected: function(src) {
+            const IMAGE = `<img class="t-emotion" src="${src}" alt="${src}" />`
             tinyMCE.editors["tinymce"].insertContent(IMAGE)
         },
     },
