@@ -304,7 +304,7 @@ export default {
         selectEmotion: function (o){
             this.resetItems();
             o.isSelected = true;
-            this.html = `<a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="${o.id}" target="_blank" href="/emotion/${o.id}"><img class="e-jx3-emotion-img" data-type="emotion" data-id="${o.id}" style="width:80px;" src="${o.url}" alt="${o.id}"/></a>`
+            this.html = `<a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="${o.id}" target="_blank" href="/emotion/${o.id}"><img class="e-jx3-emotion-img" data-type="emotion" data-id="${o.id}" style="width:180px;" src="${o.url}" alt="${o.id}"/></a>`
         },
         resetItems: function() {
             let data = this[this.type];
