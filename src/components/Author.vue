@@ -137,7 +137,7 @@ export default {
                 this.setDecoration(JSON.parse(decoration_atcard))
                 return;
             }
-            getDecoration({using:1,user_id:this.uid}).then(data=>{
+            getDecoration({using:1,user_id:this.uid,type:'atcard'}).then(data=>{
                 let res=data.data.data
                 if(res.length==0){
                     //空 则为无主题，不再加载接口，界面设No
@@ -145,17 +145,8 @@ export default {
                     this.bg = ""
                     return;
                 }
-                let decoration=res.filter(val => {
-                    return val.type === 'atcard'
-                })
-                if(decoration.length>0){
-                    sessionStorage.setItem('decoration_atcard'+this.uid,JSON.stringify(decoration[0]))
-                    this.setDecoration(decoration[0])
-                }else{
-                    //空 则为无主题，不再加载接口，界面设No
-                    this.bg = ""
-                    sessionStorage.setItem('decoration_atcard'+this.uid,'no')
-                }
+                sessionStorage.setItem('decoration_atcard'+this.uid,JSON.stringify(res[0]))
+                this.setDecoration(res[0])
             })
         },
         setDecoration(decoration_sidebar){
