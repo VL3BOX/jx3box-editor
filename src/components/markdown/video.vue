@@ -7,7 +7,7 @@
         <el-dialog :visible.sync="visible" title="插入视频" :modal-append-to-body="false">
             <a class="u-help" href="/tool/686/" target="_blank">💙 点击查看如何获取视频地址</a>
 
-            <el-input class="u-input" type="textarea" :rows="4" v-model="videoUrl"></el-input>
+            <el-input class="u-input" placeholder="请输入BV号" v-model="videoUrl"></el-input>
 
             <div slot="footer">
                 <el-button @click="cancel">取消</el-button>
@@ -35,9 +35,10 @@ export default {
             this.videoUrl = "";
         },
         insert() {
-            const content = `<div class="c-article-videox">${this.videoUrl}</div>`;
+            const content = `<iframe class="w-player-bilibili" src="//player.bilibili.com/player.html?bvid=${this.videoUrl}" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="400" height="300"> </iframe>`;
 
             this.$emit("insert", content);
+
 
             this.videoUrl = "";
 
