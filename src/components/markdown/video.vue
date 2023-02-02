@@ -5,9 +5,9 @@
         </span>
 
         <el-dialog :visible.sync="visible" title="插入视频" :modal-append-to-body="false">
-            <a class="u-help" href="/tool/686/" target="_blank">💙 点击查看如何获取视频地址</a>
+            <div class="u-help">请填入BV号或链接地址。<a style="color: #0366D6;font-weight: normal;" href="/tool/686/" target="_blank">[点击查看帮助]</a></div>
 
-            <el-input class="u-input" placeholder="请输入BV号" v-model="videoUrl"></el-input>
+            <el-input class="u-input" placeholder="请输入BV号或链接地址" v-model="videoUrl"></el-input>
 
             <div slot="footer">
                 <el-button @click="cancel">取消</el-button>
