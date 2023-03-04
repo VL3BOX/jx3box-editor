@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div class="u-honor" :style="honorStyle" v-if="honor">{{ honor }}</div>
+            <!-- <div class="u-honor" :style="honorStyle" v-if="honor">{{ honor }}</div> -->
             <div class="u-trophy" v-if="hasTrophy">
                 <div class="u-medals" v-if="medals && medals.length">
                     <medal :medals="medals" :showIcon="showMedalIcon"></medal>
@@ -115,7 +115,7 @@ export default {
                 if (val) {
                     this.loadData();
                     this.getAtcard();
-                    this.getHonor();
+                    // this.getHonor();
                 }
             },
         },
