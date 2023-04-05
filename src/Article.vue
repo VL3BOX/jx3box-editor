@@ -232,6 +232,7 @@ export default {
                 let id = $(this).attr('id')
                 let target = $(`#${id}`).offset().top;
                 $(document).scrollTop(target - HEADER_HEIGHT);
+                window.location.hash = `#${id}`;
             })
         },
         changePage: function (i) {
