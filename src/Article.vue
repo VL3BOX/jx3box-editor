@@ -62,6 +62,9 @@
 </template>
 
 <script>
+import $ from "jquery";
+const HEADER_HEIGHT = 112; //头部高度
+
 import { Pagination, Button, Popover } from "element-ui";
 import "@jx3box/jx3box-common/css/element.css";
 
@@ -224,6 +227,12 @@ export default {
             }
             let dir = renderDirectory(target, this.directorybox);
             this.$emit("directoryRendered",dir);
+
+            $('.w-directory-anchor').on('click', function(){
+                let id = $(this).attr('id')
+                let target = $(`#${id}`).offset().top;
+                $(document).scrollTop(target - HEADER_HEIGHT);
+            })
         },
         changePage: function (i) {
             this.page = i;

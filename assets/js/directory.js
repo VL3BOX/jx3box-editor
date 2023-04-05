@@ -9,6 +9,7 @@ const count = {
 };
 const MAX_DEPTH = 3;
 const PREFIX_CLS = "lv"; //class前缀
+const HEADER_HEIGHT = 112; //头部高度
 
 function directory(from, to = '#directory') {
     // 装载容器设置
@@ -50,7 +51,7 @@ function directory(from, to = '#directory') {
             // 进行克隆
             let _item = $(item).clone();
             // 解决懒加载跳转位置问题
-            $(item).append(`<a id="directory-${i}"></a>`);
+            $(item).prepend(`<a id="directory-${i}" class="el-icon-s-flag w-directory-anchor"></a>`);
 
             // 过滤行内样式
             _item.removeAttr("style");
@@ -80,7 +81,7 @@ function directory(from, to = '#directory') {
             let target = $(this)
                 .data("raw")
                 .offset().top;
-            $(document).scrollTop(target - 112);
+            $(document).scrollTop(target - HEADER_HEIGHT);
             $(this)
                 .data("raw")
                 .addClass("isScrollFocus");
