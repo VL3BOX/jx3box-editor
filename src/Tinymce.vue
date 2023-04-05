@@ -76,12 +76,12 @@ export default {
                 contextmenu: "",
                 plugins: [
                     "link autolink",
-                    "hr lists advlist table codeinline codesample checklist foldtext latex",
+                    "hr lists advlist table codeinline codesample checklist foldtext latex anchor",
                     "image emoticons media videox macro qixue talent2",
                     "code fullscreen wordcount powerpaste pagebreak printpage pz", // template anchor jx3icon autosave
                 ],
                 toolbar: [
-                    "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | fullscreen code", //restoredraft
+                    "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink anchor | fullscreen code", //restoredraft
                     "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample latex | emoticons image media videox | macro pz qixue talent2 pagebreak printpage", // template anchor jx3icon
                 ],
                 mobile: {
