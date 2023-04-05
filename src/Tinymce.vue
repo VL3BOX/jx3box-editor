@@ -81,7 +81,7 @@ export default {
                     "code fullscreen wordcount powerpaste pagebreak printpage pz", // template anchor jx3icon autosave
                 ],
                 toolbar: [
-                    "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink anchor | fullscreen code", //restoredraft
+                    "undo | formatselect | fontsizeselect | forecolor backcolor | bold italic underline strikethrough superscript subscript | link unlink | fullscreen code", //anchor restoredraft
                     "removeformat | hr alignleft aligncenter alignright alignjustify indent outdent | bullist numlist checklist table blockquote foldtext codeinline codesample latex | emoticons image media videox | macro pz qixue talent2 pagebreak printpage", // template anchor jx3icon
                 ],
                 mobile: {
