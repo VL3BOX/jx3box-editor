@@ -4,7 +4,7 @@
         <el-button type="primary" @click="dialogVisible = true" icon="el-icon-upload" :disabled="!enable">{{ btn_txt }}</el-button>
 
         <!-- 弹出界面 -->
-        <el-dialog class="c-large-dialog" title="上传" :visible.sync="dialogVisible" append-to-body>
+        <el-dialog class="c-large-dialog" title="上传" :visible.sync="dialogVisible">
             <!-- 清空按钮 -->
             <el-button class="u-upload-clear" plain icon="el-icon-delete" size="mini" @click="clear">清空</el-button>
 
@@ -80,12 +80,21 @@ export default {
             type: Boolean,
             default: true,
         },
+        max: {
+            type: Number,
+            default: 10,
+        },
+        // 文件大小限制
+        sizeLimit: {
+            type: Number,
+            default: 30
+        },
     },
     data: function () {
         return {
             API: API,
             dialogVisible: false,
-            tip: this.desc || "一次最多同时上传10个文件（单个文件不超过20M），格式限常见的图片、文档、数据表及压缩包",
+            tip: this.desc || `一次最多同时上传${this.max}个文件（单个文件不超过${this.sizeLimit}M），格式限常见的图片、文档、数据表及压缩包`,
             btn_txt: this.text || "上传附件",
 
             fileList: [],
