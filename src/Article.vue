@@ -2,28 +2,10 @@
     <div class="c-article-tinymce c-article-box">
         <!-- <div id="c-article-origin" class="c-article-origin" ref="origin"><slot></slot></div> -->
         <div id="c-article" class="c-article" ref="article" v-if="pageable">
-            <div
-                class="c-article-chunk"
-                v-for="(text, i) in data"
-                :key="i"
-                v-html="text"
-                :class="{ on: i == page - 1 || all == true }"
-                :id="'c-article-part' + ~~(i + 1)"
-            ></div>
+            <div class="c-article-chunk" v-for="(text, i) in data" :key="i" v-html="text" :class="{ on: i == page - 1 || all == true }" :id="'c-article-part' + ~~(i + 1)"></div>
         </div>
-        <div
-            id="c-article"
-            class="c-article"
-            ref="article"
-            v-else-if="data && data.length"
-            v-html="data[0]"
-        ></div>
-        <el-button
-            class="c-article-all"
-            type="primary"
-            v-if="!all && hasPages"
-            @click="showAll"
-        >加载全部</el-button>
+        <div id="c-article" class="c-article" ref="article" v-else-if="data && data.length" v-html="data[0]"></div>
+        <el-button class="c-article-all" type="primary" v-if="!all && hasPages" @click="showAll">加载全部</el-button>
         <el-pagination
             class="c-article-pages"
             v-if="!all"
@@ -36,23 +18,9 @@
             :total="total"
         ></el-pagination>
         <div class="w-jx3-element-pop" :style="jx3_element.style">
-            <jx3-item
-                :item_id="item.id"
-                :jx3ClientType="item.client"
-                v-show="jx3_element.type == 'item'"
-            />
-            <jx3-buff
-                :client="buff.client"
-                :id="buff.id"
-                :level="buff.level"
-                v-show="jx3_element.type == 'buff'"
-            />
-            <jx3-skill
-                :client="skill.client"
-                :id="skill.id"
-                :level="skill.level"
-                v-show="jx3_element.type == 'skill'"
-            />
+            <jx3-item :item_id="item.id" :jx3ClientType="item.client" v-show="jx3_element.type == 'item'" />
+            <jx3-buff :client="buff.client" :id="buff.id" :level="buff.level" v-show="jx3_element.type == 'buff'" />
+            <jx3-skill :client="skill.client" :id="skill.id" :level="skill.level" v-show="jx3_element.type == 'skill'" />
             <jx3-npc :client="npc.client" :id="npc.id" v-show="jx3_element.type === 'npc'" />
             <jx3-author :uid="author.id" v-show="jx3_element.type === 'author'" />
             <jx3-emotion-author :id="emotion.id" v-show="jx3_element.type === 'emotion'" />
@@ -96,7 +64,7 @@ import renderTalent2 from "../assets/js/talent2";
 import renderKatex from "../assets/js/katex";
 import renderCode from "../assets/js/code";
 import renderImgPreview from "../assets/js/renderImgPreview";
-import renderPzIframe from '../assets/js/pz_iframe'
+import renderPzIframe from "../assets/js/pz_iframe";
 
 // 剑三
 import Item from "./Item";
@@ -104,7 +72,7 @@ import Buff from "./Buff";
 import Skill from "./Skill";
 import Npc from "./Npc";
 import Author from "./components/Author";
-import PostAuthor from './components/PostAuthor.vue'
+import PostAuthor from "./components/PostAuthor.vue";
 import renderJx3Element from "../assets/js/jx3_element";
 
 export default {
@@ -147,15 +115,15 @@ export default {
                 level: "",
             },
             // NPC
-            npc : {
-                client : 'std',
-                id : '',
+            npc: {
+                client: "std",
+                id: "",
             },
             author: {
-                id: '',
+                id: "",
             },
             emotion: {
-                id: ''
+                id: "",
             },
             // COMMON
             jx3_element: {
@@ -199,7 +167,7 @@ export default {
             // 折叠块
             renderFoldBlock($root);
             // 代码
-            renderCode(`code[class=^'language-']`)
+            renderCode(`code[class=^'language-']`);
             // Tatex
             renderKatex();
 
@@ -226,14 +194,15 @@ export default {
                 target = "#c-article";
             }
             let dir = renderDirectory(target, this.directorybox);
-            this.$emit("directoryRendered",dir);
+            this.$emit("directoryRendered", dir);
 
-            $('.w-directory-anchor').on('click', function(){
-                let id = $(this).attr('id')
+            $(".w-directory-anchor").on("click", function () {
+                e.preventDefault();
+                let id = $(this).attr("id");
                 let target = $(`#${id}`).offset().top;
                 $(document).scrollTop(target - HEADER_HEIGHT);
                 window.location.hash = `#${id}`;
-            })
+            });
         },
         changePage: function (i) {
             this.page = i;
@@ -292,7 +261,7 @@ export default {
         "jx3-skill": Skill,
         "jx3-npc": Npc,
         "jx3-author": Author,
-        'jx3-emotion-author': PostAuthor,
+        "jx3-emotion-author": PostAuthor,
         // "gallery":gallery,
         // VueViewer
     },
