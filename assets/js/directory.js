@@ -51,7 +51,7 @@ function directory(from, to = '#directory') {
             // 进行克隆
             let _item = $(item).clone();
             // 解决懒加载跳转位置问题
-            $(item).prepend(`<a id="directory-${i}" class="w-directory-anchor"></a>`);
+            $(item).prepend(`<a id="directory-${i}" class="el-icon-link w-directory-anchor"></a>`);
 
             // 过滤行内样式
             _item.removeAttr("style");
@@ -77,7 +77,9 @@ function directory(from, to = '#directory') {
         });
 
         // 进行事件委托
-        $directory.on("click", "h1,h2,h3,h4,h5,h6", function() {
+        $directory.on("click", "h1,h2,h3,h4,h5,h6", function(e) {
+            e.preventDefault();
+            window.location.hash = $(this).data("raw").find('a[id^="directory-"]').first().attr('id')
             let target = $(this)
                 .data("raw")
                 .offset().top;
