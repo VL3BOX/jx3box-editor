@@ -51,7 +51,7 @@ function directory(from, to = '#directory') {
             // 进行克隆
             let _item = $(item).clone();
             // 解决懒加载跳转位置问题
-            $(item).prepend(`<a id="directory-${i}" class="el-icon-link w-directory-anchor"></a>`);
+            $(item).prepend(`<a id="directory-${i}" class="w-directory-anchor"></a>`);
 
             // 过滤行内样式
             _item.removeAttr("style");
