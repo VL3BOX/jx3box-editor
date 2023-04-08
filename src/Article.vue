@@ -196,6 +196,13 @@ export default {
             let dir = renderDirectory(target, this.directorybox);
             this.$emit("directoryRendered", dir);
 
+            if(window.location.hash?.includes('directory')){
+                let id = window.location.hash
+                let target = $(`${id}`).offset().top;
+                console.log(target)
+                $(document).scrollTop(target - HEADER_HEIGHT);
+            }
+
             $(".w-directory-anchor").on("click", function () {
                 e.preventDefault();
                 let id = $(this).attr("id");
