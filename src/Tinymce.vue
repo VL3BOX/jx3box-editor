@@ -39,7 +39,7 @@ import Upload from "./Upload";
 import Resource from "./Resource";
 import BoxResource from "./BoxResource";
 import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
-import { __ossRoot, __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
 import hljs_languages from "../assets/js/item/hljs_languages.js"
 const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
@@ -63,7 +63,7 @@ export default {
 
                 // 样式
                 // TODO:
-                content_css: `https://oss.jx3box.com/static/tinymce/skins/content/default/content.min.css`,
+                content_css: `https://cdn.jx3box.com/static/tinymce/skins/content/default/content.min.css`,
                 // content_css: `http://localhost:5000/skins/content/default/content.min.css`,
                 body_class: "c-article c-article-editor c-article-tinymce",
                 height: this.height || 800,
