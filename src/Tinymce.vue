@@ -206,7 +206,6 @@ export default {
         },
     },
     mounted: function() {
-        console.log(process.env)
     },
     components: {
         Editor,
