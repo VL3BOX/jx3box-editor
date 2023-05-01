@@ -63,7 +63,7 @@ export default {
 
                 // 样式
                 // TODO:
-                content_css: process.env.NODE_ENV == 'development' ? '/css/article.css' : `https://oss.jx3box.com/static/jx3box-editor/css/article.css`,
+                content_css: process.env.VUE_APP_DEV_COMPONENT == 'true' ? '/css/article.css' : `https://oss.jx3box.com/static/jx3box-editor/css/article.css`,
                 // content_css: `http://localhost:3000/skins/content/default/content.min.css`,
                 body_class: "c-article c-article-editor c-article-tinymce",
                 height: this.height || 800,
@@ -205,7 +205,9 @@ export default {
             tinyMCE.editors["tinymce"].insertContent(IMAGE)
         },
     },
-    mounted: function() {},
+    mounted: function() {
+        console.log(process.env)
+    },
     components: {
         Editor,
         Upload,
