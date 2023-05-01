@@ -246,7 +246,7 @@ export default {
         renderVal() {
             const {selected} = this;
             return `<ul class="e-skill-combo w-skill-combo">${selected.map(item => {
-                return `<li class="w-skill-combo-item">${item.SkillID},${item.Name},${item.IconID},{gcd:${item.WithoutGcd ? 1: 0}}</li>`
+                return `<li class="w-skill-combo-item">${item.SkillID},${item.Name},${item.IconID},{gcd:${item.WithoutGcd ? 0: 1}}</li>`
             })}</ul>`
         },
     },

@@ -124,13 +124,13 @@
                             show-icon
                         ></el-alert>
                     </el-tab-pane>
-                    <el-tab-pane label="技能连招" name="combo">
+                    <el-tab-pane label="连招" name="combo">
                         <span slot="label" class="u-tab-label">
                             <i
-                                class="el-icon-tickets"
+                                class="el-icon-lollipop"
                                 style="margin-right: 5px"
                             ></i>
-                            <b>技能连招</b>
+                            <b>连招</b>
                         </span>
                         <ComboVue :query="query" ref="combo" :client="comboClient"></ComboVue>
                     </el-tab-pane>
