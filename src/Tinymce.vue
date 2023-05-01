@@ -63,8 +63,8 @@ export default {
 
                 // 样式
                 // TODO:
-                content_css: `https://cdn.jx3box.com/static/tinymce/skins/content/default/content.min.css`,
-                // content_css: `http://localhost:5000/skins/content/default/content.min.css`,
+                content_css: `https://oss.jx3box.com/static/tinymce/skins/content/default/content.min.css`,
+                // content_css: `http://localhost:3000/skins/content/default/content.min.css`,
                 body_class: "c-article c-article-editor c-article-tinymce",
                 height: this.height || 800,
                 autosave_ask_before_unload: false,
