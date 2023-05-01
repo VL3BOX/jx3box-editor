@@ -47,8 +47,9 @@ jobs:
       - name: Install && Build
         run: |
           npm install
-          npm run article
-      #    npm run tinymce
+          npm run build
+      #   npm run article
+      #   npm run tinymce
 
       - name: OSS
         uses: manyuanrong/setup-ossutil@v2.0
