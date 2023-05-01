@@ -65,6 +65,7 @@ import renderKatex from "../assets/js/katex";
 import renderCode from "../assets/js/code";
 import renderImgPreview from "../assets/js/renderImgPreview";
 import renderPzIframe from "../assets/js/pz_iframe";
+import renderCombo from "../assets/js/combo";
 
 // 剑三
 import Item from "./Item";
@@ -183,6 +184,8 @@ export default {
             renderJx3Element(this);
             // 配装
             renderPzIframe();
+            // 连招
+            renderCombo();
         },
         doDir: function () {
             // 显示局部

@@ -51,9 +51,12 @@
     "lodash": "^4.17.15",
     "photoswipe": "^4.1.2",
     "prismjs": "^1.20.0",
+    "sortablejs": "^1.15.0",
     "vue": "^2.6.11",
+    "vue-contextmenujs": "^1.4.9",
     "vue-gallery-slideshow": "^1.5.2",
     "vue-photoswipe.js": "^2.0.23",
+    "vue-plugin-load-script": "^1.3.6",
     "xss": "^1.0.8"
   },
   "devDependencies": {

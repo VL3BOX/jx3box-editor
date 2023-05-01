@@ -1,5 +1,6 @@
 export default 
-`<iframe class="w-player-bilibili" src="//player.bilibili.com/player.html?bvid=BV1J24y1B7T3" frameborder="no" scrolling="no" allowfullscreen="allowfullscreen"> </iframe>#TT哭泣
+`<ul class="e-skill-combo w-skill-combo"><li class="w-skill-combo-item">13047,盾击,6339,{gcd:0}</li><li class="w-skill-combo-item">13047,盾击,6339,{gcd:0}</li><li class="w-skill-combo-item">13047,盾击,6339,{gcd:0}</li></ul>
+<iframe class="w-player-bilibili" src="//player.bilibili.com/player.html?bvid=BV1J24y1B7T3&autoplay=0" frameborder="no" scrolling="no" allowfullscreen="allowfullscreen"> </iframe>#TT哭泣
 <a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="940" target="_blank" href="/emotion/940"><img class="e-jx3-emotion-img" data-type="emotion" data-id="940" style="width:80px;" src="https://console.cnyixun.com/upload/post/2022/6/10/76986_7373574.gif" alt="940"/></a>
 <p><a class="e-jx3-author w-jx3-element" href="/author/8" target="_blank" rel="noopener" data-type="author" data-mode="" data-id="8">@浮烟</a></p>
 <pre class="e-pz-iframe">https://www.jx3box.com/pz/iframe.html?id=25402&amp;mode=horizontal</pre>

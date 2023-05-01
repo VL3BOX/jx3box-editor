@@ -17,4 +17,15 @@ function getResource(type, ids, client = "std") {
     return $.post(`/resource/${client}/${type}/`, { ids });
 }
 
-export { getResource };
+function getSkill(query, params) {
+    let condition = isNaN(query) ? "name" : "id";
+    return $node().get(`/skill/${condition}/${query}`, {
+        params: params,
+    }).then(res => {
+        return res.data;
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+export { getResource, getSkill };

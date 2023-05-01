@@ -218,4 +218,5 @@ export default {
 
 <style lang="less">
 @import "../assets/css/tinymce.less";
+@import "../assets/css/tinymce/combo.less";
 </style>
