@@ -145,7 +145,6 @@ export default {
     mounted() {
         this.$nextTick(() => {
             this.initSkillSort();
-
         });
     },
     methods: {
@@ -178,14 +177,6 @@ export default {
                     this.done = true;
                     this.loading = false;
                 });
-        },
-        submit() {
-            this.$emit("submit", this.selected);
-            this.close();
-            this.selected = [];
-        },
-        close() {
-            this.$emit("update:modelValue", false);
         },
         iconURL: function (id) {
             return iconLink(id, this.client);
@@ -224,7 +215,6 @@ export default {
             });
         },
         onContextmenu(event, skill) {
-            // console.log(skill)
             this.$contextmenu({
                 items: [
                     {
@@ -245,9 +235,15 @@ export default {
 
         renderVal() {
             const {selected} = this;
-            return `<ul class="e-skill-combo w-skill-combo">${selected.map(item => {
-                return `<li class="w-skill-combo-item">${item.SkillID},${item.Name},${item.IconID},{gcd:${item.WithoutGcd ? 0: 1}}</li>`
-            })}</ul>`
+            let skills_html = ''
+            selected.forEach(item => {
+                const obj = {
+                    gcd: item.WithoutGcd ? 0: 1
+                }
+                skills_html += `<li class="w-skill-combo-item">${item.SkillID},${item.Name},${item.IconID},${JSON.stringify(obj)}</li>`
+            })
+            const html = `<ul class="e-skill-combo w-skill-combo">${skills_html}</ul>`
+            return html;
         },
     },
 };
