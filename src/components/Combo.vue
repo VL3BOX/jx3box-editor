@@ -218,7 +218,7 @@ export default {
             this.$contextmenu({
                 items: [
                     {
-                        label: !skill?.WithoutGcd ? "设置为无GCD技能" : "取消无GCD技能",
+                        label: !skill?.WithoutGcd ? "设置为无GCD技能" : "设置为有GCD技能",
                         onClick: () => {
                             this.$set(skill, "WithoutGcd", !skill.WithoutGcd);
                         },

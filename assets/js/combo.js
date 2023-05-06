@@ -14,7 +14,6 @@ function renderCombo(selector = ".e-skill-combo .w-skill-combo-item") {
 
             
             const _extend = extend ? JSON.parse(extend) : null;
-            console.log(_extend.gcd)
 
             // 渲染
             let code = `
