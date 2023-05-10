@@ -118,6 +118,10 @@ export default {
             type: String,
             default: "std",
         },
+        strict: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {

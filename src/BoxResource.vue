@@ -35,6 +35,9 @@
                         @keyup.enter.native="search"
                     >
                         <template slot="prepend">关键词</template>
+                        <template slot="append">
+                            <el-switch v-model="strict" active-text="精确匹配"></el-switch>
+                        </template>
                     </el-input>
                 </div>
 
@@ -132,7 +135,7 @@
                             ></i>
                             <b>连招</b>
                         </span>
-                        <ComboVue :query="query" ref="combo" :client="comboClient"></ComboVue>
+                        <ComboVue :query="query" ref="combo" :client="comboClient" :strict="strict"></ComboVue>
                     </el-tab-pane>
                 </el-tabs>
 
