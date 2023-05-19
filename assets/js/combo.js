@@ -1,31 +1,41 @@
 import $ from "jquery";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 
-function renderCombo(selector = ".e-skill-combo .w-skill-combo-item") {
+function renderCombo(selector = ".e-skill-combo") {
     try {
-        let html = ''
-        $(selector).each(function(i, ele) {
+        $(selector).each(function (i, ele) {
             // 获取嵌入源地址
-            let url = $(this).text();
+            let html = ''
 
-            const [id, name, icon, extend] = url.split(",");
+            let children = $(this).children();
 
-            // 渲染
-            let code = `
+            console.log(children)
+
+            children.each(function (i, ele) {
+                let url = $(this).text();
+
+                // extend = {gcd: 0}
+                const [id, name, icon, extend] = url.split(",");
+                // 去除左右花括号
+
+                const _extend = extend ? JSON.parse(extend) : null;
+
+                // 渲染
+                let code = `
                 <span class="w-skill-combo-item">
                     <img class="u-skill-icon" src="${iconLink(icon)}" alt="${icon}" title="${name}" />
                     <span class="u-skill-name" title="${name}">${name}</span>
-                    <i class="u-gcd-icon ${extend && extend.gcd ? 'is-show' : ''}" title="无GCD技能">
+                    <i class="u-gcd-icon ${_extend && _extend.gcd == 0 ? 'is-show' : ''}" title="无GCD技能">
                         <i class="el-icon-time"></i>
                     </i>
                 </span>
             `;
-            html += code;
+                html += code;
+            });
+            // 挂载点
+            $(this).html(html);
         });
-
-        // 挂载点
-        $(selector).parent().html(html);
-    } catch(e) {
+    } catch (e) {
         console.log(e)
     }
 }

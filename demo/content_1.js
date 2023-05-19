@@ -1,9 +1,15 @@
 export default 
 `
 <ul class="e-skill-combo w-skill-combo">
-<li class="w-skill-combo-item">13047,盾击,6339,{gcd:0}</li>
-<li class="w-skill-combo-item">13047,盾击,6339,{gcd:0}</li>
-<li class="w-skill-combo-item">13047,盾击,6339,{gcd:0}</li>
+<li class="w-skill-combo-item">13047,盾击,6339,{"gcd":1}</li>
+<li class="w-skill-combo-item">13047,盾击,6339,{"gcd":0}</li>
+<li class="w-skill-combo-item">13047,盾击,6339,{"gcd":1}</li>
+</ul>
+
+<ul class="e-skill-combo w-skill-combo">
+<li class="w-skill-combo-item">13047,盾击,6339,{"gcd":1}</li>
+<li class="w-skill-combo-item">13047,盾击,6339,{"gcd":0}</li>
+<li class="w-skill-combo-item">13047,盾击,6339,{"gcd":0}</li>
 </ul>
 
 <iframe class="w-player-bilibili" src="//player.bilibili.com/player.html?bvid=BV1J24y1B7T3&autoplay=0" frameborder="no" scrolling="no" allowfullscreen="allowfullscreen"> </iframe>#TT哭泣
