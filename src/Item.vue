@@ -139,7 +139,7 @@
             ></div>
             <!-- 最大耐久度 -->
             <div
-                v-if="source.AucGenre >= 1 && source.AucGenre <= 3"
+                v-if="source.AucGenre >= 1 && source.AucGenre <= 3 && source.MaxDurability"
                 class="u-max-durability"
                 v-text="'最大耐久度' + source.MaxDurability"
             ></div>
