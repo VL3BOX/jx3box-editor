@@ -64,7 +64,7 @@ module.exports = {
     devServer: {
         proxy: {
             "/api/cms": {
-                "target": process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://cms.jx3box.com",
+                "target": process.env["DEV_SERVER"] == "true" ? "http://localhost:7100" : "https://cms.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
