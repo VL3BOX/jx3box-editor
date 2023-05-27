@@ -1,6 +1,6 @@
 {
   "name": "@jx3box/jx3box-editor",
-  "version": "1.9.8",
+  "version": "1.9.9",
   "description": "JX3BOX Article & Editor",
   "main": "index.js",
   "scripts": {
