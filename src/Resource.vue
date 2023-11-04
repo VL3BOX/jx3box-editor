@@ -4,7 +4,7 @@
         <el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline src="../assets/img/jx3.svg" />剑三资源 </el-button>
 
         <!-- 弹出界面 -->
-        <el-dialog class="c-large-dialog" title="剑三数据库" :visible.sync="dialogVisible">
+        <el-dialog class="c-large-dialog" title="剑三数据库" :visible.sync="dialogVisible" v-draggable>
             <div class="c-resource-content" v-loading="loading">
                 <div class="m-database-search">
                     <el-radio-group class="u-client" v-model="client" @change="search">

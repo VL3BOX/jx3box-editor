@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import Editor from "@tinymce/tinymce-vue";
 import Upload from "./Upload";
 import Resource from "./Resource";
@@ -44,6 +45,10 @@ import Emotion from "@jx3box/jx3box-emotion/src/Emotion.vue"
 import hljs_languages from "../assets/js/item/hljs_languages.js"
 const API_Root = process.env.NODE_ENV === "production" ? __cms : "/";
 const API = API_Root + "api/cms/upload/tinymce";
+
+// directive 
+import { draggable } from "../assets/js/drag";
+Vue.directive('draggable', draggable);
 
 export default {
     name: "Tinymce",

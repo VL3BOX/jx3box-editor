@@ -12,6 +12,7 @@
 
         <!-- 弹出界面 -->
         <el-dialog
+            v-draggable
             class="c-large-dialog"
             title="魔盒资源库"
             :visible.sync="dialogVisible"
