@@ -44,6 +44,7 @@ export default {
                         id &&
                             getSkill(...this.params).then((res) => {
                                 let data = res.data?.list?.[0];
+                                if (!data) data = null;
                                 this.data = data;
 
                                 // 将数据放入 sessionStorage

@@ -13,6 +13,7 @@
             @contentRendered="test1"
             @directoryRendered="test2"
         ></Article>
+        <Buff :id="51145" client="origin" :level="0"></Buff>
         <Item :item_id="'6_27425'"></Item>
         <div id="directory"></div>
     </div>
@@ -25,6 +26,7 @@ import demohtml from "./content_1";
 import { get_item } from "../service/item";
 import { getBuff, getSkill } from "../service/database";
 import Item from "../src/Item.vue";
+import Buff from "../src/Buff.vue";
 
 export default {
     name: "A",
@@ -108,6 +110,7 @@ export default {
         });
     },
     components: {
+        Buff,
         Article,
         // ItemSimple,
         Item

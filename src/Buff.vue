@@ -1,13 +1,18 @@
 <template>
     <div class="w-buff" v-if="data">
         <div class="w-buff-wrapper">
-            <img class="w-buff-icon" :src="iconLink(data.IconID)" :alt="data.Name" />
+            <img
+                class="w-buff-icon"
+                :src="iconLink(data.IconID)"
+                :alt="data.Name" />
             <div class="w-buff-content">
-                <span class="w-buff-name">{{data.Name}}</span>
-                <span class="w-buff-desc">{{data.Desc}}</span>
-                <span class="w-buff-type" v-if="data.DetachType">※ {{data.DetachType | showDetachType}}</span>
-                <span class="w-buff-meta">ID : {{data.BuffID}}</span>
-                <span class="w-buff-meta">Level : {{data.Level}}</span>
+                <span class="w-buff-name">{{ data.Name }}</span>
+                <span class="w-buff-desc">{{ data.Desc }}</span>
+                <span class="w-buff-type" v-if="data.DetachType"
+                    >※ {{ data.DetachType | showDetachType }}</span
+                >
+                <span class="w-buff-meta">ID : {{ data.BuffID }}</span>
+                <span class="w-buff-meta">Level : {{ data.Level }}</span>
             </div>
         </div>
     </div>
@@ -40,12 +45,14 @@ export default {
                         `buff-${client}-${id}-${level}`
                     );
                     if (cache) {
-                        this.data = JSON.parse(cache);
-                        // 没有缓存则发起请求获取数据
+                        try {
+                            this.data = JSON.parse(cache);
+                        } catch (e) {}
                     } else {
                         id &&
-                            getBuff(...this.params).then((res) => {
+                            getBuff(...this.params).then(res => {
                                 let data = res.data?.list?.[0];
+                                if (!data) data = null;
                                 this.data = data;
 
                                 // 将数据放入 sessionStorage
@@ -64,7 +71,7 @@ export default {
             return iconLink(id, this.client);
         },
     },
-    filters : {
+    filters: {
         showDetachType: function (val) {
             if (val && detach_types[val]) {
                 return detach_types[val];
@@ -72,7 +79,7 @@ export default {
                 return "";
             }
         },
-    }
+    },
 };
 </script>
 
