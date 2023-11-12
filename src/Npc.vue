@@ -23,6 +23,7 @@
                                 {{ data.Intensity }}
                             </span>
                         </div>
+                        <slot name="title"></slot>
                     </div>
                     <div class="u-primary">
                         <div class="u-life">
@@ -154,7 +155,6 @@
                     </div>
                     <div class="u-id">
                         ID : {{id}}
-                        <slot></slot>
                     </div>
                 </div>
             </div>
