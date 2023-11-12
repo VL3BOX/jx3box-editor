@@ -7,6 +7,7 @@
                 <span class="w-skill-desc">{{data.Desc}}</span>
                 <span class="w-skill-meta">ID : {{data.SkillID}}</span>
                 <span class="w-skill-meta">Level : {{data.Level}}</span>
+                <slot></slot>
             </div>
         </div>
     </div>

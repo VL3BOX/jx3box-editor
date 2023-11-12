@@ -154,6 +154,7 @@
                     </div>
                     <div class="u-id">
                         ID : {{id}}
+                        <slot></slot>
                     </div>
                 </div>
             </div>

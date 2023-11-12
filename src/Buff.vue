@@ -13,6 +13,7 @@
                 >
                 <span class="w-buff-meta">ID : {{ data.BuffID }}</span>
                 <span class="w-buff-meta">Level : {{ data.Level }}</span>
+                <slot></slot>
             </div>
         </div>
     </div>
