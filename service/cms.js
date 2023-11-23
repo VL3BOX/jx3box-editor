@@ -1,6 +1,7 @@
 import { $cms } from "@jx3box/jx3box-common/js/https";
 import axios from "axios";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+
 function uploadFile(data) {
     return $cms().post(`/api/cms/upload`, data);
 }
@@ -24,8 +25,16 @@ function getDecoration(params) {
         params,
     });
 }
+
 function getDecorationJson() {
     let url = __imgPath + "decoration/index.json";
     return axios.get(url);
 }
-export { uploadFile, loadAuthors, loadEmotions, getDecoration, getDecorationJson };
+
+// 获取信纸
+function getLetterPaper(params) {
+    return $cms().get(`/api/cms/design/letter-paper`, {
+        params,
+    });
+}
+export { uploadFile, loadAuthors, loadEmotions, getDecoration, getDecorationJson, getLetterPaper };
