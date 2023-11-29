@@ -72,17 +72,16 @@
 							<i class="el-icon-coffee-cup" style="margin-right: 5px"></i>
 							<b>信纸</b>
 						</span>
-						<LetterDemo v-for="(item, i) in letter" :key="i" :data="item" @update="insertLetter" />
+						<div class="m-letter-list">
+							<div class="m-letter" :class="{ active: !!o.isSelected }" v-for="o in filterLetter" :key="o.id" @click="selectLetter(o)">
+								<LetterPaper :data="o" />
+							</div>
+						</div>
+						<el-alert v-if="!letter.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
 					</el-tab-pane>
 				</el-tabs>
 
-				<template v-if="multipage && type !== 'combo'">
-					{{ multipage && type !== "combo" }}
-					<!-- 下一页 -->
-					<el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" icon="el-icon-arrow-down" @click="appendPage">加载更多</el-button>
-					<!-- 分页 -->
-					<el-pagination class="m-archive-pages" background layout="total, prev, pager, next,jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
-				</template>
+				<template v-if="multipage && type !== 'combo'"> </template>
 
 				<div class="m-database-tip" v-show="isBlank && type !== 'combo'">❤ 请输入搜索条件查询</div>
 			</div>
@@ -107,12 +106,12 @@ import { getLink, showAvatar, resolveImagePath } from "@jx3box/jx3box-common/js/
 import User from "@jx3box/jx3box-common/js/user";
 
 import ComboVue from "./components/Combo.vue";
-import LetterDemo from "./components/LetterDemo.vue";
+import LetterPaper from "./components/Letter.vue";
 export default {
 	name: "BoxResource",
 	components: {
 		ComboVue,
-		LetterDemo,
+		LetterPaper,
 	},
 	props: {
 		enable: {
@@ -196,6 +195,9 @@ export default {
 		boxIcon: function () {
 			return __imgPath + "image/common/jx3box_white.svg";
 		},
+		filterLetter() {
+			return this.letter;
+		},
 	},
 	watch: {
 		html: function (newval) {
@@ -258,9 +260,9 @@ export default {
 						this.loading = false;
 					});
 			} else if (this.type === "letter") {
-				const { per, page, name } = params;
+				const { per, page } = params;
 				const _params = { per, page };
-				if (name) _params._search = name;
+				if (this.query) _params._search = this.query;
 				getLetterPaper(_params)
 					.then((res) => {
 						if (!append) this.letter = [];
@@ -355,8 +357,14 @@ export default {
 			o.isSelected = true;
 			this.html = `<a data-type="emotion" class="e-jx3-emotion w-jx3-element" data-id="${o.id}" target="_blank" href="/emotion/${o.id}"><img class="e-jx3-emotion-img" data-type="emotion" data-id="${o.id}" style="width:180px;" src="${o.url}" alt="${o.id}"/></a>`;
 		},
-		insertLetter(html) {
-			this.html = html;
+		// 信纸
+		selectLetter(o) {
+			this.resetItems();
+			o.isSelected = true;
+			const { slug, style } = o;
+			const titleHtml = `<div class="e-letter-title letter-title--${slug}">我是标题</div>`;
+			const contentHtml = `<div class="e-letter-content letter-header--${slug}"><div class="u-letter-content--header letter-footer--${slug}"><div class="u-letter-content--footer letter-body--${slug}"><p>明月几时有，把酒问青天。</p></div></div></div>`;
+			this.html = `<div class="e-letter letter--${slug}">${titleHtml}<br/> ${contentHtml}</div></div><style>${style}</style>`;
 		},
 		resetItems: function () {
 			let data = this[this.type];
@@ -406,7 +414,36 @@ export default {
 	background: none !important;
 	border: none;
 }
-.m-database-tabs .c-letter-paper {
-	.w(25%);
+.m-database-tabs .m-letter-list {
+	.flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	.m-letter {
+		.pointer;
+		.pr;
+		box-sizing: border-box;
+		border: 3px solid transparent;
+		&::after {
+			content: "";
+			display: block;
+			.full;
+			.pa;
+			.lt(0);
+			.z(1);
+			.tm(0.3);
+			.r(3px);
+			background: #000;
+		}
+		&.active {
+			.r(5px);
+			border: 3px solid #409eff;
+			&::after {
+				.none;
+			}
+		}
+		.e-letter {
+			zoom: 0.7;
+		}
+	}
 }
 </style>
