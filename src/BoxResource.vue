@@ -361,9 +361,9 @@ export default {
 		selectLetter(o) {
 			this.resetItems();
 			o.isSelected = true;
-			const { slug, style } = o;
-			const titleHtml = `<div class="e-letter-title letter-title--${slug}">我是标题</div>`;
-            const contentHtml = `<div class="e-letter-content letter-body--${slug}"><div class="u-letter-content--header letter-header--${slug}"><div class="u-letter-content--footer letter-footer--${slug}"><p contenteditable="true">明月几时有，把酒问青天。</p></div></div></div>`;
+			const { slug, style, remark } = o;
+			const titleHtml = `<div class="e-letter-title letter-title--${slug}">${remark}</div>`;
+			const contentHtml = `<div class="e-letter-content letter-body--${slug}"><div class="u-letter-content--header letter-header--${slug}"><div class="u-letter-content--footer letter-footer--${slug}"><p>~ 魔盒真好玩，魔盒真好用 ~</p></div></div></div>`;
 			this.html = `<div class="e-letter letter--${slug}">${titleHtml}<br/> ${contentHtml}</div></div><style>${style}</style>`;
 		},
 		resetItems: function () {
@@ -421,19 +421,9 @@ export default {
 	.m-letter {
 		.pointer;
 		.pr;
+		.size(20%,80px);
 		box-sizing: border-box;
 		border: 3px solid transparent;
-		&::after {
-			content: "";
-			display: block;
-			.full;
-			.pa;
-			.lt(0);
-			.z(1);
-			.tm(0.3);
-			.r(3px);
-			background: #000;
-		}
 		&.active {
 			.r(5px);
 			border: 3px solid #409eff;
@@ -442,7 +432,13 @@ export default {
 			}
 		}
 		.e-letter {
-			zoom: 0.7;
+			.w(100%);
+			.e-letter-title {
+				.w(100%);
+			}
+			.e-letter-content {
+				.none;
+			}
 		}
 	}
 }
