@@ -53,8 +53,7 @@ export default {
 
 				// 样式
 				// TODO:
-				// content_css: process.env.VUE_APP_DEV_COMPONENT == "true" ? "/css/article.css" : `https://cdn.jx3box.com/static/jx3box-editor/css/article.css`,
-				content_css:"/css/article.css",
+				content_css: process.env.VUE_APP_DEV_COMPONENT == "true" ? "/css/article.css" : `https://cdn.jx3box.com/static/jx3box-editor/css/article.css`,
 				// content_css: `http://localhost:3000/skins/content/default/content.min.css`,
 				body_class: "c-article c-article-editor c-article-tinymce",
 				height: this.height || 800,
