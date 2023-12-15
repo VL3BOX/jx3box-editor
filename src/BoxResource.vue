@@ -81,7 +81,12 @@
 					</el-tab-pane>
 				</el-tabs>
 
-				<template v-if="multipage && type !== 'combo'"> </template>
+				<template v-if="multipage && type !== 'combo'">
+				<!-- 下一页 -->
+				<el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" icon="el-icon-arrow-down" @click="appendPage">加载更多</el-button>
+					<!-- 分页 -->
+					<el-pagination class="m-archive-pages" background layout="total, prev, pager, next,jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
+				</template>
 
 				<div class="m-database-tip" v-show="isBlank && type !== 'combo'">❤ 请输入搜索条件查询</div>
 			</div>
