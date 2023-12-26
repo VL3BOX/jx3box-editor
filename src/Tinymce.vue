@@ -77,7 +77,7 @@ export default {
 				],
 				mobile: {
 					toolbar_drawer: true,
-					toolbar: ["undo emoticons bold forecolor backcolor removeformat pagebreak fullscreen", "hr alignleft aligncenter alignright alignjustify indent outdent bullist numlist checklist table blockquote codesample latex macro qixue talent2 media"],
+					toolbar: ["undo emoticons bold italic underline strikethrough superscript subscript link unlink forecolor backcolor removeformat pagebreak fullscreen code", "hr alignleft aligncenter alignright alignjustify indent outdent bullist numlist checklist table blockquote foldtext codeinline codesample latex macro pz qixue talent2 media videox"],
 				},
 				block_formats: "段落=p;一级标题=h1;二级标题=h2;三级标题=h3;四级标题=h4;五级标题=h5;六级标题=h6;",
 				fontsize_formats: "12px 14px 16px 18px 22px 24px 26px 28px 32px 48px 72px",
