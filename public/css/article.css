@@ -478,7 +478,6 @@
 .c-article-tinymce .e-details,
 .c-article-tinymce .e-summary {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-  white-space: pre-wrap;
   margin: 0;
 }
 .c-article-tinymce .e-summary {
@@ -528,6 +527,7 @@
   background: none;
   border-top: none;
   display: none;
+  line-height: 2.2;
 }
 .c-article-editor .e-summary {
   cursor: text;
@@ -1272,6 +1272,10 @@
   height: 12px;
   border-radius: 50%;
   display: block;
+  display: none;
+}
+.c-article-tinymce:not(.c-article-editor) .w-skill-combo-item .u-gcd-icon.is-show {
+  display: inline-block;
 }
 .c-article-tinymce:not(.c-article-editor) .w-skill-combo-item .u-gcd-icon i {
   color: #fff;
