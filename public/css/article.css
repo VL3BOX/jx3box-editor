@@ -528,6 +528,11 @@
   border-top: none;
   display: none;
   line-height: 2.2;
+}
+.c-article-tinymce pre.e-details {
+  white-space: pre-line;
+}
+.c-article-tinymce div.e-details {
   white-space: normal;
 }
 .c-article-editor .e-summary {
@@ -535,7 +540,6 @@
 }
 .c-article-editor .e-details {
   display: block;
-  white-space: normal;
 }
 .hevue-imgpreview-wrap .he-img-wrap {
   background: rgba(0, 0, 0, 0.8);
