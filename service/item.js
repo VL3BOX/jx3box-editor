@@ -4,7 +4,7 @@ import { $node, $cms } from "@jx3box/jx3box-common/js/https";
 function get_item(item_id, client) {
     if (!item_id) return;
 
-    return $node().get(`/resource/${client}/item_merged.${5_566}`);
+    return $node().get(`/resource/${client}/item_merged.${item_id}`);
 }
 
 // 获取清单
