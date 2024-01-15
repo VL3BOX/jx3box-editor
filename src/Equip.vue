@@ -99,7 +99,7 @@ export default {
     mounted: function() {
         if (this.id) {
             get_plan(this.id).then((res) => {
-                this.plan_data = res.data.data.plan;
+                this.plan_data = res.data.data;
             });
         }
     },
