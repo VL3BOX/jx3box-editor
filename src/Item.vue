@@ -341,16 +341,13 @@ export default {
                     // 服务端拉取
                     }else{
                         get_item(this.item_id, this.final_client).then((res) => {
-                            let data = res.data;
-                            if (data.code === 200) {
-                                let item = data.data.item;
-                                let isValidItem = JSON.stringify(item) !== "{}"
-                                if(isValidItem){
-                                    this.source = item
-                                    sessionStorage.setItem(this.cache_key,JSON.stringify(this.source));
-                                }else{
-                                    this.source = null
-                                }
+                            let item = res.data;
+                            let isValidItem = JSON.stringify(item) !== "{}"
+                            if(isValidItem){
+                                this.source = item
+                                sessionStorage.setItem(this.cache_key,JSON.stringify(this.source));
+                            }else{
+                                this.source = null
                             }
                         });
                     }
