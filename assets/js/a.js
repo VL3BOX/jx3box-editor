@@ -12,12 +12,11 @@ function formatLink(str){
 
         let href = item[2]
         let to = url.parse(href)
-        const whiteHost = /https?:\/\/.*\.jx3box\.com/
+        const whiteHost = /https?:\/\/.*\.(jx|vl)3box\.com/
 
-        if(to.host == 'oss.jx3box.com'){
+        if(to.host == 'oss.jx3box.com' || to.host == 'oss.vl3box.com'){
             href = resolveImagePath(href)
         }
-
 
         let skip = ''
         if(!whiteHost.test(to.hostname)){
