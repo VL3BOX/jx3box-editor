@@ -1,0 +1,27 @@
+name: Build and deploy to GitHub pages
+on:
+    push:
+        branches:
+            - i18n
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Copy static files
+              run: |
+                    mkdir -p dist/css/
+                    cp css/article.css dist/css/article.css
+
+            - name: Deploy 🚀
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                  branch: gh-pages
+                  repository-name: vl3box/vl3box
+                  folder: dist
+                  target-folder: static/${{ github.event.repository.name }}
+                  token: ${{ secrets.GH_REPO_TOKEN }}
+                  clean: true
+                  clean-exclude: |
+                      **/*.map
