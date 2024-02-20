@@ -131,7 +131,7 @@ export default {
                 style: {
                     top: 0,
                     left: 0,
-                    display: "none",
+                    display: "block",
                 },
                 type: "",
             },

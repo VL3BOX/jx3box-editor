@@ -1,9 +1,8 @@
 import $ from "jquery";
 
 function renderItem(vm, selector = ".w-jx3-element") {
-
     let outer, inner;
-    const pop_class = '.w-jx3-element-pop'
+    const pop_class = ".w-jx3-element-pop";
 
     // 触发时
     $(selector).on("mouseenter", function (e) {
@@ -11,12 +10,12 @@ function renderItem(vm, selector = ".w-jx3-element") {
 
         // 获取元素数据
         let type = $(e.target).attr("data-type");
-        if (type == 'item') {
+        if (type == "item") {
             vm.item.id = $(e.target).attr("data-id");
-            vm.item.client = $(e.target).attr("data-client") == 'origin' ? 2 : 1;
-        } else if (type === 'author') {
+            vm.item.client = $(e.target).attr("data-client") == "origin" ? 2 : 1;
+        } else if (type === "author") {
             vm.author.id = $(e.target).attr("data-id");
-        } else if (type === 'emotion') {
+        } else if (type === "emotion") {
             vm.emotion.id = $(e.target).attr("data-id");
         } else {
             vm[type].client = $(e.target).attr("data-client");
@@ -26,7 +25,7 @@ function renderItem(vm, selector = ".w-jx3-element") {
 
         // 显示浮层
         $(pop_class).fadeIn();
-        vm.jx3_element.type = type
+        vm.jx3_element.type = type;
 
         // 计算浮层位置
         let self_height = $(pop_class).height();
