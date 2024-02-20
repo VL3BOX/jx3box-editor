@@ -14,6 +14,7 @@
             @directoryRendered="test2"
         ></Article>
         <Buff :id="51145" client="origin" :level="0"></Buff>
+        <Skill :id="2716" client="std" :level="0"></Skill>
         <Item :item_id="'6_27425'"></Item>
         <div id="directory"></div>
     </div>
@@ -27,6 +28,7 @@ import { get_item } from "../service/item";
 import { getBuff, getSkill } from "../service/database";
 import Item from "../src/Item.vue";
 import Buff from "../src/Buff.vue";
+import Skill from "../src/Skill.vue";
 
 export default {
     name: "A",
@@ -113,7 +115,8 @@ export default {
         Buff,
         Article,
         // ItemSimple,
-        Item
+        Item,
+        Skill
     },
 };
 </script>
