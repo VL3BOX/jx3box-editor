@@ -12,18 +12,28 @@
         display: flex;
     }
 
-    .w-skill-icon{
+    .w-skill-icon {
         .size(48px);
-        border:none;
-        padding:0;
-        margin:0 10px 0 0;
+        border: none;
+        padding: 0;
+        margin: 0 10px 0 0;
     }
 
-    .w-skill-content{
+    .w-skill-content {
         font-weight: normal;
         flex-grow: 1;
         text-shadow: 1px 1px 1px #0f2222;
         line-height: 20px;
+    }
+
+    .w-skill-switch-parse {
+        padding: 5px;
+        float: right;
+        color: #5df9eb;
+        transition: all 0.15s ease;
+        &:hover {
+            color: #ff0;
+        }
     }
 
     .w-skill-name {
@@ -34,19 +44,28 @@
 
     .w-skill-desc {
         color: #ffffff;
-        letter-spacing:0.5px;
+        letter-spacing: 0.5px;
         .mb(10px);
         .fz(12px,20px);
+        white-space: pre-wrap;
     }
 
-    .w-skill-meta{
-        .db;.fz(12px,20px);
-        color:#5df9eb;
+    .w-skill-talent {
+        color: #04cfb4;
+        letter-spacing: 0.5px;
+        .mb(10px);
+        .fz(12px,20px);
+        white-space: pre-wrap;
+    }
+
+    .w-skill-meta {
+        .db;
+        .fz(12px,20px);
+        color: #5df9eb;
     }
 }
 
 .c-article .e-jx3-skill {
-
     // img {
     //     border: none;
     //     margin: 0 5px 0 0;
@@ -59,7 +78,7 @@
     // }
 
     text-decoration: underline;
-    &:hover{
+    &:hover {
         box-shadow: none !important;
     }
 }
