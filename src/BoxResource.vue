@@ -1,33 +1,33 @@
 <template>
 	<div class="c-resource c-resource__jx3box">
 		<!-- 上传触发按钮 -->
-		<el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline :src="boxIcon" />魔盒资源 </el-button>
+		<el-button class="u-switch" type="primary" @click="openDialog" :disabled="!enable"> <img class="u-icon" svg-inline :src="boxIcon" />{{ $t('魔盒资源') }} </el-button>
 
 		<!-- 弹出界面 -->
-		<el-dialog v-draggable class="c-large-dialog" title="魔盒资源库" :visible.sync="dialogVisible">
+		<el-dialog v-draggable class="c-large-dialog" :title="$t('魔盒资源库')" :visible.sync="dialogVisible">
 			<div class="c-resource-content" v-loading="loading">
 				<div class="m-database-search">
 					<el-radio-group class="u-client" v-model="comboClient" @change="search" v-if="type === 'combo'">
-						<el-radio-button label="std">重制</el-radio-button>
-						<el-radio-button label="origin">缘起</el-radio-button>
+						<el-radio-button label="std">{{ $t('重制') }}</el-radio-button>
+						<el-radio-button label="origin">{{ $t('缘起') }}</el-radio-button>
 					</el-radio-group>
 					<el-input class="u-input" :placeholder="placeholderText" v-model="query" @change="search" @keyup.enter.native="search">
-						<template slot="prepend">关键词</template>
+						<template slot="prepend">{{ $t('关键词') }}</template>
 						<template slot="append">
-							<el-switch v-model="strict" active-text="精确匹配"></el-switch>
+							<el-switch v-model="strict" :active-text="$t('精确匹配')"></el-switch>
 						</template>
 					</el-input>
 				</div>
 
 				<el-tabs class="m-database-tabs" v-model="type" type="card" @tab-click="changeType">
-					<el-tab-pane label="魔盒用户" name="authors">
+					<el-tab-pane :label="$t('魔盒用户')" name="authors">
 						<span slot="label" class="u-tab-label">
 							<i class="el-icon-s-custom" style="margin-right: 5px"></i>
-							<b>用户</b>
+							<b>{{ $t('用户') }}</b>
 							<i class="u-lv-box">Lv2+</i>
 						</span>
 						<p v-if="total && done" class="m-resource-count">
-							<i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
+							<i class="el-icon-s-data"></i> {{ $t('共找到') }} <b>{{ total }}</b> {{ $t('条记录') }}
 						</p>
 						<ul class="m-resource-list">
 							<li v-for="(o, i) in authors" class="u-item" :key="i" :class="{ on: !!o.isSelected }" @click="selectAuthor(o, i)" ref="author">
@@ -43,12 +43,12 @@
 								</span>
 							</li>
 						</ul>
-						<el-alert v-if="!authors.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
+						<el-alert v-if="!authors.length && done" :title="$t('没有找到相关条目')" type="info" show-icon></el-alert>
 					</el-tab-pane>
-					<el-tab-pane label="剑三趣图" name="emotions">
+					<el-tab-pane :label="$t('剑三趣图')" name="emotions">
 						<span slot="label" class="u-tab-label">
 							<i class="el-icon-sugar" style="margin-right: 5px"></i>
-							<b>趣图</b>
+							<b>{{ $t('趣图') }}</b>
 						</span>
 						<p v-if="total && done" class="m-resource-count">
 							<i class="el-icon-s-data"></i> 共找到 <b>{{ total }}</b> 条记录
@@ -58,42 +58,42 @@
 								<img class="e-jx3-emotion" :src="resolveImagePath(o.url)" :alt="query" />
 							</li>
 						</ul>
-						<el-alert v-if="!emotions.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
+						<el-alert v-if="!emotions.length && done" :title="$t('没有找到相关条目')" type="info" show-icon></el-alert>
 					</el-tab-pane>
-					<el-tab-pane label="连招" name="combo">
+					<el-tab-pane :label="$t('连招')" name="combo">
 						<span slot="label" class="u-tab-label">
 							<i class="el-icon-lollipop" style="margin-right: 5px"></i>
-							<b>连招</b>
+							<b>{{ $t('连招') }}</b>
 						</span>
 						<ComboVue :query="query" ref="combo" :client="comboClient" :strict="strict"></ComboVue>
 					</el-tab-pane>
-					<el-tab-pane label="信纸" name="letter">
+					<el-tab-pane :label="$t('信纸')" name="letter">
 						<span slot="label" class="u-tab-label">
 							<i class="el-icon-coffee-cup" style="margin-right: 5px"></i>
-							<b>信纸</b>
+							<b>{{ $t('信纸') }}</b>
 						</span>
 						<div class="m-letter-list">
 							<div class="m-letter" :class="{ active: !!o.isSelected }" v-for="o in filterLetter" :key="o.id" @click="selectLetter(o)">
 								<LetterPaper :data="o" />
 							</div>
 						</div>
-						<el-alert v-if="!letter.length && done" title="没有找到相关条目" type="info" show-icon></el-alert>
+						<el-alert v-if="!letter.length && done" & type="info" show-icon></el-alert>
 					</el-tab-pane>
 				</el-tabs>
 
 				<template v-if="multipage && type !== 'combo'">
 				<!-- 下一页 -->
-				<el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" icon="el-icon-arrow-down" @click="appendPage">加载更多</el-button>
+				<el-button class="m-archive-more" :class="{ show: hasNextPage }" type="primary" icon="el-icon-arrow-down" @click="appendPage">{{ $t('加载更多') }}</el-button>
 					<!-- 分页 -->
 					<el-pagination class="m-archive-pages" background layout="total, prev, pager, next,jumper" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page" @current-change="changePage"></el-pagination>
 				</template>
 
-				<div class="m-database-tip" v-show="isBlank && type !== 'combo'">❤ 请输入搜索条件查询</div>
+				<div class="m-database-tip" v-show="isBlank && type !== 'combo'">❤ {{ $t('请输入搜索条件查询') }}</div>
 			</div>
 
 			<!-- 插入按钮 -->
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false">取 消</el-button>
+				<el-button @click="dialogVisible = false">{{ $t('取 消') }}</el-button>
 				<el-button type="primary" @click="insert">
 					{{ buttonTXT }}
 				</el-button>

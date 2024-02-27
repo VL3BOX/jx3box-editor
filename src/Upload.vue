@@ -4,9 +4,9 @@
         <el-button type="primary" @click="dialogVisible = true" icon="el-icon-upload" :disabled="!enable">{{ btn_txt }}</el-button>
 
         <!-- 弹出界面 -->
-        <el-dialog class="c-large-dialog" title="上传" :visible.sync="dialogVisible">
+        <el-dialog class="c-large-dialog" :title="$t('上传')" :visible.sync="dialogVisible">
             <!-- 清空按钮 -->
-            <el-button class="u-upload-clear" plain icon="el-icon-delete" size="mini" @click="clear">清空</el-button>
+            <el-button class="u-upload-clear" plain icon="el-icon-delete" size="mini" @click="clear">{{ $t('清空') }}</el-button>
 
             <!-- 限制提示 -->
             <el-alert class="u-upload-tip" :title="tip" type="info" show-icon :closable="false"></el-alert>
@@ -43,7 +43,7 @@
 
             <!-- 插入按钮 -->
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button @click="dialogVisible = false">{{ $t('取 消') }}</el-button>
                 <el-button type="primary" @click="insert">
                     {{ buttonTXT }}
                 </el-button>

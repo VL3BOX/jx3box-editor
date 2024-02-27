@@ -1,13 +1,13 @@
 <template>
     <div class="c-editor-markdown-dialog">
-        <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" title="插入宏">宏</span>
+        <span class="c-markdown-toolbar-file c-markdown-toolbar-item" @click="handleClick" :title="$t('插入宏')">{{ $t('宏') }}</span>
 
-        <el-dialog :visible.sync="visible" title="插入宏" :modal-append-to-body="false">
+        <el-dialog :visible.sync="visible" :title="$t('插入宏')" :modal-append-to-body="false">
             <el-input class="u-input u-input-macro" type="textarea" :rows="15" v-model="macro" show-word-limit :maxlength="128"></el-input>
 
             <div slot="footer">
-                <el-button @click="cancel">取消</el-button>
-                <el-button type="primary" @click="insert">插入</el-button>
+                <el-button @click="cancel">{{ $t('取消') }}</el-button>
+                <el-button type="primary" @click="insert">{{ $t('插入') }}</el-button>
             </div>
         </el-dialog>
     </div>

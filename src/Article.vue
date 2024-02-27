@@ -5,7 +5,7 @@
             <div class="c-article-chunk" v-for="(text, i) in data" :key="i" v-html="text" :class="{ on: i == page - 1 || all == true }" :id="'c-article-part' + ~~(i + 1)"></div>
         </div>
         <div id="c-article" class="c-article" ref="article" v-else-if="data && data.length" v-html="data[0]"></div>
-        <el-button class="c-article-all" type="primary" v-if="!all && hasPages" @click="showAll">加载全部</el-button>
+        <el-button class="c-article-all" type="primary" v-if="!all && hasPages" @click="showAll">{{ $t('加载全部') }}</el-button>
         <el-pagination
             class="c-article-pages"
             v-if="!all"

@@ -8,7 +8,7 @@
 				backgroundSize: 'cover',
 			}"
 		>
-			我是抬头
+			{{ $t('我是抬头') }}
 		</div>
 		<div
 			:class="`c-letter-content c-letter-content__${data.slug}`"
@@ -32,7 +32,7 @@
 						backgroundPosition: 'bottom center',
 					}"
 				>
-					<p v-for="o in 4" :key="o">明月几时有，把酒问青天。</p>
+					<p v-for="o in 4" :key="o">{{ $t('明月几时有，把酒问青天。') }}</p>
 				</div>
 			</div>
 		</div>

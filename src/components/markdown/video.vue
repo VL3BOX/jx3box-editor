@@ -3,22 +3,22 @@
         <span
             class="c-markdown-toolbar-video c-markdown-toolbar-item"
             @click="handleClick"
-            title="插入视频"
+            :title="$t('插入视频')"
         >
             <i class="el-icon-video-camera"></i>
         </span>
 
         <el-dialog
             :visible.sync="visible"
-            title="插入视频"
+            :title="$t('插入视频')"
             :modal-append-to-body="false"
         >
             <div class="u-help">
-                请填入BV号或链接地址。<a
+                {{ $t('请填入BV号或链接地址。') }}<a
                     style="color: #0366d6; font-weight: normal"
                     href="/tool/686/"
                     target="_blank"
-                    >[点击查看帮助]</a
+                    >[{{ $t('点击查看帮助') }}]</a
                 >
             </div>
 
@@ -29,8 +29,8 @@
             ></el-input>
 
             <div slot="footer">
-                <el-button @click="cancel">取消</el-button>
-                <el-button type="primary" @click="insert">插入</el-button>
+                <el-button @click="cancel">{{ $t('取消') }}</el-button>
+                <el-button type="primary" @click="insert">{{ $t('插入') }}</el-button>
             </div>
         </el-dialog>
     </div>

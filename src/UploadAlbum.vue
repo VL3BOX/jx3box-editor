@@ -1,6 +1,6 @@
 <template>
     <div class="c-upload-album">
-        <Upload @insert="updateFileList" text="批量上传图片" />
+        <Upload @insert="updateFileList" :text="$t('批量上传图片')" />
         <div class="c-upload-album-list">
             <draggable v-model="imgList" v-if="imgList && imgList.length">
                 <transition-group>
@@ -12,7 +12,7 @@
                     </div>
                 </transition-group>
             </draggable>
-            <div class="u-null" v-else><i class="el-icon-warning-outline"></i> 当前没有任何图片</div>
+            <div class="u-null" v-else><i class="el-icon-warning-outline"></i> {{ $t('当前没有任何图片') }}</div>
         </div>
         <el-dialog class="c-upload-album-preview" :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt />
