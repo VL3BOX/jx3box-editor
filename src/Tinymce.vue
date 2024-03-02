@@ -49,7 +49,7 @@ export default {
 				selector: "#tinymce",
 
 				// 语言
-				language: this.$i18n?.locale || "vi",
+				language: this.$i18n?.locale?.replace('-', '_') || "vi",
 
 				// 设置
 				convert_urls: false,
