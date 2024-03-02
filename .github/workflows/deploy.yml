@@ -12,7 +12,7 @@ jobs:
             - name: Copy static files
               run: |
                     mkdir -p dist/css/
-                    cp css/article.css dist/css/article.css
+                    cp public/css/article.css dist/css/article.css
 
             - name: Deploy 🚀
               uses: JamesIves/github-pages-deploy-action@v4
